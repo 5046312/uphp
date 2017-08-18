@@ -1,7 +1,11 @@
 <?php
 namespace app\index\model;
 
-class user
-{
+use uphp\Model;
 
+class user extends Model
+{
+    public function getUserById($id){
+
+    }
 }
