@@ -1,9 +1,10 @@
 <?php
 namespace app\index\controller;
+use uphp\Controller;
 
-class indexController
+class indexController extends Controller
 {
     public function index(){
-        echo 123;
+        $this->view();
     }
 }
