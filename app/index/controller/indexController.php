@@ -5,6 +5,8 @@ use uphp\Controller;
 class indexController extends Controller
 {
     public function index(){
-        $this->view();
+        $userModel = model('user');
+        d($userModel);
+        $res = $userModel->getUserById();
     }
 }
