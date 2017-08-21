@@ -8,6 +8,7 @@ class Model
     protected $tableName;//数据库表名
     protected $fields = array();//定义表的字段
     protected $pk = "id";//主键叫id
+
     //添加几个属性
     protected $where = array();//搜索条件
     protected $order = null;//排序条件
@@ -17,17 +18,16 @@ class Model
     // 构造方法实现数据库的连接，并初始化表名
     public function __construct($tableName)
     {
-        $this->link = @mysqli_connect(HOST,USER,PASS,DBNAME) or die("数据库连接失败");
+        $this->link = @mysqli_connect(config('db')['host'], config('db')['username'], config('db')['password'], config('db')['database']) or die("数据库连接失败");
         mysqli_set_charset($this->link,"utf8");
-        $this->tableName = $tableName;
-        $this->loadFields();//加载字段
+        $this->tableName = config('db')['prefix'].$tableName;
+        $this->loadFields();
     }
 
     //加载当前表字段信息的方法
     private function loadFields()
     {
         $sql = "desc {$this->tableName}";
-        // die($sql);
         $result = mysqli_query($this->link,$sql);
         //遍历每个字段信息
         while($row = mysqli_fetch_assoc($result)){
