@@ -6,7 +6,6 @@ function model($moduleName){
     $modelClass = 'app\index\model\\'.$moduleName.'Model';
     return new $modelClass();
 }
-
 // 获取配置或设置配置项
 function config($key, $value){
     if(isset($value)){
@@ -20,4 +19,25 @@ function d($value){
     echo '<pre>';
     var_dump($value);
     echo '</pre>';
+}
+// curl get
+function curlGet($url){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return ($output);
+}
+// curl post
+function curlPost($url, $data){
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    $output = curl_exec($ch);
+    curl_close($ch);
+    return ($output);
 }
