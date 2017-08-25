@@ -4,7 +4,7 @@ function model($moduleName){
     include_once(APP_DIR.'/'.$GLOBALS['uphp']['urlInfo']['m'].'/model/'.$moduleName.'Model.php');
     // 实例化
     $modelClass = 'app\index\model\\'.$moduleName.'Model';
-    return new $modelClass();
+    return new $modelClass($moduleName);
 }
 // 获取配置或设置配置项
 function config($key, $value){
@@ -40,4 +40,8 @@ function curlPost($url, $data){
     $output = curl_exec($ch);
     curl_close($ch);
     return ($output);
+}
+
+function __autoload($className){
+    include_once($className.'.php');
 }

@@ -4,6 +4,6 @@ use uphp\Model;
 class userModel extends Model
 {
     public function getUserById($id){
-        return $this->where(['id' => '1'])->select();
+        return $this->where(['id'=>$id])->select();
     }
 }

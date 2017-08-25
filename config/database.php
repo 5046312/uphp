@@ -7,7 +7,7 @@
 return [
     "host" => "127.0.0.1",
     "port" => "3306",
-    "database" => "uphp",
+    "dbname" => "uphp",
     "username" => "root",
     "password" => "root",
     "prefix" => "", // 数据表前缀

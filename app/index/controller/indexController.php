@@ -1,12 +1,12 @@
 <?php
 namespace app\index\controller;
+use app\index\model\userModel;
 use uphp\Controller;
 
 class indexController extends Controller
 {
     public function index(){
-        $userModel = model('user');
-        d($userModel);
-        $res = $userModel->getUserById();
+        $user = new userModel();
+        d($user);
     }
 }

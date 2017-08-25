@@ -15,7 +15,7 @@ $GLOBALS['uphp']['urlInfo']['a'] =  $_GET['a'] ?: START_ACTION;
 $GLOBALS['uphp']['db'] = include(CONFIG_DIR.'/database.php');
 
 // 引入Db基类
-include(U_DIR.'/lib/Db.php');
+include(U_DIR.'/lib/Mysql.php');
 // 引入Model基类
 include(U_DIR.'/lib/Model.php');
 // 引入控制器基类
