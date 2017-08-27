@@ -42,6 +42,52 @@ function curlPost($url, $data){
     return ($output);
 }
 
+function ajaxOut($data){
+    echo json_encode($data);
+    die;
+}
+
+function jump($url, $refresh, $info){
+    if(is_null($refresh)){
+        header("Location:$url");
+    }else{
+        echo"<meta http-equiv=\"refresh\" content=".$refresh.";URL=".$url.">";
+        echo $info;
+    }
+    return;
+}
+
+/**
+ * 生成url
+ * @param $url
+ * @param $param
+ * @return bool|string
+ */
+function url($url, $param){
+    $urlData = explode("/", $url);
+    if(!empty($param)){
+        $paramData = "&";
+        foreach ($param as $k=>$v){
+            $paramData .= "{$k}={$v}&";
+        }
+        $paramData = rtrim($paramData, "&");
+    }
+    switch (count($urlData)){
+        case 1:
+            $newUrl = "/index.php?m={$urlData[0]}".$paramData;
+            break;
+        case 2:
+            $newUrl = "/index.php?m={$urlData[0]}&c={$urlData[1]}".$paramData;
+            break;
+        case 3:
+            $newUrl = "/index.php?m={$urlData[0]}&c={$urlData[1]}&a={$urlData[2]}".$paramData;
+            break;
+        default:
+            return false;
+    }
+    return $newUrl;
+}
+
 function __autoload($className){
     include_once($className.'.php');
 }
