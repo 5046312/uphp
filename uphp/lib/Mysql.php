@@ -5,7 +5,7 @@ class Mysql
     protected $PDO; // 链接
     protected $PDOStatement; // PDOStatement
     protected $querySql; // Sql
-    protected $bindParam; // Sql参数绑定
+    protected $bindParam = []; // Sql参数绑定
 
     public function __construct()
     {
@@ -76,12 +76,21 @@ class Mysql
                 $this->error();
                 return false;
             } else {
-                // execute
+                // execute success
+                return $result;
             }
         }catch (\PDOException $e) {
             $this->error();
             return false;
         }
+    }
+
+    public function bind($key, $value){
+        $this->bindParam[$key] = $value;
+    }
+
+    public function getLastInsertId(){
+        return $this->PDO->lastInsertId();
     }
 
     public function free() {
@@ -91,8 +100,9 @@ class Mysql
     public function error()
     {
         $error = $this->PDOStatement->errorInfo();
-        echo "SQL语句出错:".$this->querySql.'<br>';
-        d($error);
+        echo "SQL语句:".$this->querySql.'<br>';
+        echo "错误原因:",($error[2]);
+        die;
     }
 
     public function fetchAll(){
