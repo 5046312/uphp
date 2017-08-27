@@ -49,15 +49,13 @@ class Model
 
     public function update($data){
         $fields = "";
-        $values = "";
         foreach ($data as $k=>$v){
-            $fields .= "`{$k}`,";
-            $values .= ":{$k},";
+            $fields .= "`{$k}` = :{$k} , ";
             $this->db->bind(":{$k}", $v);
         }
-        $fields = rtrim($fields, ",");
-        $values = rtrim($values, ",");
-        $sql = "UPDATE ".$this->table."({$fields}) SET({$values}) WHERE " . $this->parseWhere();
+        $fields = rtrim($fields, " , ");
+        $sql = "UPDATE ".$this->table. " SET {$fields} " . $this->parseWhere();
+        d($sql);
         return $this->db->execute($sql);
     }
 

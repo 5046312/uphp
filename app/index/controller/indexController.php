@@ -16,10 +16,8 @@ class indexController extends Controller
 //        $res = $user->where(['id'=>'1'])->delete();
 
 
-        $data = [
-            'name' => 'wwww'
-        ];
-        $res = $user->where(['id'=>1])->update($data);
+        $data = ['name' => 'qwes', 'id' => '9198'];
+        $res = $user->where(['id'=>0])->update($data);
         d($res);
     }
 }
