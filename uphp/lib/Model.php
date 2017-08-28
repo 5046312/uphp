@@ -12,7 +12,7 @@ class Model
     {
         $this->db = new Mysql();
         $this->table = empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
-        $this->prefix = empty($prefix)?:config('db')['prefix'];
+        $this->prefix = empty($prefix)?:config('db_prefix');
     }
 
     public function __set($key, $value){

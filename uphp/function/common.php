@@ -9,9 +9,9 @@ function model($moduleName){
 // 获取配置或设置配置项
 function config($key, $value){
     if(isset($value)){
-        $GLOBALS['uphp'][$key] = $value;
+        $GLOBALS['uphp']['config'][$key] = $value;
     }else{
-        return $GLOBALS['uphp'][$key];
+        return $GLOBALS['uphp']['config'][$key];
     }
 }
 // 格式化输出
@@ -49,9 +49,9 @@ function ajaxOut($data){
 
 function jump($url, $refresh, $info){
     if(is_null($refresh)){
-        header("Location:$url");
+        header("Location:.{$url}");
     }else{
-        echo"<meta http-equiv=\"refresh\" content=".$refresh.";URL=".$url.">";
+        echo"<meta http-equiv=\"refresh\" content=".$refresh.";URL=.".$url.">";
         echo $info;
     }
     return;

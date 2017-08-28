@@ -12,6 +12,6 @@ class Controller
      * @param $view
      */
     public function redirect($url, $param, $refresh, $view){
-
+        jump(url($url, $param), $refresh, $view);
     }
 }

@@ -5,9 +5,8 @@ class BaseController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
         if(empty($_SESSION['login'])){
-
+            $this->redirect('index/index/login');
         }
     }
 }
