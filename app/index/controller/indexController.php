@@ -17,6 +17,6 @@ class indexController extends Controller
         $user = new userModel();
         $res = $user->select();
         echo "login";
-        $this->view("user/home");
+        return $this->view("user/home");
     }
 }

@@ -19,6 +19,6 @@ class View
     }
 
     public function show(){
-        return $this;
+        return "view show";
     }
 }
