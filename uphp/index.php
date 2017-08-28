@@ -18,6 +18,8 @@ $GLOBALS['uphp']['config'] = include(CONFIG_DIR.'/config.php');
 include(U_DIR.'/lib/Mysql.php');
 // 引入Model基类
 include(U_DIR.'/lib/Model.php');
+# 引入模板引擎
+include_once(U_DIR."/lib/View.php");
 // 引入控制器基类
 include(U_DIR.'/lib/Controller.php');
 // 引用控制器
@@ -26,3 +28,4 @@ include(APP_DIR.'/'.$GLOBALS['uphp']['urlInfo']['m'].'/controller/'.$GLOBALS['up
 $class = APP_DIR.'\\'.$GLOBALS['uphp']['urlInfo']['m'].'\controller\\'.$GLOBALS['uphp']['urlInfo']['c'].'Controller';
 $controller = new $class();
 $action = $controller->$GLOBALS['uphp']['urlInfo']['a']();
+echo $action;

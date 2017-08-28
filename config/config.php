@@ -12,6 +12,7 @@ return [
     "db_prefix" => "", // 数据表前缀
 
     # 模板配置
+    "view_suffix" => ".html", // 模板文件后缀
     "view_tag_left" => "@",
     "view_tag_right" => "@"
 ];
