@@ -15,6 +15,7 @@ class Controller
      */
     public function redirect($url, $param, $refresh, $view){
         jump(url($url, $param), $refresh, $view);
+        die;
     }
 
     public function fetch($key, $value){
@@ -55,5 +56,16 @@ class Controller
 
         $view = new View($tplFile, $this->viewVariable);
         return $view->show();
+    }
+
+    public function encode($data, $type = "JSON", $option = 0){
+        switch(strtoupper($type)){
+            case "JSON":
+                header("Content-type:application/json; charset=utf-8");
+                die(json_encode($data, $option));
+            case "XML":
+                header("Content-type:text/xml; charset=utf-8");
+                die(xml_encode($data));
+        }
     }
 }
