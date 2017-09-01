@@ -1,6 +1,6 @@
 <?php
 # php入口文件
-define('UPHP', true); // 确定入口进入
+define('UPHP', true); // 确保入口
 
 # 配置文件
 define('U_DIR', 'uphp'); // 框架所在目录

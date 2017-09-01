@@ -7,6 +7,7 @@ use uphp\Controller;
 class indexController extends Controller
 {
     public function index(){
+        p(123);
         return "this is index/index";
     }
 

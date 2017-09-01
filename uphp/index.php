@@ -4,17 +4,7 @@ defined("UPHP") or die;
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 # 引用公共函数
-include(U_DIR.'/function/common.php');
-# 引入Config配置类
-include(U_DIR."/library/Config.php");
-# 引入Db基类
-include(U_DIR.'/library/Mysql.php');
-# 引入Model基类
-include(U_DIR.'/library/Model.php');
-# 引入模板引擎
-include(U_DIR."/library/View.php");
-# 引入控制器基类
-include(U_DIR.'/library/Controller.php');
+include(U_DIR.'/function/Common.php');
 
 # 公共配置变量
 config("urlInfo.m", $_GET['m'] ?: START_MODULE);
