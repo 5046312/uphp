@@ -17,7 +17,7 @@ function config($key, $value){
  * 格式化输出
  * @param $value
  */
-function d($value){
+function p($value){
     echo '<pre>';
     var_dump($value);
     echo '</pre>';

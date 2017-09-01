@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 use app\index\model\userModel;
+use uphp\Config;
 use uphp\Controller;
 
 class indexController extends Controller

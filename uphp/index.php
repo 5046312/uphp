@@ -11,8 +11,11 @@ $GLOBALS['uphp']['urlInfo']['m'] = $_GET['m'] ?: START_MODULE;
 $GLOBALS['uphp']['urlInfo']['c'] =  $_GET['c'] ?: START_CONTROLLER;
 $GLOBALS['uphp']['urlInfo']['a'] =  $_GET['a'] ?: START_ACTION;
 
+# 引入Config配置类
+include(U_DIR."/library/Config.php");
+
 # 加载数据库设置
-$GLOBALS['uphp']['config'] = include(CONFIG_DIR.'/config.php');
+\uphp\Config::init(include(CONFIG_DIR.'/config.php'));
 
 # 引入Db基类
 include(U_DIR.'/library/Mysql.php');
