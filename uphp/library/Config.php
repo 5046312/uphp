@@ -10,7 +10,12 @@ class Config
      * @param $value
      */
     public static function set($key, $value){
-        self::$config[$key] = $value;
+        if(strpos($key, ".")){
+            $keys = explode(".", $key);
+            self::$config[$keys[0]][$key[1]] = $value;
+        }else{
+            self::$config[$key] = $value;
+        }
     }
 
     /**
