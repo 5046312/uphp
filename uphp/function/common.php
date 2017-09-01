@@ -112,7 +112,7 @@ function url($url, $param){
  * @param string $encoding 数据编码
  * @return string
  */
-function xml_encode($data, $root='uphp', $item='item', $attr='', $id='id', $encoding='utf-8') {
+function xmlEncode($data, $root='uphp', $item='item', $attr='', $id='id', $encoding='utf-8') {
     if(is_array($attr)){
         $_attr = array();
         foreach ($attr as $key => $value) {
@@ -124,7 +124,7 @@ function xml_encode($data, $root='uphp', $item='item', $attr='', $id='id', $enco
     $attr   = empty($attr) ? '' : " {$attr}";
     $xml    = "<?xml version=\"1.0\" encoding=\"{$encoding}\"?>";
     $xml   .= "<{$root}{$attr}>";
-    $xml   .= data_to_xml($data, $item, $id);
+    $xml   .= dataToXml($data, $item, $id);
     $xml   .= "</{$root}>";
     return $xml;
 }
@@ -136,7 +136,7 @@ function xml_encode($data, $root='uphp', $item='item', $attr='', $id='id', $enco
  * @param string $id   数字索引key转换为的属性名
  * @return string
  */
-function data_to_xml($data, $item='item', $id='id') {
+function dataToXml($data, $item='item', $id='id') {
     $xml = $attr = '';
     foreach ($data as $key => $val) {
         if(is_numeric($key)){
@@ -144,7 +144,7 @@ function data_to_xml($data, $item='item', $id='id') {
             $key  = $item;
         }
         $xml    .=  "<{$key}{$attr}>";
-        $xml    .=  (is_array($val) || is_object($val)) ? data_to_xml($val, $item, $id) : $val;
+        $xml    .=  (is_array($val) || is_object($val)) ? dataToXml($val, $item, $id) : $val;
         $xml    .=  "</{$key}>";
     }
     return $xml;

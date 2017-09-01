@@ -78,7 +78,7 @@ class Controller
                 die(json_encode($data, $option));
             case "XML":
                 header("Content-type:text/xml; charset=utf-8");
-                die(xml_encode($data));
+                die(xmlEncode($data));
         }
     }
 }

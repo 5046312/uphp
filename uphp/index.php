@@ -11,8 +11,6 @@ config("urlInfo.m", $_GET['m'] ?: START_MODULE);
 config("urlInfo.c", $_GET['c'] ?: START_CONTROLLER);
 config("urlInfo.a", $_GET['a'] ?: START_ACTION);
 
-# 引用控制器
-include(APP_DIR.'/'.config("urlInfo.m").'/controller/'.config("urlInfo.c").'Controller'.'.php');
 # 带命名空间类的实例化
 $class = APP_DIR.'\\'.config("urlInfo.m").'\controller\\'.config("urlInfo.c").'Controller';
 echo (new $class())->{config("urlInfo.a")}();
