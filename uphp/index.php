@@ -26,6 +26,5 @@ include(APP_DIR.'/'.config("urlInfo.m").'/controller/'.config("urlInfo.c").'Cont
 # 带命名空间类的实例化
 $class = APP_DIR.'\\'.config("urlInfo.m").'\controller\\'.config("urlInfo.c").'Controller';
 $controller = new $class();
-$a = config("urlInfo.a");
-$action = $controller->$a();
+$action = $controller->{config("urlInfo.a")}();
 echo $action;
