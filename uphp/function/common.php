@@ -7,9 +7,9 @@
  */
 function config($key, $value){
     if(isset($value)){
-        $GLOBALS['uphp']['config'][$key] = $value;
+        \uphp\Config::set($key, $value);
     }else{
-        return $GLOBALS['uphp']['config'][$key];
+        return \uphp\Config::get($key);
     }
 }
 

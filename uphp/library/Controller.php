@@ -5,7 +5,6 @@ class Controller
 {
     public $viewVariable = []; // 模板变量
 
-
     /**
      * $this->redirect("index/login", ["a" => "123", "b" => "456"])
      * @param $url
@@ -45,13 +44,13 @@ class Controller
             # $tpl "index" or "hello/asd"
             if(strpos($tpl, "/")){
                 $tpl = explode("/", $tpl);
-                $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$tpl[0]."/".$tpl[1].config("view_suffix");
+                $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$tpl[0]."/".$tpl[1].Config::get("view_suffix");
             }else{
-                $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$GLOBALS['uphp']['urlInfo']['c']."/".$tpl.config("view_suffix");
+                $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$GLOBALS['uphp']['urlInfo']['c']."/".$tpl.Config::get("view_suffix");
             }
         }else{
             # empty to find same action template
-            $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$GLOBALS['uphp']['urlInfo']['c']."/".$GLOBALS['uphp']['urlInfo']['a'].config("view_suffix");
+            $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$GLOBALS['uphp']['urlInfo']['c']."/".$GLOBALS['uphp']['urlInfo']['a'].Config::get("view_suffix");
         }
 
         $view = new View($tplFile, $this->viewVariable);

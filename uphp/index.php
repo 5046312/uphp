@@ -13,10 +13,6 @@ $GLOBALS['uphp']['urlInfo']['a'] =  $_GET['a'] ?: START_ACTION;
 
 # 引入Config配置类
 include(U_DIR."/library/Config.php");
-
-# 加载数据库设置
-\uphp\Config::init(include(CONFIG_DIR.'/config.php'));
-
 # 引入Db基类
 include(U_DIR.'/library/Mysql.php');
 # 引入Model基类

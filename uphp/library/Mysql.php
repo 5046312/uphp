@@ -9,9 +9,9 @@ class Mysql
 
     public function __construct()
     {
-        $dsn = "mysql:host=".config('db_host').";dbname=".config('db_name').";port=".config('db_port');
+        $dsn = "mysql:host=".Config::get('db_host').";dbname=".Config::get('db_name').";port=".Config::get('db_port');
         try {
-            $this->PDO = new \PDO($dsn, config('db_username'), config('db_password'), [\PDO::ATTR_PERSISTENT => true]);
+            $this->PDO = new \PDO($dsn, Config::get('db_username'), Config::get('db_password'), [\PDO::ATTR_PERSISTENT => true]);
         }catch(\PDOException $e){
             d($e->getMessage());
             die;

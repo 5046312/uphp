@@ -5,14 +5,6 @@ class Config
     private static $config;
 
     /**
-     * 初始化配置项
-     * @param $config
-     */
-    public static function init($config){
-        self::$config = $config;
-    }
-
-    /**
      * 新增或修改配置项
      * @param $key
      * @param $value
@@ -26,6 +18,7 @@ class Config
      * @param $key
      */
     public static function get($key){
-        return self::$config[$key];
+        !is_null(self::$config)?:self::$config = include(CONFIG_DIR.'/config.php');
+        return @self::$config[$key];
     }
 }
