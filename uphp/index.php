@@ -25,6 +25,4 @@ config("urlInfo.a", $_GET['a'] ?: START_ACTION);
 include(APP_DIR.'/'.config("urlInfo.m").'/controller/'.config("urlInfo.c").'Controller'.'.php');
 # 带命名空间类的实例化
 $class = APP_DIR.'\\'.config("urlInfo.m").'\controller\\'.config("urlInfo.c").'Controller';
-$controller = new $class();
-$action = $controller->{config("urlInfo.a")}();
-echo $action;
+echo (new $class())->{config("urlInfo.a")}();
