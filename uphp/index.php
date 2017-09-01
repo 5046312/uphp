@@ -15,13 +15,13 @@ $GLOBALS['uphp']['urlInfo']['a'] =  $_GET['a'] ?: START_ACTION;
 $GLOBALS['uphp']['config'] = include(CONFIG_DIR.'/config.php');
 
 # 引入Db基类
-include(U_DIR.'/lib/Mysql.php');
+include(U_DIR.'/library/Mysql.php');
 # 引入Model基类
-include(U_DIR.'/lib/Model.php');
+include(U_DIR.'/library/Model.php');
 # 引入模板引擎
-include_once(U_DIR."/lib/View.php");
+include_once(U_DIR."/library/View.php");
 # 引入控制器基类
-include(U_DIR.'/lib/Controller.php');
+include(U_DIR.'/library/Controller.php');
 # 引用控制器
 include(APP_DIR.'/'.$GLOBALS['uphp']['urlInfo']['m'].'/controller/'.$GLOBALS['uphp']['urlInfo']['c'].'Controller'.'.php');
 # 带命名空间类的实例化
