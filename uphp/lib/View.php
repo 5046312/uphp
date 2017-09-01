@@ -18,7 +18,15 @@ class View
         $this->variable = $data;
     }
 
+    /**
+     * 模板引擎处理后的返回结果
+     * @return string
+     */
     public function show(){
-        return "view show";
+
+    }
+
+    private function parseTag(){
+
     }
 }
