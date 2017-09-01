@@ -1,5 +1,10 @@
 <?php
 namespace uphp;
+/**
+ * PDO
+ * Class Mysql
+ * @package uphp
+ */
 class Mysql
 {
     protected $PDO; // 链接
@@ -13,7 +18,7 @@ class Mysql
         try {
             $this->PDO = new \PDO($dsn, Config::get('db_username'), Config::get('db_password'), [\PDO::ATTR_PERSISTENT => true]);
         }catch(\PDOException $e){
-            d($e->getMessage());
+            p($e->getMessage());
             die;
         }
         $this->PDO->exec('set names utf8');

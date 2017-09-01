@@ -1,5 +1,10 @@
 <?php
 namespace uphp;
+/**
+ * Model类
+ * Class Model
+ * @package uphp
+ */
 class Model
 {
     protected $name; // 数据表

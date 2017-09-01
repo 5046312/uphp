@@ -68,7 +68,7 @@ function jump($url, $refresh, $info){
         echo"<meta http-equiv=\"refresh\" content=".$refresh.";URL=.".$url.">";
         echo $info;
     }
-    return;
+    die;
 }
 
 /**

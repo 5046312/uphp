@@ -1,5 +1,10 @@
 <?php
 namespace uphp;
+/**
+ * 配置文件类
+ * Class Config
+ * @package uphp
+ */
 class Config
 {
     private static $config;
@@ -24,6 +29,11 @@ class Config
      */
     public static function get($key){
         !is_null(self::$config)?:self::$config = include(CONFIG_DIR.'/config.php');
-        return @self::$config[$key];
+        if(strpos($key, ".")){
+            $keys = explode(".", $key);
+            return @self::$config[$keys[0]][$key[1]];
+        }else{
+            return @self::$config[$key];
+        }
     }
 }

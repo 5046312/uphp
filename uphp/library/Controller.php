@@ -1,6 +1,10 @@
 <?php
 namespace uphp;
-// 控制器基类
+/**
+ * 控制器基类
+ * Class Controller
+ * @package uphp
+ */
 class Controller
 {
     public $viewVariable = []; // 模板变量
@@ -14,9 +18,13 @@ class Controller
      */
     public function redirect($url, $param, $refresh, $view){
         jump(url($url, $param), $refresh, $view);
-        die;
     }
 
+    /**
+     * 绑定模板变量
+     * @param $key
+     * @param $value
+     */
     public function fetch($key, $value){
         if(is_array($key)){
             foreach($key as $k=>$v){
@@ -57,6 +65,12 @@ class Controller
         return $view->show();
     }
 
+    /**
+     * 转换数据格式输出
+     * @param $data
+     * @param string $type 支持XML JSON
+     * @param int $option
+     */
     public function encode($data, $type = "JSON", $option = 0){
         switch(strtoupper($type)){
             case "JSON":
