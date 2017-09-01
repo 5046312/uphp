@@ -34,13 +34,13 @@ class Controller
      * @param array $data 指定变量赋值
      */
     public function view($tpl, $data){
-        // 附带变量渲染模板
+        # 附带变量渲染模板
         if(!empty($data)){
             foreach($data as $k=>$v){
                 $this->viewVariable[$k] = $v;
             }
         }
-        // 指定输出模板
+        # 指定输出模板
         if(!empty($tpl)){
             # $tpl "index" or "hello/asd"
             if(strpos($tpl, "/")){
