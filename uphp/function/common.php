@@ -1,12 +1,10 @@
 <?php
-// 实例化model类
-function model($moduleName){
-    include_once(APP_DIR.'/'.$GLOBALS['uphp']['urlInfo']['m'].'/model/'.$moduleName.'Model.php');
-    // 实例化
-    $modelClass = 'app\index\model\\'.$moduleName.'Model';
-    return new $modelClass($moduleName);
-}
-// 获取配置或设置配置项
+/**
+ * 获取配置或设置配置项
+ * @param $key 配置项名称
+ * @param $value 设置配置项
+ * @return mixed
+ */
 function config($key, $value){
     if(isset($value)){
         $GLOBALS['uphp']['config'][$key] = $value;
@@ -14,13 +12,22 @@ function config($key, $value){
         return $GLOBALS['uphp']['config'][$key];
     }
 }
-// 格式化输出
+
+/**
+ * 格式化输出
+ * @param $value
+ */
 function d($value){
     echo '<pre>';
     var_dump($value);
     echo '</pre>';
 }
-// curl get
+
+/**
+ * curl get
+ * @param $url
+ * @return mixed
+ */
 function curlGet($url){
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -30,7 +37,13 @@ function curlGet($url){
     curl_close($ch);
     return ($output);
 }
-// curl post
+
+/**
+ * curl post
+ * @param $url
+ * @param $data
+ * @return mixed
+ */
 function curlPost($url, $data){
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -42,11 +55,12 @@ function curlPost($url, $data){
     return ($output);
 }
 
-function ajaxOut($data){
-    echo json_encode($data);
-    die;
-}
-
+/**
+ * 页面跳转
+ * @param $url 完整URL
+ * @param $refresh 等待时间
+ * @param $info 等待时页面显示内容
+ */
 function jump($url, $refresh, $info){
     if(is_null($refresh)){
         header("Location:.{$url}");
