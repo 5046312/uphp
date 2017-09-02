@@ -6,7 +6,7 @@ so it's a little difficult to test
 
 ##  TODO:
 <ol>
-<li>Exception class</li>
+<li>Error class(Exception)</li>
 <li>Composer supporting</li>
 <li>A easy achieving View class</li>
 <li>More database supporting(MongoDb, Redis, Memcache...)</li>
