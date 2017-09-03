@@ -1,5 +1,5 @@
 <?php
-namespace uphp;
+namespace Uphp;
 /**
  * 控制器基类
  * Class Controller

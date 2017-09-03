@@ -25,7 +25,16 @@ class Uphp
     }
 
     #   实例化
-    public static function getInstance(){
+    public static function run(){
+        error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+        # 引用公共函数
+        include(U_DIR.'/function/Common.php');
+
+        # 公共配置变量
+        define("_MODULE_", $_GET['m'] ?: START_MODULE);
+        define("_CONTROLLER_", $_GET['c'] ?: START_CONTROLLER);
+        define("_ACTION_", $_GET['a'] ?: START_ACTION);
+
         #   判断模块是否存在
 
         #   判断控制器

@@ -1,5 +1,5 @@
 <?php
-namespace uphp;
+namespace Uphp;
 /**
  * Model类
  * Class Model

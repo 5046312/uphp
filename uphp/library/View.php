@@ -1,5 +1,5 @@
 <?php
-namespace uphp;
+namespace Uphp;
 /**
  * 模板类
  * Class View

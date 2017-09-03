@@ -1,5 +1,5 @@
 <?php
-namespace uphp;
+namespace Uphp;
 /**
  * 异常类
  * Class Exception

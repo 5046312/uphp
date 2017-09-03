@@ -12,4 +12,6 @@ define('START_MODULE', 'index'); // 默认模块
 define('START_CONTROLLER', 'index'); // 默认控制器
 define('START_ACTION', 'index'); // 默认方法
 
-require('./uphp/index.php');
+#   实例化入口
+include(U_DIR."/library/Uphp.php");
+Uphp\Uphp::run();

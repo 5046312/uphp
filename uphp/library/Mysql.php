@@ -1,5 +1,5 @@
 <?php
-namespace uphp;
+namespace Uphp;
 /**
  * PDO
  * Class Mysql
