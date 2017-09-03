@@ -7,10 +7,11 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 include(U_DIR.'/function/Common.php');
 
 # 公共配置变量
-config("urlInfo.m", $_GET['m'] ?: START_MODULE);
-config("urlInfo.c", $_GET['c'] ?: START_CONTROLLER);
-config("urlInfo.a", $_GET['a'] ?: START_ACTION);
+define("_MODULE_", $_GET['m'] ?: START_MODULE);
+define("_CONTROLLER_", $_GET['c'] ?: START_CONTROLLER);
+define("_ACTION_", $_GET['a'] ?: START_ACTION);
 
-# 带命名空间类的实例化
-$class = APP_DIR.'\\'.config("urlInfo.m").'\controller\\'.config("urlInfo.c").'Controller';
-echo (new $class())->{config("urlInfo.a")}();
+#   实例化入口
+include(U_DIR."/library/Uphp.php");
+
+Uphp\Uphp::getInstance();

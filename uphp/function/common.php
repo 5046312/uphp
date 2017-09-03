@@ -149,16 +149,3 @@ function dataToXml($data, $item='item', $id='id') {
     }
     return $xml;
 }
-
-/**
- * 自动加载类
- * @param $className
- */
-spl_autoload_register(function($className){
-    # 加载系统类
-    if(substr($className, 0, 4) == U_DIR){
-        include_once(U_DIR."/library/".substr($className, 5).".php");
-    }else{
-        include_once($className.'.php');
-    }
-});

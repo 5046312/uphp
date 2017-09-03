@@ -5,7 +5,4 @@ namespace uphp;
  * Class Exception
  * @package uphp
  */
-class Exception extends \Exception
-{
-
-}
+class Exception extends \Exception{}
