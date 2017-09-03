@@ -3,7 +3,7 @@ namespace Uphp;
 /**
  * 控制器基类
  * Class Controller
- * @package uphp
+ * @package Uphp
  */
 class Controller
 {
@@ -52,13 +52,13 @@ class Controller
             # $tpl "index" or "hello/asd"
             if(strpos($tpl, "/")){
                 $tpl = explode("/", $tpl);
-                $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$tpl[0]."/".$tpl[1].Config::get("view_suffix");
+                $tplFile = "./".APP_DIR."/".$GLOBALS['Uphp']['urlInfo']['m']."/View/".$tpl[0]."/".$tpl[1].Config::get("view_suffix");
             }else{
-                $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$GLOBALS['uphp']['urlInfo']['c']."/".$tpl.Config::get("view_suffix");
+                $tplFile = "./".APP_DIR."/".$GLOBALS['Uphp']['urlInfo']['m']."/View/".$GLOBALS['Uphp']['urlInfo']['c']."/".$tpl.Config::get("view_suffix");
             }
         }else{
             # empty to find same action template
-            $tplFile = "./".APP_DIR."/".$GLOBALS['uphp']['urlInfo']['m']."/view/".$GLOBALS['uphp']['urlInfo']['c']."/".$GLOBALS['uphp']['urlInfo']['a'].Config::get("view_suffix");
+            $tplFile = "./".APP_DIR."/".$GLOBALS['Uphp']['urlInfo']['m']."/View/".$GLOBALS['Uphp']['urlInfo']['c']."/".$GLOBALS['Uphp']['urlInfo']['a'].Config::get("view_suffix");
         }
 
         $view = new View($tplFile, $this->viewVariable);

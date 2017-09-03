@@ -3,7 +3,7 @@ namespace Uphp;
 /**
  * PDO
  * Class Mysql
- * @package uphp
+ * @package Uphp
  */
 class Mysql
 {

@@ -3,7 +3,7 @@ namespace Uphp;
 /**
  * 核心启动
  * Class Uphp
- * @package uphp
+ * @package Uphp
  */
 class Uphp
 {
@@ -17,7 +17,7 @@ class Uphp
         spl_autoload_register(function($className){
             # 加载系统类
             if(substr($className, 0, 4) == U_DIR){
-                include_once(U_DIR."/library/".substr($className, 5).".php");
+                include_once(U_DIR."/Library/".substr($className, 5).".php");
             }else{
                 include_once($className.'.php');
             }
@@ -28,12 +28,19 @@ class Uphp
     public static function run(){
         error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
         # 引用公共函数
-        include(U_DIR.'/function/Common.php');
+        include(U_DIR.'/Function/Common.php');
 
         # 公共配置变量
         define("_MODULE_", $_GET['m'] ?: START_MODULE);
         define("_CONTROLLER_", $_GET['c'] ?: START_CONTROLLER);
         define("_ACTION_", $_GET['a'] ?: START_ACTION);
+
+        #   注册自动加载类
+        self::autoload();
+
+        #   异常处理
+        set_exception_handler("Uphp\Exception::handler");
+        Exception::error(Language::get("MODULE_NOT_EXIST"));
 
         #   判断模块是否存在
 
@@ -41,8 +48,6 @@ class Uphp
 
         #   判断方法
 
-        #   注册自动加载类
-        self::autoload();
         #   单例
         if(is_null(self::$instance)){
             $controller = APP_DIR.'\\'._MODULE_.'\controller\\'._CONTROLLER_.'Controller';

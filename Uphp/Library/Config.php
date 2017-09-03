@@ -3,7 +3,7 @@ namespace Uphp;
 /**
  * 配置文件类
  * Class Config
- * @package uphp
+ * @package Uphp
  */
 class Config
 {
@@ -15,7 +15,7 @@ class Config
      * @param $value
      */
     public static function set($key, $value){
-        !is_null(self::$config)?:self::$config = include('/config.php');
+        isset(self::$config) ?: self::$config = include('/config.php');
         if(strpos($key, ".")){
             $keys = explode(".", $key);
             self::$config[$keys[0]][$key[1]] = $value;
@@ -29,7 +29,7 @@ class Config
      * @param $key
      */
     public static function get($key){
-        !is_null(self::$config)?:self::$config = include('/config.php');
+        isset(self::$config) ?: self::$config = include('/config.php');
         if(strpos($key, ".")){
             $keys = explode(".", $key);
             return @self::$config[$keys[0]][$key[1]];

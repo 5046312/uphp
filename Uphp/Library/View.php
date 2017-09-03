@@ -3,7 +3,7 @@ namespace Uphp;
 /**
  * 模板类
  * Class View
- * @package uphp
+ * @package Uphp
  */
 class View
 {

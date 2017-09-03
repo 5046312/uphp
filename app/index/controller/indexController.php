@@ -1,13 +1,13 @@
 <?php
 namespace app\index\controller;
 use app\index\model\userModel;
-use uphp\Config;
-use uphp\Controller;
+use Uphp\Config;
+use Uphp\Controller;
 
 class indexController extends Controller
 {
     public function index(){
-        p(123);
+        p(_MODULE_);
         return "this is index/index";
     }
 

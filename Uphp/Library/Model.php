@@ -3,7 +3,7 @@ namespace Uphp;
 /**
  * Model类
  * Class Model
- * @package uphp
+ * @package Uphp
  */
 class Model
 {

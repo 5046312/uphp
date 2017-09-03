@@ -7,9 +7,9 @@
  */
 function config($key, $value){
     if(isset($value)){
-        \uphp\Config::set($key, $value);
+        \Uphp\Config::set($key, $value);
     }else{
-        return \uphp\Config::get($key);
+        return \Uphp\Config::get($key);
     }
 }
 
@@ -112,7 +112,7 @@ function url($url, $param){
  * @param string $encoding 数据编码
  * @return string
  */
-function xmlEncode($data, $root='uphp', $item='item', $attr='', $id='id', $encoding='utf-8') {
+function xmlEncode($data, $root='Uphp', $item='item', $attr='', $id='id', $encoding='utf-8') {
     if(is_array($attr)){
         $_attr = array();
         foreach ($attr as $key => $value) {

@@ -8,6 +8,9 @@
     <title>异常报告</title>
 </head>
 <body>
-
+<h1><?=$title?></h1>
+<?php if(APP_DEV):?>
+    <h4>错误file: - 行号line:</h4>
+<?php endif;?>
 </body>
 </html>
