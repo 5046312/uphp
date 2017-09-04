@@ -26,11 +26,18 @@ class Uphp
 
     #   实例化
     public static function run(){
-        error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-        # 引用公共函数
+        error_reporting(0);
+
+        #   设置session存放路径
+        session_save_path(SESSION_DIR);
+
+        #   开启session
+        session_start();
+
+        #   引用公共函数
         include(U_DIR.'/Function/Common.php');
 
-        # 公共配置变量
+        #   公共配置变量
         define("_MODULE_", $_GET['m'] ?: START_MODULE);
         define("_CONTROLLER_", $_GET['c'] ?: START_CONTROLLER);
         define("_ACTION_", $_GET['a'] ?: START_ACTION);

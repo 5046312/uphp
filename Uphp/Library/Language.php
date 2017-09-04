@@ -19,7 +19,7 @@ class Language
      * @param $lang
      */
     public static function init($lang){
-        $AllLanguage = include_once("/language.php");
+        $AllLanguage = include_once("./language.php");
         #   判断语言是否存在
         isset($AllLanguage[$lang]) or Exception::error("Language Not Exist");
         self::$language = $AllLanguage[$lang];
@@ -31,7 +31,7 @@ class Language
      * @param $key
      */
     public static function get($key){
-        isset(self::$language) ?: self::init(config("APP_LANGUAGE"));
+        isset(self::$language) ?: self::init(config("APP.LANGUAGE"));
         return self::$language[$key];
     }
 
@@ -41,7 +41,7 @@ class Language
      * @param $value
      */
     public static function set($key, $value){
-        isset(self::$language) or self::init(config("APP_LANGUAGE"));
+        isset(self::$language) or self::init(config("APP.LANGUAGE"));
         self::$language[$key] = $value;
     }
 }

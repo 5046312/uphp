@@ -1,11 +1,11 @@
 <?php
 /**
  * 获取配置或设置配置项
- * @param $key 配置项名称
- * @param $value 设置配置项
+ * @param mixed $key 配置项名称
+ * @param mixed $value 设置配置项
  * @return mixed
  */
-function config($key, $value){
+function config($key, $value = ""){
     if(isset($value)){
         \Uphp\Config::set($key, $value);
     }else{
@@ -162,7 +162,7 @@ function authCode($string, $operation = 'DECODE',$expiry = 0, $key = 'UPHP') {
     # 动态密匙长度，相同的明文会生成不同密文就是依靠动态密匙
     $cKey_length = 4;
     # 密匙
-    $key = md5($key);
+    $key = empty($key) ? md5(config("APP_ENCRYPT_KEY")) : md5($key);
     # 密匙a会参与加解密
     $keyA = md5(substr($key, 0, 16));
     # 密匙b会用来做数据完整性验证
