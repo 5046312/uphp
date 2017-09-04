@@ -40,11 +40,11 @@ class Session
      * @param $id
      * @return string
      */
-    public static function id($id = ""){
-        if(empty($id)){
-            return session_id();
-        }else{
+    public static function id($id = NULL){
+        if(isset($id)){
             return session_id($id);
+        }else{
+            return session_id();
         }
     }
 }
