@@ -7,6 +7,11 @@ namespace Uphp;
  */
 class Session
 {
+    /**
+     * 获取session，支持.进行二维数组查询
+     * @param $key
+     * @return mixed
+     */
     public static function get($key){
         if(strpos($key, ".")){
             $keys = explode(".", $key);

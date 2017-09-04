@@ -9,6 +9,11 @@ class Cookie
 {
     protected static $config;
 
+    /**
+     * 获取Cookie，数组自动转换
+     * @param $key
+     * @return mixed|null
+     */
     public static function get($key){
         if(isset($_COOKIE[$key])){
             $value = $_COOKIE[$key];
@@ -22,6 +27,15 @@ class Cookie
         }
     }
 
+    /**
+     * 设置Cookie，数组自动处理
+     * @param $key
+     * @param $value
+     * @param null $expire 有效时间（从当前时间起)
+     * @param null $path
+     * @param null $domain
+     * @param null $secure
+     */
     public static function set($key, $value, $expire = NULL, $path = NULL, $domain = NULL, $secure = NULL){
         #   载入配置
         isset(self::$config) ?: self::$config = config('cookie');
