@@ -14,7 +14,7 @@ so it's a little difficult to test
 <li>A easy achieving View class</li>
 <li>Route in Controller class</li>
 <li>More database supporting(MongoDb, Redis, Memcache...)</li>
-<li>Better build and debug tools</li>
+<li>Better building and debug tools</li>
 <li>Log generation</li>
 <li>Sql performance query and suggest to better </li>
 </ol>
