@@ -36,15 +36,10 @@ class Session
     }
 
     /**
-     * 查询当前sessionId或查询指定Id的session内容
-     * @param $id
+     * 查询当前sessionId
      * @return string
      */
-    public static function id($id = NULL){
-        if(isset($id)){
-            return session_id($id);
-        }else{
-            return session_id();
-        }
+    public static function id(){
+        return session_id();
     }
 }

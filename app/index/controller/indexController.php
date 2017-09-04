@@ -10,9 +10,7 @@ class indexController extends Controller
 {
     public function index(){
         Session::set("user", 123);
-        Cookie::set("a", ["a"=>1, "b"=>2], 3600);
-        $v = Cookie::get("a");
-        p($v);
+        p(Session::id("6s87gko2r5e9b9jgjti11dms75"));
         return "this is index/index";
     }
 
