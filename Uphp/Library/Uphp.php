@@ -39,20 +39,28 @@ class Uphp
         self::autoload();
 
         #   异常处理
-        set_exception_handler("Uphp\Exception::handler");
-        Exception::error(Language::get("MODULE_NOT_EXIST"));
+        set_exception_handler('Uphp\Exception::handler');
 
         #   判断模块是否存在
-
-        #   判断控制器
-
-        #   判断方法
-
-        #   单例
-        if(is_null(self::$instance)){
-            $controller = APP_DIR.'\\'._MODULE_.'\controller\\'._CONTROLLER_.'Controller';
-            self::$instance = (new $controller)->{_ACTION_}();
+        if(!file_exists(APP_DIR."/"._MODULE_)){
+            Exception::error(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
+        }else{
+            #   判断控制器
+            if(!file_exists(APP_DIR."/"._MODULE_."/controller/"._CONTROLLER_."Controller.php")){
+                Exception::error(Language::get("CONTROLLER_NOT_EXIST").":"._CONTROLLER_);
+            }else{
+                #   单例
+                if(is_null(self::$instance)){
+                    $controller = APP_DIR.'\\'._MODULE_.'\controller\\'._CONTROLLER_.'Controller';
+                    self::$instance = (new $controller);
+                }
+                #   判断方法
+                if(!method_exists(self::$instance, _ACTION_)){
+                    Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
+                }else{
+                    echo self::$instance->{_ACTION_}();
+                }
+            }
         }
-        echo self::$instance;
     }
 }

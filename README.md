@@ -8,6 +8,8 @@ so it's a little difficult to test
 <ol>
 <li>Exception class(Waiting for fix)</li>
 <li>Language class</li>
+<li>Cookie class</li>
+<li>Session class</li>
 <li>Composer supporting</li>
 <li>A easy achieving View class</li>
 <li>Route in Controller class</li>

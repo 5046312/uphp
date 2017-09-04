@@ -10,7 +10,19 @@
 <body>
 <h1><?=$title?></h1>
 <?php if(APP_DEV):?>
-    <h4>错误file: - 行号line:</h4>
+    <h4>有关的错误位置：</h4>
+    <table cellpadding="4">
+        <tr>
+            <td>错误file</td>
+            <td>错误line</td>
+        </tr>
+        <?php foreach($trace as $v):?>
+            <tr>
+                <td><b><?=$v["file"]?></b></td>
+                <td><b><?=$v["line"]?></b></td>
+            </tr>
+        <?php endforeach;?>
+    </table>
 <?php endif;?>
 </body>
 </html>
