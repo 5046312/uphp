@@ -9,8 +9,10 @@ use Uphp\Session;
 class indexController extends Controller
 {
     public function index(){
-        Cookie::set(1,2,"",2);
-        p(_MODULE_);
+        Session::set("user", 123);
+        Cookie::set("a", ["a"=>1, "b"=>2], 3600);
+        $v = Cookie::get("a");
+        p($v);
         return "this is index/index";
     }
 
