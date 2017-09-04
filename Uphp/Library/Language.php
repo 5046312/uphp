@@ -31,7 +31,7 @@ class Language
      * @param $key
      */
     public static function get($key){
-        isset(self::$language) ?: self::init(config("APP.LANGUAGE"));
+        isset(self::$language) ?: self::init(config("app.language"));
         return self::$language[$key];
     }
 
@@ -41,7 +41,7 @@ class Language
      * @param $value
      */
     public static function set($key, $value){
-        isset(self::$language) or self::init(config("APP.LANGUAGE"));
+        isset(self::$language) or self::init(config("app.language"));
         self::$language[$key] = $value;
     }
 }
