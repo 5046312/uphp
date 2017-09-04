@@ -32,7 +32,7 @@ class Config
         isset(self::$config) ?: self::$config = include('/config.php');
         if(strpos($key, ".")){
             $keys = explode(".", $key);
-            return @self::$config[$keys[0]][$key[1]];
+            return @self::$config[$keys[0]][$keys[1]];
         }else{
             return @self::$config[$key];
         }

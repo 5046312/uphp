@@ -12,9 +12,9 @@ so it's a little difficult to test
 <li>Session class</li>
 <li>File class</li>
 <li>Image class(include Captcha)</li>
+<li>Route class</li>
 <li>Composer supporting</li>
 <li>A easy achieving View class</li>
-<li>Route in Controller class</li>
 <li>More database supporting(MongoDb, Redis, Memcache...)</li>
 <li>Better building and debug tools</li>
 <li>Log generation</li>

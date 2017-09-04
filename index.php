@@ -6,7 +6,7 @@ define('UPHP', true); // 确保入口
 define('APP_DEV', true); // 开发阶段
 define('U_DIR', 'Uphp'); // 框架所在目录
 define('APP_DIR', 'app'); // 应用所在目录
-define("SESSION_DIR", "Cache/session"); // session存放位置
+define("SESSION_DIR", "cache/session"); // session存放位置
 
 # 应用设置
 define('START_MODULE', 'index'); // 默认模块

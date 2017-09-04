@@ -5,7 +5,7 @@
  * @param mixed $value 设置配置项
  * @return mixed
  */
-function config($key, $value = ""){
+function config($key, $value = NULL){
     if(isset($value)){
         \Uphp\Config::set($key, $value);
     }else{
