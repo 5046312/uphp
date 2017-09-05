@@ -9,8 +9,6 @@ use Uphp\Session;
 class indexController extends Controller
 {
     public function index(){
-        Session::set("user", 123);
-        p(Session::id("6s87gko2r5e9b9jgjti11dms75"));
         return "this is index/index";
     }
 

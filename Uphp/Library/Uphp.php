@@ -37,13 +37,11 @@ class Uphp
         #   引用公共函数
         include(U_DIR.'/Function/Common.php');
 
-        #   公共配置变量
-        define("_MODULE_", $_GET['m'] ?: START_MODULE);
-        define("_CONTROLLER_", $_GET['c'] ?: START_CONTROLLER);
-        define("_ACTION_", $_GET['a'] ?: START_ACTION);
-
         #   注册自动加载类
         self::autoload();
+
+        #   路由类初始化
+        Route::init();
 
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
