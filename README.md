@@ -10,12 +10,13 @@ so it's a little difficult to test
 <li>Language class</li>
 <li>Cookie class</li>
 <li>Session class</li>
+<li>Route class</li>
+<li>Cache class</li>
 <li>File class</li>
 <li>Image class(include Captcha)</li>
-<li>Route class</li>
 <li>Composer supporting</li>
 <li>A easy achieving View class</li>
-<li>More database supporting(MongoDb, Redis, Memcache...)</li>
+<li>More database supporting(MongoDb...)</li>
 <li>Better building and debug tools</li>
 <li>Log generation</li>
 <li>Sql performance query and suggest to better </li>

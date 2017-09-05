@@ -27,25 +27,18 @@ class Uphp
     #   实例化
     public static function run(){
         error_reporting(0);
-
-        #   设置session存放路径
-        session_save_path(SESSION_DIR);
-
-        #   开启session
-        session_start();
-
         #   引用公共函数
         include(U_DIR.'/Function/Common.php');
-
         #   注册自动加载类
         self::autoload();
-
+        #   设置session存放路径
+        session_save_path(config("session.dir"));
+        #   开启session
+        session_start();
         #   路由类初始化
         Route::init();
-
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
-
         #   判断模块是否存在
         if(!file_exists(APP_DIR."/"._MODULE_)){
             Exception::error(Language::get("MODULE_NOT_EXIST").":"._MODULE_);

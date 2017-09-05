@@ -12,7 +12,7 @@ class indexController extends Controller
         return "this is index/index";
     }
 
-    public function test($abc,$p){
+    public function test($abc, $p){
         echo $abc;
         p($p);
     }

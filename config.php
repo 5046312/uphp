@@ -30,13 +30,21 @@ if(APP_DEV){
             "secure" => "", // 规定是否通过安全的 HTTPS 连接来传输 cookie。
         ],
         #   Session配置
-
+        "session" => [
+            "dir" => "cache/session" // session存放位置
+        ],
         #   模板配置
         "view" => [
             "suffix" => ".html", // 模板文件后缀
             "tag_left" => "@",
             "tag_right" => "@"
-        ]
+        ],
+
+        #   日志配置
+        "log" => [
+            "type" => "file", // 默认日志储存类型
+            "dir" => "cache/log", // 日志文件存放路径
+        ],
     ];
 }else{
     # 生产阶段 环境配置
