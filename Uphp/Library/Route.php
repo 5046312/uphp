@@ -19,24 +19,34 @@ class Route
         #   几种Url形式值得验证（每种情况都分为有index.php和无index.php）
         #   1、已存在路由规则中的、不带$_GET参数  /a/b/c
         #   2、已存在路由规则中的、带$_GET参数   /a/b/c?a=123&m=456
-
         #   3、有/分割前缀、不存在路由规则中的、不带$_GET参数    /index/b/c
         #   4、有/分割前缀、不存在路由规则中的、带$_GET参数 /index/b/c?a=123&m=456
         #   5、无/分割前缀、带$_GET参数   ?a=123&m=456
 
         #   分析当前路由形态
-        $uri = ltrim($_SERVER['REQUEST_URI'], "/index.php");
+
+
+        $uri = trim(str_replace("/index.php", "", $_SERVER['REQUEST_URI']), "/");
         $url = explode("?", $uri);
         if(isset(self::$rule[$url[0]])){
             #   规则存在则使用实例化真实路径
             $route = explode("/", self::$rule[$url[0]]);
         }else{
             #   不存在规则
-
             #   判断是否存在分割/
             if(strpos($uri, "/")){
                 #   存在/
                 $route = explode("/", $url[0]);
+                #   判断个数，若小于3个则用默认控制器或方法填充
+                switch(count($route)){
+                    case 2:
+                        $route[2] = START_ACTION;
+                        break;
+                    case 1:
+                        $route[1] = START_CONTROLLER;
+                        $route[2] = START_ACTION;
+                        break;
+                }
             }else{
                 #   不存在/
                 $route = [
