@@ -4,7 +4,7 @@
  */
 return [
     "GET" => [
-        "a/b/c" => "index/index/index"
+        "a/b/c" => "index/index/index",
 
     ],
 

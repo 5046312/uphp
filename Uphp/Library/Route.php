@@ -23,9 +23,9 @@ class Route
         #   4、有/分割前缀、不存在路由规则中的、带$_GET参数 /index/b/c?a=123&m=456
         #   5、无/分割前缀、带$_GET参数   ?a=123&m=456
 
+        #   6、如果方法可传参数，则/a/b/c/d，d则为对应第一个参数，以此类推
+
         #   分析当前路由形态
-
-
         $uri = trim(str_replace("/index.php", "", $_SERVER['REQUEST_URI']), "/");
         $url = explode("?", $uri);
         if(isset(self::$rule[$url[0]])){
@@ -37,15 +37,22 @@ class Route
             if(strpos($uri, "/")){
                 #   存在/
                 $route = explode("/", $url[0]);
-                #   判断个数，若小于3个则用默认控制器或方法填充
-                switch(count($route)){
-                    case 2:
-                        $route[2] = START_ACTION;
-                        break;
-                    case 1:
-                        $route[1] = START_CONTROLLER;
-                        $route[2] = START_ACTION;
-                        break;
+                #   判断个数，大于三个开始则为对应参数
+                if(count($route) > 3){
+                    for($i=3;$i<count($route);$i++){
+                        $args[] = $route[$i];
+                    }
+                }else{
+                    #   若小于3个则用默认控制器或方法填充
+                    switch(count($route)){
+                        case 2:
+                            $route[2] = START_ACTION;
+                            break;
+                        case 1:
+                            $route[1] = START_CONTROLLER;
+                            $route[2] = START_ACTION;
+                            break;
+                    }
                 }
             }else{
                 #   不存在/
@@ -61,5 +68,6 @@ class Route
         define("_MODULE_", $route[0]);
         define("_CONTROLLER_", $route[1]);
         define("_ACTION_", $route[2]);
+        define("_ARGS_", serialize($args));
     }
 }

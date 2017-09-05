@@ -63,7 +63,7 @@ class Uphp
                 if(!method_exists(self::$instance, _ACTION_)){
                     Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }else{
-                    echo self::$instance->{_ACTION_}();
+                    echo call_user_func_array([self::$instance, _ACTION_], unserialize(_ARGS_));
                 }
             }
         }

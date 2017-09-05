@@ -12,6 +12,11 @@ class indexController extends Controller
         return "this is index/index";
     }
 
+    public function test($abc,$p){
+        echo $abc;
+        p($p);
+    }
+
     public function article(){
         echo 123;
     }
