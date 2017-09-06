@@ -1,5 +1,5 @@
 <?php
-namespace Uphp\Log;
+namespace Uphp\Cache;
 /**
  * Memcached缓存类
  * Class Memcached

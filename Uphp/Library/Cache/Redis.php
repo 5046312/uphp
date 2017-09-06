@@ -1,5 +1,5 @@
 <?php
-namespace Uphp\Log;
+namespace Uphp\Cache;
 /**
  * Redis缓存类
  * Class Redis
