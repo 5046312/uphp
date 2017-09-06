@@ -11,7 +11,7 @@ so it's a little difficult to test
 <li>Cookie class</li>
 <li>Session class</li>
 <li>Route class</li>
-<li>Cache class</li>
+<li>Cache class(File,Redis,Memcached)</li>
 <li>File class</li>
 <li>Image class(include Captcha)</li>
 <li>Composer supporting</li>

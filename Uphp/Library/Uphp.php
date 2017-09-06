@@ -35,10 +35,10 @@ class Uphp
         session_save_path(config("session.dir"));
         #   开启session
         session_start();
-        #   路由类初始化
-        Route::init();
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
+        #   路由类初始化
+        Route::init();
         #   判断模块是否存在
         if(!file_exists(APP_DIR."/"._MODULE_)){
             Exception::error(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
@@ -56,7 +56,7 @@ class Uphp
                 if(!method_exists(self::$instance, _ACTION_)){
                     Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }else{
-                    echo call_user_func_array([self::$instance, _ACTION_], unserialize(_ARGS_));
+                    echo call_user_func_array([self::$instance, _ACTION_], (array)unserialize(_ARGS_));
                 }
             }
         }

@@ -43,6 +43,7 @@ class Route
                         $args[] = $route[$i];
                     }
                 }else{
+                    $args = [];
                     #   若小于3个则用默认控制器或方法填充
                     switch(count($route)){
                         case 2:
