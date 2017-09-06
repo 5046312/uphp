@@ -24,7 +24,7 @@ class File
     }
 
     /**
-     * 添加日志
+     * 追加日志
      * @param $content
      */
     public static function add($content){
@@ -40,10 +40,7 @@ class File
         if(!file_exists(self::$config['dir'])){
             mkdir(self::$config['dir'], 0755, true);
         }
-        #   判断今天是否生成过日志文件
-        if(!file_exists(self::$config['dir']."/".date(self::$config['date_format']))){
-            touch(self::$config['dir']."/".date(self::$config['date_format']).self::$config['suffix']);
-        }
+        #   file_put_contents函数 如果写入文件不存在则自动创建，省去主动判断、创建文件步骤
         #   文件追加日志
         file_put_contents(self::$config['dir']."/".date(self::$config['date_format']).self::$config['suffix'], self::$log.$addContent.PHP_EOL, FILE_APPEND);
         #   清空变量
