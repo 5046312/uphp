@@ -10,7 +10,7 @@ so it's a little difficult to test
 <li>Language class</li>
 <li>Cookie class</li>
 <li>Session class</li>
-<li>Route class</li>
+<li>Route class(Restful)</li>
 <li>Cache class(File,Redis,Memcached)</li>
 <li>File class</li>
 <li>Image class(include Captcha)</li>

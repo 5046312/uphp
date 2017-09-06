@@ -14,10 +14,16 @@ class Uphp
 
     #   自动加载方法
     private static function autoload(){
+//        include_once("/Uphp/Library/Log/File.php");
+//                      "Uphp/Library/Log/File.php"
         spl_autoload_register(function($className){
             # 加载系统类
             if(substr($className, 0, 4) == U_DIR){
-                include_once(U_DIR."/Library/".substr($className, 5).".php");
+                #   框架目录
+                $className = str_replace("\\", "/", $className);
+                $str = U_DIR."/Library/".substr($className, 5).".php";
+                p($str);
+                include_once($str);
             }else{
                 include_once($className.'.php');
             }
@@ -26,7 +32,7 @@ class Uphp
 
     #   实例化
     public static function run(){
-        error_reporting(0);
+//        error_reporting(0);
         #   引用公共函数
         include(U_DIR.'/Function/Common.php');
         #   注册自动加载类

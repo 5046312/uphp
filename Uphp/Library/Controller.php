@@ -8,6 +8,12 @@ namespace Uphp;
 class Controller
 {
     public $viewVariable = []; // 模板变量
+    public $log = []; // 日志记录
+
+    public function __construct()
+    {
+
+    }
 
     /**
      * $this->redirect("index/login", ["a" => "123", "b" => "456"])
@@ -80,5 +86,11 @@ class Controller
                 header("Content-type:text/xml; charset=utf-8");
                 die(xmlEncode($data));
         }
+    }
+
+    public function __destruct()
+    {
+        $log = new Log\File();
+        p($log->config);
     }
 }
