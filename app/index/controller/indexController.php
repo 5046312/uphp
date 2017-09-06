@@ -4,6 +4,7 @@ use app\index\model\userModel;
 use Uphp\Config;
 use Uphp\Controller;
 use Uphp\Cookie;
+use Uphp\Log\File;
 use Uphp\Session;
 
 class indexController extends Controller

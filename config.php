@@ -42,8 +42,14 @@ if(APP_DEV){
 
         #   日志配置
         "log" => [
-            "type" => "file", // 默认日志储存类型
-            "dir" => "cache/log", // 日志文件存放路径
+            "open" => true, // 开启日志
+            "type" => "file",
+            "file" => [
+                "date_format" => "Y-m-d", // 日志文件命名格式
+                "dir" => "cache/log", // 日志文件存放路径
+                "suffix" => ".txt", // 日志文件后缀
+            ],
+
         ],
     ];
 }else{

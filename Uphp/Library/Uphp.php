@@ -14,16 +14,13 @@ class Uphp
 
     #   自动加载方法
     private static function autoload(){
-//        include_once("/Uphp/Library/Log/File.php");
-//                      "Uphp/Library/Log/File.php"
         spl_autoload_register(function($className){
             # 加载系统类
             if(substr($className, 0, 4) == U_DIR){
                 #   框架目录
                 $className = str_replace("\\", "/", $className);
-                $str = U_DIR."/Library/".substr($className, 5).".php";
-                p($str);
-                include_once($str);
+
+                include_once(U_DIR."/Library/".substr($className, 5).".php");
             }else{
                 include_once($className.'.php');
             }
@@ -32,19 +29,23 @@ class Uphp
 
     #   实例化
     public static function run(){
-//        error_reporting(0);
+        error_reporting(1);
         #   引用公共函数
         include(U_DIR.'/Function/Common.php');
         #   注册自动加载类
         self::autoload();
+        #   时区设置
+        date_default_timezone_set(config("app.timezone"));
         #   设置session存放路径
         session_save_path(config("session.dir"));
         #   开启session
         session_start();
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
+
         #   路由类初始化
         Route::init();
+
         #   判断模块是否存在
         if(!file_exists(APP_DIR."/"._MODULE_)){
             Exception::error(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
