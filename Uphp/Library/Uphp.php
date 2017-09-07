@@ -35,13 +35,10 @@ class Uphp
         self::autoload();
         #   时区设置
         date_default_timezone_set(config("app.timezone"));
-        #   设置session存放路径
-        session_save_path(config("session.dir"));
         #   开启session
         session_start();
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
-
         #   日志类初始化（内部判断开启状态）
         $log_config = config('log');
         if($log_config['open']){
@@ -83,7 +80,6 @@ class Uphp
                         $log_args = [
                             "Time:".(microtime()-$startMicroTime) * 1000 . "ms".PHP_EOL."::::End::::".PHP_EOL
                         ];
-                        p($log_args);
                         call_user_func_array([$log_class, "save"], $log_args);
                     }
                 }
