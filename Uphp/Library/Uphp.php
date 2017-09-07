@@ -29,7 +29,6 @@ class Uphp
 
     #   实例化
     public static function run(){
-        error_reporting(1);
         #   引用公共函数
         include(U_DIR.'/Function/Common.php');
         #   注册自动加载类
@@ -42,8 +41,25 @@ class Uphp
         session_start();
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
+
+        #   日志类初始化（内部判断开启状态）
+        $log_config = config('log');
+        if($log_config['open']){
+            $startMicroTime = microtime();
+            switch(strtolower($log_config['type'])){
+                case "file":
+                    $log_class = U_DIR."\\Log\\FILE";
+                    $log_args =  [NULL, $log_config['file']];
+                    break;
+                default:
+                    Exception::error(Language::get("LOG_TYPE_ERROR"));
+            }
+            call_user_func_array([$log_class, "init"], $log_args);
+        }
+
         #   路由类初始化
         Route::init();
+
         #   判断模块是否存在
         if(!file_exists(APP_DIR."/"._MODULE_)){
             Exception::error(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
@@ -62,6 +78,14 @@ class Uphp
                     Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }else{
                     echo call_user_func_array([self::$instance, _ACTION_], (array)unserialize(_ARGS_));
+                    #   结束日志
+                    if(isset($log_class)){
+                        $log_args = [
+                            "Time:".(microtime()-$startMicroTime) * 1000 . "ms".PHP_EOL."::::End::::".PHP_EOL
+                        ];
+                        p($log_args);
+                        call_user_func_array([$log_class, "save"], $log_args);
+                    }
                 }
             }
         }

@@ -13,16 +13,7 @@ class Controller
 
     public function __construct()
     {
-        #   日志
-        $log_config = config('log');
-        if($log_config['open']){
-            switch(strtolower($log_config['type'])){
-                case "file":
-                    $this->logType = "Uphp\\Log\\FILE";
-                    call_user_func([$this->logType, "init"]);
-                    break;
-            }
-        }
+
     }
 
     /**

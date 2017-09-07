@@ -27,6 +27,8 @@ class Exception extends \Exception{
      * @throws Exception
      */
     public static function error($info){
+        #   日志记录
+
         throw new self($info);
     }
 }
