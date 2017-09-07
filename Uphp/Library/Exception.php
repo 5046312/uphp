@@ -14,6 +14,7 @@ class Exception extends \Exception{
     public static function handler($e){
         #   日志
         Log\File::save($e->message);
+        
         if(APP_DEV){
             $title = $e->message;
             $trace = $e->gettrace();
