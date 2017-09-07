@@ -1,7 +1,5 @@
 <?php
 namespace Uphp\Log;
-use Uphp\Exception;
-use Uphp\Language;
 
 /**
  * 文件日志类

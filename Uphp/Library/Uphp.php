@@ -42,10 +42,8 @@ class Uphp
         session_start();
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
-
         #   路由类初始化
         Route::init();
-
         #   判断模块是否存在
         if(!file_exists(APP_DIR."/"._MODULE_)){
             Exception::error(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
@@ -57,7 +55,7 @@ class Uphp
                 #   单例
                 if(is_null(self::$instance)){
                     $controller = APP_DIR.'\\'._MODULE_.'\controller\\'._CONTROLLER_.'Controller';
-                    self::$instance = (new $controller);
+                    self::$instance = new $controller;
                 }
                 #   判断方法
                 if(!method_exists(self::$instance, _ACTION_)){

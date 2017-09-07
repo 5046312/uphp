@@ -14,7 +14,7 @@ class indexController extends Controller
     }
 
     public function test($abc, $p){
-        echo $abc;
+        echo "this is test";
         p($p);
     }
 
