@@ -32,7 +32,9 @@ class File
             mkdir(self::$config['dir'], 0755, true);
             self::$dirExist = true;
         }
-        $txt = "::::Start::::".PHP_EOL.date("Y-m-d H:i:s")."\t".$_SERVER['REQUEST_METHOD']."\t".$_SERVER['REQUEST_URI'];
+        $txt = "::::Start::::".PHP_EOL;
+        $txt .= date("Y-m-d H:i:s")."\t".$_SERVER['REMOTE_ADDR'].PHP_EOL ;
+        $txt .= $_SERVER['REQUEST_METHOD']."\t".$_SERVER['REQUEST_URI'];
         empty($content) ?: $txt .= $content;
         self::save($txt);
     }
@@ -42,18 +44,18 @@ class File
      * @param $content
      */
     public static function add($content){
+        #   无需判断是否开启日志，init和save方法才有写入文件操作，执行前已经在Uphp.php中进行处理
         self::$log .= $content.PHP_EOL;
     }
 
     /**
      * 一次写入到日志文件中
+     * 在操作执行结束后或在异常处理时执行，即日志收尾
      * @param $addContent
      */
     public static function save($addContent){
         #   file_put_contents函数 如果写入文件不存在则自动创建，省去主动判断、创建文件步骤
         #   文件追加日志
         file_put_contents(self::$config['dir']."/".date(self::$config['date_format']).self::$config['suffix'], self::$log.$addContent.PHP_EOL, FILE_APPEND);
-        #   清空变量
-        self::$log = "";
     }
 }

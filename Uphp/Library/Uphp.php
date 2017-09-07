@@ -78,7 +78,7 @@ class Uphp
                     #   结束日志
                     if(isset($log_class)){
                         $log_args = [
-                            "Time:".(microtime()-$startMicroTime) * 1000 . "ms".PHP_EOL."::::End::::".PHP_EOL
+                            "Time:" . round((microtime()-$startMicroTime) * 1000) . "ms".PHP_EOL."::::End::::".PHP_EOL
                         ];
                         call_user_func_array([$log_class, "save"], $log_args);
                     }

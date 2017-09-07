@@ -12,6 +12,8 @@ class Exception extends \Exception{
      * @param $e
      */
     public static function handler($e){
+        #   日志
+        Log\File::save($e->message);
         if(APP_DEV){
             $title = $e->message;
             $trace = $e->gettrace();
@@ -27,8 +29,6 @@ class Exception extends \Exception{
      * @throws Exception
      */
     public static function error($info){
-        #   日志记录
-
         throw new self($info);
     }
 }
