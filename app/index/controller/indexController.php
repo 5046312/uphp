@@ -10,6 +10,7 @@ use Uphp\Session;
 class indexController extends Controller
 {
     public function index(){
+        echo "<img src='public/1.jpg'>";
         return "this is index/index";
     }
 
