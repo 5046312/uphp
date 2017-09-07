@@ -18,7 +18,9 @@ class File
      */
     public static function init($config = NULL){
         self::$config = isset($config) ? $config : config("log.file");
-        self::save(date("Y-m-d H:i:s")."##########################################");
+        $content = date("Y-m-d H:i:s")."##########################################".PHP_EOL;
+        $content .= $_SERVER['REQUEST_METHOD']."\t".$_SERVER['REQUEST_URI'].PHP_EOL;
+        self::save($content);
     }
 
     /**
