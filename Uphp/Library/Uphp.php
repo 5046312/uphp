@@ -7,7 +7,12 @@ namespace Uphp;
  */
 class Uphp
 {
-    public static $instance; // 应用单一入口
+    #   应用对象仓库
+    public static $instance = [
+        'log'=> [
+            'file'=> NULL,
+        ],
+    ];
 
     #   隐藏构造
     private function __construct(){}
@@ -65,16 +70,15 @@ class Uphp
             if(!file_exists(APP_DIR."/"._MODULE_."/controller/"._CONTROLLER_."Controller.php")){
                 Exception::error(Language::get("CONTROLLER_NOT_EXIST").":"._CONTROLLER_);
             }else{
-                #   单例
-                if(is_null(self::$instance)){
-                    $controller = APP_DIR.'\\'._MODULE_.'\controller\\'._CONTROLLER_.'Controller';
-                    self::$instance = new $controller;
-                }
+                #   舍去单例
+                $controllerString = APP_DIR.'\\'._MODULE_.'\controller\\'._CONTROLLER_.'Controller';
+                $controller = new $controllerString;
+
                 #   判断方法
-                if(!method_exists(self::$instance, _ACTION_)){
+                if(!method_exists($controller, _ACTION_)){
                     Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }else{
-                    echo call_user_func_array([self::$instance, _ACTION_], (array)unserialize(_ARGS_));
+                    echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
                     #   结束日志
                     if(isset($log_class)){
                         $log_args = [
