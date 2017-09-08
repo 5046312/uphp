@@ -1,5 +1,5 @@
 <?php
-namespace Uphp\Log;
+namespace Uphp\Log\Driver;
 
 /**
  * 文件日志类

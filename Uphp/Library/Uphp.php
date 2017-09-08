@@ -7,15 +7,17 @@ namespace Uphp;
  */
 class Uphp
 {
-    #   应用对象仓库
+    #   系统仓库
     public static $instance = [
-        'log'=> [
-            'file'=> NULL,
-        ],
-    ];
+        'config'=> null,
 
-    #   隐藏构造
-    private function __construct(){}
+        'class' => [
+            'log'=> [
+                'file'=> NULL,
+            ],
+        ],
+
+    ];
 
     #   自动加载方法
     private static function autoload(){
@@ -24,7 +26,6 @@ class Uphp
             if(substr($className, 0, 4) == U_DIR){
                 #   框架目录
                 $className = str_replace("\\", "/", $className);
-
                 include_once(U_DIR."/Library/".substr($className, 5).".php");
             }else{
                 include_once($className.'.php');
@@ -44,20 +45,7 @@ class Uphp
         session_start();
         #   异常处理
         set_exception_handler('Uphp\Exception::handler');
-        #   日志类初始化（内部判断开启状态）
-        $log_config = config('log');
-        if($log_config['open']){
-            $startMicroTime = microtime();
-            switch(strtolower($log_config['type'])){
-                case "file":
-                    $log_class = U_DIR."\\Log\\FILE";
-                    $log_args =  [NULL, $log_config['file']];
-                    break;
-                default:
-                    Exception::error(Language::get("LOG_TYPE_ERROR"));
-            }
-            call_user_func_array([$log_class, "init"], $log_args);
-        }
+        #   TODO:日志类初始化（内部判断开启状态）
 
         #   路由类初始化
         Route::init();
@@ -79,13 +67,13 @@ class Uphp
                     Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }else{
                     echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
-                    #   结束日志
-                    if(isset($log_class)){
+                    #   TODO:结束日志
+                    /*if(isset($log_class)){
                         $log_args = [
                             "Time:" . round((microtime()-$startMicroTime) * 1000) . "ms".PHP_EOL."::::End::::".PHP_EOL
                         ];
                         call_user_func_array([$log_class, "save"], $log_args);
-                    }
+                    }*/
                 }
             }
         }
