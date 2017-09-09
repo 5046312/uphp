@@ -7,26 +7,25 @@ namespace Uphp;
  */
 class Uphp
 {
-    #   系统仓库
-    public static $instance = [
-        'config'=> null,
+    public $config;
 
-        'class' => [
-            'log'=> [
-                'file'=> NULL,
-            ],
-        ],
+    public function __construct()
+    {
+        #   加载系统配置项，用户配置项将进行覆盖操作
+        $this->config = include("Uphp/config.php");
+        #   注册自动加载类
+        $this->autoload();
+    }
 
-    ];
 
     #   自动加载方法
-    private static function autoload(){
+    private function autoload(){
         spl_autoload_register(function($className){
             # 加载系统类
-            if(substr($className, 0, 4) == U_DIR){
+            if(substr($className, 0, 4) == "Uphp"){
                 #   框架目录
                 $className = str_replace("\\", "/", $className);
-                include_once(U_DIR."/Library/".substr($className, 5).".php");
+                include_once("Uphp/Library/".substr($className, 5).".php");
             }else{
                 include_once($className.'.php');
             }
@@ -34,11 +33,9 @@ class Uphp
     }
 
     #   实例化
-    public static function run(){
-        #   引用公共函数
-        include(U_DIR.'/Function/Common.php');
-        #   注册自动加载类
-        self::autoload();
+    public static function start(){
+
+
         #   时区设置
         date_default_timezone_set(config("app.timezone"));
         #   开启session

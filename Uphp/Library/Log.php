@@ -1,5 +1,5 @@
 <?php
-namespace Uphp\Log;
+namespace Uphp;
 
 class Log
 {

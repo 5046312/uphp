@@ -65,7 +65,7 @@ class Route
             }
         }
 
-        #   公共配置变量
+        #   Url变量
         define("_MODULE_", $route[0]);
         define("_CONTROLLER_", $route[1]);
         define("_ACTION_", $route[2]);

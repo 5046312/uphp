@@ -8,12 +8,16 @@ namespace Uphp;
 class Config
 {
     /**
+     * 全局配置项
+     * @var
+     */
+    public $config;
+    /**
      * 新增或修改配置项
      * @param $key
      * @param $value
      */
     public static function set($key, $value){
-        isset(Uphp::$instance['config']) ?: Uphp::$instance['config'] = include('config.php');
         if(strpos($key, ".")){
             $keys = explode(".", $key);
             Uphp::$instance['config'][$keys[0]][$key[1]] = $value;
@@ -27,7 +31,6 @@ class Config
      * @param $key
      */
     public static function get($key){
-        isset(Uphp::$instance['config']) ?: Uphp::$instance['config'] = include('config.php');
         if(strpos($key, ".")){
             $keys = explode(".", $key);
             return Uphp::$instance['config'][$keys[0]][$keys[1]];
