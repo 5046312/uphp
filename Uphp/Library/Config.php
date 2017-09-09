@@ -11,7 +11,23 @@ class Config
      * 全局配置项
      * @var
      */
-    public $config;
+    public static $config;
+
+    public static function init($config){
+        if(empty(self::$config)){
+            self::$config = $config;
+        }else{
+            #   不为空则从后向前进行覆盖
+            foreach ($config as $area=>$value){
+                foreach ($value as $k=>$v){
+                    self::$config[$area][$k] = $v;
+                }
+            }
+            return self::$config;
+        }
+    }
+
+
     /**
      * 新增或修改配置项
      * @param $key
@@ -20,9 +36,9 @@ class Config
     public static function set($key, $value){
         if(strpos($key, ".")){
             $keys = explode(".", $key);
-            Uphp::$instance['config'][$keys[0]][$key[1]] = $value;
+            self::$config[$keys[0]][$key[1]] = $value;
         }else{
-            Uphp::$instance['config'][$key] = $value;
+            self::$config[$key] = $value;
         }
     }
 
@@ -30,12 +46,16 @@ class Config
      * 获取配置项的值
      * @param $key
      */
-    public static function get($key){
-        if(strpos($key, ".")){
-            $keys = explode(".", $key);
-            return Uphp::$instance['config'][$keys[0]][$keys[1]];
+    public static function get($key = Null){
+        if(isset($key)){
+            if(strpos($key, ".")){
+                $keys = explode(".", $key);
+                return self::$config[$keys[0]][$keys[1]];
+            }else{
+                return self::$config[$key];
+            }
         }else{
-            return Uphp::$instance['config'][$key];
+            return self::$config;
         }
     }
 }

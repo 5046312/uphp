@@ -88,13 +88,13 @@ function url($url, $param){
     }
     switch (count($urlData)){
         case 1:
-            $newUrl = "/index.php?m={$urlData[0]}".$paramData;
+            $newUrl = "/indexControllerController.php?m={$urlData[0]}".$paramData;
             break;
         case 2:
-            $newUrl = "/index.php?m={$urlData[0]}&c={$urlData[1]}".$paramData;
+            $newUrl = "/indexController.phproller.php?m={$urlData[0]}&c={$urlData[1]}".$paramData;
             break;
         case 3:
-            $newUrl = "/index.php?m={$urlData[0]}&c={$urlData[1]}&a={$urlData[2]}".$paramData;
+            $newUrl = "/indexController.phproller.php?m={$urlData[0]}&c={$urlData[1]}&a={$urlData[2]}".$paramData;
             break;
         default:
             return false;

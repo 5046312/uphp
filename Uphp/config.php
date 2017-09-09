@@ -6,6 +6,8 @@ return [
     #   基本配置
     "app" => [
         "debug" => true, // debug开发阶段
+        "default_controller" => "indexController", // 默认控制器
+        "default_method" => "indexController", // 默认方法
         "timezone" => "PRC",
         "language" => "ch", // 默认语言包
         "encrypt_key" => "UPHP", // 加密函数密钥

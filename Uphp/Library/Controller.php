@@ -17,7 +17,7 @@ class Controller
     }
 
     /**
-     * $this->redirect("index/login", ["a" => "123", "b" => "456"])
+     * $this->redirect("indexController/login", ["a" => "123", "b" => "456"])
      * @param $url
      * @param $param
      * @param $refresh
@@ -56,7 +56,7 @@ class Controller
         }
         # 指定输出模板
         if(!empty($tpl)){
-            # $tpl "index" or "hello/asd"
+            # $tpl "indexController" or "hello/asd"
             if(strpos($tpl, "/")){
                 $tpl = explode("/", $tpl);
                 $tplFile = "./".APP_DIR."/".$GLOBALS['Uphp']['urlInfo']['m']."/View/".$tpl[0]."/".$tpl[1].Config::get("view_suffix");

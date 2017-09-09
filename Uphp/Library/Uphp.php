@@ -7,20 +7,26 @@ namespace Uphp;
  */
 class Uphp
 {
-    public $config;
-
+    /**
+     * 核心类构造
+     * Uphp constructor.
+     */
     public function __construct()
     {
-        #   加载系统配置项，用户配置项将进行覆盖操作
-        $this->config = include("Uphp/config.php");
+        define("APP_START_TIME", microtime());
         #   注册自动加载类
         $this->autoload();
+        #   加载系统配置项，用户配置项将按用户全局->分层控制器组->控制器依次加载，依次被覆盖
+        Config::init(include("Uphp/config.php"));
+        #   时区设置
+        date_default_timezone_set(Config::get("app.timezone"));
     }
 
 
     #   自动加载方法
     private function autoload(){
         spl_autoload_register(function($className){
+            p($className);
             # 加载系统类
             if(substr($className, 0, 4) == "Uphp"){
                 #   框架目录
@@ -32,12 +38,8 @@ class Uphp
         });
     }
 
-    #   实例化
-    public static function start(){
-
-
-        #   时区设置
-        date_default_timezone_set(config("app.timezone"));
+    #   启动方法
+    public function start(){
         #   开启session
         session_start();
         #   异常处理
@@ -45,34 +47,39 @@ class Uphp
         #   TODO:日志类初始化（内部判断开启状态）
 
         #   路由类初始化
-        Route::init();
+//        Route::init();
 
-        #   判断模块是否存在
-        if(!file_exists(APP_DIR."/"._MODULE_)){
-            Exception::error(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
-        }else{
-            #   判断控制器
-            if(!file_exists(APP_DIR."/"._MODULE_."/controller/"._CONTROLLER_."Controller.php")){
-                Exception::error(Language::get("CONTROLLER_NOT_EXIST").":"._CONTROLLER_);
-            }else{
-                #   舍去单例
-                $controllerString = APP_DIR.'\\'._MODULE_.'\controller\\'._CONTROLLER_.'Controller';
-                $controller = new $controllerString;
+        $this->callRequestMethod();
+    }
 
-                #   判断方法
-                if(!method_exists($controller, _ACTION_)){
-                    Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
-                }else{
-                    echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
-                    #   TODO:结束日志
-                    /*if(isset($log_class)){
-                        $log_args = [
-                            "Time:" . round((microtime()-$startMicroTime) * 1000) . "ms".PHP_EOL."::::End::::".PHP_EOL
-                        ];
-                        call_user_func_array([$log_class, "save"], $log_args);
-                    }*/
-                }
-            }
-        }
+    /**
+     * 调用请求
+     */
+    private function callRequestMethod(){
+        #   获取应用所在文件路径
+        $app_dir = config("dir.application");
+        #   判断控制器（异常放入autoload中抛出，省去判断文件步骤）
+//        Exception::error(Language::get("CONTROLLER_NOT_EXIST").":"._CONTROLLER_);
+//        Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
+        #   舍去单例，直接实例化、调用
+        //  测试多种控制器方式
+        //  单层、多层
+        //  indexController、admin/indexController
+        //  index            admin\index（/需要转换为namespace中\）
+//        define("_CONTROLLER_", "index");
+        define("_CONTROLLER_", "admin\index");
+        define("_ACTION_", "index");
+        define("_ARGS_", serialize(["index"]));
+
+        $controllerString = $app_dir."\Controller\\"._CONTROLLER_.'Controller';
+        $controller = new $controllerString;
+        echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
+        #   TODO:结束日志
+        /*if(isset($log_class)){
+            $log_args = [
+                "Time:" . round((microtime() - APP_START_TIME) * 1000) . "ms".PHP_EOL."::::End::::".PHP_EOL
+            ];
+            call_user_func_array([$log_class, "save"], $log_args);
+        }*/
     }
 }

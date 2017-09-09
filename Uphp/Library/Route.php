@@ -19,14 +19,14 @@ class Route
         #   几种Url形式值得验证（每种情况都分为有index.php和无index.php）
         #   1、已存在路由规则中的、不带$_GET参数  /a/b/c
         #   2、已存在路由规则中的、带$_GET参数   /a/b/c?a=123&m=456
-        #   3、有/分割前缀、不存在路由规则中的、不带$_GET参数    /index/b/c
-        #   4、有/分割前缀、不存在路由规则中的、带$_GET参数 /index/b/c?a=123&m=456
+        #   3、有/分割前缀、不存在路由规则中的、不带$_GET参数    /indexController/b/c
+        #   4、有/分割前缀、不存在路由规则中的、带$_GET参数 /indexController/b/c?a=123&m=456
         #   5、无/分割前缀、带$_GET参数   ?a=123&m=456
 
         #   6、如果方法可传参数，则/a/b/c/d，d则为对应第一个参数，以此类推
 
         #   分析当前路由形态
-        $uri = trim(str_replace("/index.php", "", $_SERVER['REQUEST_URI']), "/");
+        $uri = trim(str_replace("/indexControllerController.php", "", $_SERVER['REQUEST_URI']), "/");
         $url = explode("?", $uri);
         if(isset(self::$rule[$url[0]])){
             #   规则存在则使用实例化真实路径

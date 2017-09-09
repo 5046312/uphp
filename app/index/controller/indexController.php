@@ -11,7 +11,7 @@ class indexController extends Controller
 {
     public function index(){
         echo "<img src='public/1.jpg'>";
-        return "this is index/index";
+        return "this is indexController/indexController";
     }
 
     public function test($abc, $p){
