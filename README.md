@@ -1,8 +1,8 @@
 # uphp 
-a simple PHP framework, too simple too young....hope u give me a thumbs up
+一个年轻的轻量级框架
 ## version collect
-2017-9 first version is a basic framework without exceptional function...
-so it's a little difficult to test
+2017-9-1  初代版本功能较少，调试起来可能有些麻烦<br>
+2017-9-11 基本实现路由的访问来调用控制器方法
 
 ##  TODO:
 <ol>
