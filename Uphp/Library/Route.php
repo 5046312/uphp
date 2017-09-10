@@ -29,6 +29,7 @@ class Route
         #   去除/index.php，去除最后可能出现的/
         $uri = trim(str_replace("/index.php", "", $_SERVER['REQUEST_URI']), "/");
         $uriArr = explode("?", $uri);
+        $argArr = [];
         #   判断是否定义了路由规则
         if(isset(self::$rule[$uriArr[0]])){
             #   规则存在则使用实例化真实路径
@@ -40,9 +41,9 @@ class Route
                 if(config('url.both_type')){
                     #   开启兼容模式
                     $route = [
-                        $_GET['m'] ?: config("app.default_module"),
-                        $_GET['c'] ?: config("app.default_controller"),
-                        $_GET['a'] ?: config("app.default_action"),
+                        isset($_GET['m']) ? $_GET['m'] : config("app.default_module"),
+                        isset($_GET['c']) ? $_GET['c'] : config("app.default_controller"),
+                        isset($_GET['a']) ? $_GET['a'] : config("app.default_action"),
                     ];
                 }else{
                     #   未开启兼容，用$_GET无法定位控制器则调用默认控制器方法
@@ -56,21 +57,17 @@ class Route
                 $route = explode("/", $uriArr[0]);
                 if(isset($route[1])){
                     isset($route[2]) ?: $route[2] = config("app.default_action");
+                    $argArr = array_slice($route, 3);
                 }else{
                     $route[1] = config("app.default_controller");
                     $route[2] = config("app.default_action");
                 }
-                // todo:从第4位开始则为参数项，取出后进行串行化处理放入常量
             }
-            p($route);
-            die;
-
             #   Url变量
             define("_MODULE_", $route[0]);
             define("_CONTROLLER_", $route[1]);
-            define("_METHOD_", $route[2]);
-            define("_ARGS_", serialize($args));
-
+            define("_ACTION_", $route[2]);
+            define("_ARGS_", serialize($argArr));
         }
     }
 }

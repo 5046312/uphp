@@ -65,12 +65,7 @@ class Uphp
         //  单层、多层
         //  indexController、admin/indexController
         //  index            admin\index（/需要转换为namespace中\）
-//        define("_CONTROLLER_", "index");
-        define("_CONTROLLER_", "admin\index");
-        define("_ACTION_", "index");
-        define("_ARGS_", serialize(["index"]));
-
-        $controllerString = $app_dir."\Controller\\"._CONTROLLER_.'Controller';
+        $controllerString = $app_dir."\Controller\\"._MODULE_."\\"._CONTROLLER_.'Controller';
         $controller = new $controllerString;
         echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
         #   TODO:结束日志
