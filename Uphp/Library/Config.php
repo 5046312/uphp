@@ -20,7 +20,9 @@ class Config
             #   不为空则从后向前进行覆盖
             foreach ($config as $area=>$value){
                 foreach ($value as $k=>$v){
-                    self::$config[$area][$k] = $v;
+                    if(!empty($v)){
+                        self::$config[$area][$k] = $v;
+                    }
                 }
             }
             return self::$config;

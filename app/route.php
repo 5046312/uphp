@@ -4,7 +4,9 @@
  */
 return [
     "GET" => [
-        "a/b/c" => "indexController/indexController/indexController",
+        #访问URL     定位到控制器方法
+        "a/b" => "index/index/index",
+        "a/b/{c}" => ["index/index/index", ["c"=>"[0-9]+",]],
     ],
 
     "POST" => [

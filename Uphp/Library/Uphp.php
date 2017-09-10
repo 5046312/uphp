@@ -26,7 +26,6 @@ class Uphp
     #   自动加载方法
     private function autoload(){
         spl_autoload_register(function($className){
-            p($className);
             # 加载系统类
             if(substr($className, 0, 4) == "Uphp"){
                 #   框架目录
@@ -47,7 +46,7 @@ class Uphp
         #   TODO:日志类初始化（内部判断开启状态）
 
         #   路由类初始化
-//        Route::init();
+        Route::init();
 
         $this->callRequestMethod();
     }
