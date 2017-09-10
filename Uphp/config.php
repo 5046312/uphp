@@ -6,8 +6,9 @@ return [
     #   基本配置
     "app" => [
         "debug" => true, // debug开发阶段
-        "default_controller" => "indexController", // 默认控制器
-        "default_method" => "index", // 默认方法
+        "default_module" => "index", // 默认控制器
+        "default_controller" => "index", // 默认控制器
+        "default_action" => "index", // 默认方法
         "timezone" => "PRC",
         "language" => "ch", // 默认语言包
         "encrypt_key" => "UPHP", // 加密函数密钥
@@ -17,6 +18,13 @@ return [
     "dir" => [
         "application" => "app", //  应用所在目录
         "framework" => "Uphp",  //  框架所在目录
+    ],
+
+    #   URL设置
+    "url" => [
+        "must_prefix" => true, // 强制访问后缀（路由规则中无需添加）
+        "prefix" => ".html", // url后缀
+        "both_type" => true, // 两种路由形式是否同时开启（false时只支持/分割形式，不支持?m=index&c=index&a=index形式，注意：两种模式并不能混用有/则无法用get定位）
     ],
 
     #   数据库配置
