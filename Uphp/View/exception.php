@@ -8,21 +8,27 @@
     <title>异常报告</title>
 </head>
 <body>
-<h1><?=$title?></h1>
+<?php
+
+?>
+<h1><?=$error['title']?></h1>
 <?php if(config("app.debug")):?>
-    <h4>有关的错误位置：</h4>
+    <h3><?=$error['file']?> : <?=$error['line']?></h3>
+    <h4>trace错误追踪：</h4>
     <table cellpadding="4">
         <tr>
             <td>错误file</td>
             <td>错误line</td>
         </tr>
-        <?php foreach($trace as $v):?>
+        <?php foreach($error['trace'] as $v):?>
             <tr>
-                <td><b><?=$v["file"]?></b></td>
-                <td><b><?=$v["line"]?></b></td>
+                <td><b><?=$v?></b></td>
             </tr>
         <?php endforeach;?>
     </table>
+    <div>
+        <?=$error['trace']?>
+    </div>
 <?php endif;?>
 </body>
 </html>
