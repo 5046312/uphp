@@ -15,17 +15,6 @@
 <?php if(config("app.debug")):?>
     <h3><?=$error['file']?> : <?=$error['line']?></h3>
     <h4>trace错误追踪：</h4>
-    <table cellpadding="4">
-        <tr>
-            <td>错误file</td>
-            <td>错误line</td>
-        </tr>
-        <?php foreach($error['trace'] as $v):?>
-            <tr>
-                <td><b><?=$v?></b></td>
-            </tr>
-        <?php endforeach;?>
-    </table>
     <div>
         <?=$error['trace']?>
     </div>

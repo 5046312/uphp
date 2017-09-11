@@ -7,6 +7,10 @@ namespace Uphp;
  */
 class Error extends \Exception{
 
+    /**
+     * 异常处理
+     * @param $e
+     */
     public static function exceptionHandler($e){
         #   日志
 
@@ -14,22 +18,33 @@ class Error extends \Exception{
         $error = [];
         if(config("app.debug")){
             $error['title'] = $e->getMessage();
-            $error['trace'] = $e->getTraceAsString();
+            $error['trace'] = nl2br($e->getTraceAsString());
             $trace = $e->getTrace();
+            $error['file'] = $trace[0]['file'];
+            $error['line'] = $trace[0]['line'];
+            self::trace($error);
         }else{
-            $title = Language::get('SYSTEM_BUSY');
+            $error['title'] = Language::get('SYSTEM_BUSY');
+            self::error($error);
         }
-
-        p($trace);
-
-
-
     }
 
+    /**
+     * 错误处理
+     * @param $no
+     * @param $str
+     * @param $file
+     * @param $line
+     */
     public static function errorHandler($no, $str, $file, $line){
 
     }
 
+    /**
+     * 抛出异常
+     * @param $info
+     * @throws Error
+     */
     public static function exception($info){
         throw new self($info);
     }
@@ -42,7 +57,7 @@ class Error extends \Exception{
     }
 
     /**
-     * 显示完成trace
+     * 显示完整trace
      */
     public static function trace($error){
         include("Uphp/View/exception.php");
@@ -51,7 +66,7 @@ class Error extends \Exception{
     /**
      * 只显示系统错误，不显示具体错误原因和trace
      */
-    public static function error(){
+    public static function error($error){
 
     }
 
