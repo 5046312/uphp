@@ -7,39 +7,26 @@ namespace Uphp;
  */
 class Error extends \Exception{
 
-    public static function ExceptionHandler($e){
+    public static function exceptionHandler($e){
         #   日志
 
         #   异常报告在开发模式下显示更完全
         $error = [];
         if(config("app.debug")){
-            $error['title'] = $e->message;
-            $trace = $e->getTraceAsString();
+            $error['title'] = $e->getMessage();
+            $error['trace'] = $e->getTraceAsString();
+            $trace = $e->getTrace();
         }else{
             $title = Language::get('SYSTEM_BUSY');
         }
 
-
-        $error = array();
-        $error['message']   =   $e->getMessage();
-        $trace              =   $e->getTrace();
-        if('E'==$trace[0]['function']) {
-            $error['file']  =   $trace[0]['file'];
-            $error['line']  =   $trace[0]['line'];
-        }else{
-            $error['file']  =   $e->getFile();
-            $error['line']  =   $e->getLine();
-        }
-        $error['trace']     =   $e->getTraceAsString();
-
-        p($error);
+        p($trace);
 
 
 
-        include("Uphp/View/exception.php");
     }
 
-    public static function ErrorHandler($no, $str, $file, $line){
+    public static function errorHandler($no, $str, $file, $line){
 
     }
 
@@ -57,8 +44,8 @@ class Error extends \Exception{
     /**
      * 显示完成trace
      */
-    public static function trace(){
-
+    public static function trace($error){
+        include("Uphp/View/exception.php");
     }
 
     /**
@@ -66,5 +53,15 @@ class Error extends \Exception{
      */
     public static function error(){
 
+    }
+
+    /**
+     * fatal error 处理
+     */
+    public static function fatalHandler(){
+        #   清空缓存区
+        /*ob_clean();
+        $e = error_get_last();
+        p($e);*/
     }
 }

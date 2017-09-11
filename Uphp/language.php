@@ -5,7 +5,7 @@
 return [
     "ch" => [
         "SYSTEM_BUSY" => "系统繁忙，稍后再试",
-        "MODULE_NOT_EXIST" => "控制器不存在",
+        "MODULE_NOT_EXIST" => "模块不存在",
         "CONTROLLER_NOT_EXIST" => "控制器不存在",
         "ACTION_NOT_EXIST" => "控制器方法不存在",
 
