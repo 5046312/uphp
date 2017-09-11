@@ -6,4 +6,8 @@ class indexController extends Controller
     public function index(){
         return "this is admin/indexController/index";
     }
+
+    private function pr(){
+        echo "pr";
+    }
 }

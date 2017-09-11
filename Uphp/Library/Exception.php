@@ -13,15 +13,15 @@ class Exception extends \Exception{
      */
     public static function handler($e){
         #   日志
-        Log\File::save($e->message);
 
-        if(APP_DEV){
+        #   异常报告在开发模式下显示更完全
+        if(config("app.debug")){
             $title = $e->message;
             $trace = $e->gettrace();
         }else{
             $title = Language::get('SYSTEM_BUSY');
         }
-        include(U_DIR."/View/exception.php");
+        include("Uphp/View/exception.php");
     }
 
     /**

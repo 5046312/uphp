@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1><?=$title?></h1>
-<?php if(APP_DEV):?>
+<?php if(config("app.debug")):?>
     <h4>有关的错误位置：</h4>
     <table cellpadding="4">
         <tr>

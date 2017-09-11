@@ -88,4 +88,8 @@ class Controller
                 die(xmlEncode($data));
         }
     }
+
+    public function __call($method, $arguments){
+        Exception::error(Language::get("ACTION_NOT_EXIST").":".$method);
+    }
 }

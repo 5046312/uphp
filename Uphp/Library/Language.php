@@ -15,33 +15,69 @@ class Language
     public static $language;
 
     /**
-     * 选择使用的语言
-     * @param $lang
+     * 当前默认语言包
+     * @var
      */
-    public static function init($lang){
-        $AllLanguage = include_once("./language.php");
-        #   判断语言是否存在
-        isset($AllLanguage[$lang]) or Exception::error("Language Not Exist");
-        self::$language = $AllLanguage[$lang];
+    public static $current;
+
+    /**
+     * 语言初始化
+     */
+    public static function init(){
+        if(empty(self::$language)){
+            #   先加载框架默认语言包
+            self::$language = include("Uphp/language.php");
+            #   后加载应用默认语言包
+            #   合并语言包，从后向前进行覆盖
+            if(file_exists(config("dir.application")."/Language/language.php")){
+                $appLanguage = include(config("dir.application")."/Language/language.php");
+                foreach ($appLanguage as $lang=>$value){
+                    foreach ($value as $k=>$v){
+                        if(!empty($v)){
+                            self::$language[$lang][$k] = $v;
+                        }
+                    }
+                }
+            }
+        }
+        return self::$language;
+    }
+
+    /**
+     * 加载用户自定义语言包
+     * @param $fileName 语言包文件名
+     * @return array
+     */
+    public static function load($fileName){
+        if(file_exists(config("dir.application")."/Language/{$fileName}.php")){
+            #   引入自定义语言包不需要再次进行覆盖
+            $load = include(config("dir.application")."/Language/{$fileName}.php");
+            self::$language = array_merge(self::init(), $load);
+        }else{
+            #   自定义语言包不存在
+        }
+        return self::$language;
     }
 
     /**
      * 获取当前语言的对应数组值
      * 如果没有调用init，则默认使用配置项中的语言
      * @param $key
+     * @param $lang 选择使用的语言包，默认使用系统配置中的默认语言包
      */
-    public static function get($key){
-        isset(self::$language) ?: self::init(config("app.language"));
-        return self::$language[$key];
+    public static function get($key, $lang = NULL){
+        isset($lang) ?: $lang = config("app.language");
+        return self::init()[$lang][$key];
     }
 
     /**
      * 同获取
      * @param $key
      * @param $value
+     * @param $lang
      */
-    public static function set($key, $value){
-        isset(self::$language) or self::init(config("app.language"));
-        self::$language[$key] = $value;
+    public static function set($key, $value, $lang = NULL){
+        isset($lang) ?: $lang = config("app.language");
+        self::init()[$lang][$key] = $value;
     }
 }

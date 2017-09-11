@@ -16,7 +16,7 @@ class Uphp
         define("APP_START_TIME", microtime());
         #   注册自动加载类
         $this->autoload();
-        #   加载系统配置项，用户配置项将按用户全局->分层控制器组->控制器依次加载，依次被覆盖
+        #   加载系统配置项，用户配置项将按用户全局->模块->控制器依次加载，依次被覆盖
         Config::init(include("Uphp/config.php"));
         #   时区设置
         date_default_timezone_set(Config::get("app.timezone"));
@@ -60,12 +60,8 @@ class Uphp
         #   判断控制器（异常放入autoload中抛出，省去判断文件步骤）
 //        Exception::error(Language::get("CONTROLLER_NOT_EXIST").":"._CONTROLLER_);
 //        Exception::error(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
-        #   舍去单例，直接实例化、调用
-        //  测试多种控制器方式
-        //  单层、多层
-        //  indexController、admin/indexController
-        //  index            admin\index（/需要转换为namespace中\）
-        $controllerString = $app_dir."\Controller\\"._MODULE_."\\"._CONTROLLER_.'Controller';
+        #   舍去单例，直接实例化
+        $controllerString = $app_dir."\\Controller\\"._MODULE_."\\"._CONTROLLER_.'Controller';
         $controller = new $controllerString;
         echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
         #   TODO:结束日志

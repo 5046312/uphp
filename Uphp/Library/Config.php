@@ -25,8 +25,8 @@ class Config
                     }
                 }
             }
-            return self::$config;
         }
+        return self::$config;
     }
 
 
