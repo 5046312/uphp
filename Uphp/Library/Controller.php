@@ -90,6 +90,6 @@ class Controller
     }
 
     public function __call($method, $arguments){
-        Exception::error(Language::get("ACTION_NOT_EXIST").":".$method);
+        Error::exception(Language::get("ACTION_NOT_EXIST").":".$method);
     }
 }

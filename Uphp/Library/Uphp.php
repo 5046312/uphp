@@ -42,7 +42,9 @@ class Uphp
         #   开启session
         session_start();
         #   异常处理
-        set_exception_handler('Uphp\Exception::handler');
+        set_exception_handler('Uphp\Error::ExceptionHandler');
+        #   错误处理
+        set_error_handler('Uphp\Error::ErrorHandler');
         #   TODO:日志类初始化（内部判断开启状态）
 
         #   路由类初始化

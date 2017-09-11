@@ -1,17 +1,13 @@
 <?php
 namespace Uphp;
 /**
- * 异常类
- * Class Exception
+ * 异常、错误类
+ * Class Error
  * @package Uphp
  */
-class Exception extends \Exception{
+class Error extends \Exception{
 
-    /**
-     * 全局异常处理
-     * @param $e
-     */
-    public static function handler($e){
+    public static function ExceptionHandler($e){
         #   日志
 
         #   异常报告在开发模式下显示更完全
@@ -24,12 +20,18 @@ class Exception extends \Exception{
         include("Uphp/View/exception.php");
     }
 
-    /**
-     * 异常抛出
-     * @param $info
-     * @throws Exception
-     */
-    public static function error($info){
+    public static function ErrorHandler($no, $str, $file, $line){
+
+    }
+
+    public static function exception($info){
         throw new self($info);
+    }
+
+    /**
+     * 错误日志管理
+     */
+    private static function errLog(){
+
     }
 }
