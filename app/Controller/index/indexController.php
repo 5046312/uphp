@@ -6,8 +6,10 @@ class indexController
 {
     public function index(){
         #   index/index/index()
-        Log::init();
         echo "index/index/index";
+
+        $excel = new \PHPExcel();
+        p($excel);
     }
 
     public function test($a, $b){

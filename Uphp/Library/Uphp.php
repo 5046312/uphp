@@ -40,6 +40,8 @@ class Uphp
             }
             include_once($dir);
         });
+        #   引入composer自动加载文件
+        include("vendor/autoload.php");
     }
 
     #   启动方法
@@ -56,6 +58,7 @@ class Uphp
         #   日志类初始化（内部判断开启状态）
         #   日志首行在请求时就写入
         Log::startLine();
+
         #   路由类初始化
         Route::init();
         $this->callRequestMethod();
@@ -65,6 +68,7 @@ class Uphp
      * 调用请求
      */
     private function callRequestMethod(){
+
         #   判断控制器（异常放入autoload中抛出，省去判断文件步骤）
         #   舍去单例，直接实例化
         #   优先判断模块是否存在
