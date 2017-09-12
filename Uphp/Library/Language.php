@@ -26,11 +26,11 @@ class Language
     public static function init(){
         if(empty(self::$language)){
             #   先加载框架默认语言包
-            self::$language = include("Uphp/language.php");
+            self::$language = include(UPHP_DIR."/language.php");
             #   后加载应用默认语言包
             #   合并语言包，从后向前进行覆盖
-            if(file_exists(config("dir.application")."/Language/language.php")){
-                $appLanguage = include(config("dir.application")."/Language/language.php");
+            if(file_exists(APP_DIR."/Language/language.php")){
+                $appLanguage = include(APP_DIR."/Language/language.php");
                 foreach ($appLanguage as $lang=>$value){
                     foreach ($value as $k=>$v){
                         if(!empty($v)){
@@ -49,9 +49,9 @@ class Language
      * @return array
      */
     public static function load($fileName){
-        if(file_exists(config("dir.application")."/Language/{$fileName}.php")){
+        if(file_exists(APP_DIR."/Language/{$fileName}.php")){
             #   引入自定义语言包不需要再次进行覆盖
-            $load = include(config("dir.application")."/Language/{$fileName}.php");
+            $load = include(APP_DIR."/Language/{$fileName}.php");
             self::$language = array_merge(self::init(), $load);
         }else{
             #   自定义语言包不存在
