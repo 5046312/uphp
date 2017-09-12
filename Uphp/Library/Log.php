@@ -3,42 +3,28 @@ namespace Uphp;
 
 class Log
 {
-    public function test(){
-        $log_config = config('log');
-        if($log_config['open']){
-            $startMicroTime = microtime();
-            switch(strtolower($log_config['type'])){
-                case "file":
-                    $log_class = U_DIR."\\Log\\FILE";
-                    $log_args =  [NULL, $log_config['file']];
-                    break;
-                default:
-                    Exception::error(Language::get("LOG_TYPE_ERROR"));
-            }
-            call_user_func_array([$log_class, "init"], $log_args);
-        }
-    }
-
     public static $config;
     public static $currentType; // 当前日志类型
     public static $currentDriver; // 当前日志驱动
     public static $content; // 临时存放，最后写入文件
     /**
      * 初始化Log类，载入全部日志配置文件
+     * @param $type null 传入使用类型，默认使用系统配置中定义的类型
      */
-    public static function init(){
+    public static function init($type = NULL){
         empty(self::$config) AND self::$config = config("log");
+        #   只有开启状态才会进行实例化等操作
         if(self::isOpen()){
-            self::$currentType = self::$config['type'];
+            #   设置日志类型，
+            self::$currentType = isset($type) ? strtolower($type) : strtolower(self::$config['type']);
             #   查找日志驱动文件是否存在，验证配置项中的日志类型是否正确
-            $driverDir = UPHP_DIR."\\Library\\Driver\\Log\\".ucfirst(self::$currentType);
+            $driverDir = UPHP_DIR."\\Library\\Driver\\Log\\".ucfirst(strtolower(self::$currentType));
             if(file_exists($driverDir.".php")){
                 #   直接引入，省去了autoload判断的步骤
                 include($driverDir.".php");
-                $driverClass = UPHP_DIR."\\Driver\\Log\\".ucfirst(self::$currentType);
-                self::$currentDriver = new $driverClass;
+                $driverClass = UPHP_DIR."\\Driver\\Log\\".ucfirst(strtolower(self::$currentType));
+                self::$currentDriver = new $driverClass(self::$config[self::$currentType]);
             }else{
-                p($driverDir);
                 Error::exception(Language::get("LOG_TYPE_ERROR"));
             }
         }
@@ -68,5 +54,35 @@ class Log
     private static function isOpen(){
         return self::$config['open'];
 //        self::$config['open'] == true ? (return 123) : return 132312231 ;
+    }
+
+    /**
+     * 单条日志
+     * 开始
+     * @param null $line
+     * @param null $type
+     */
+    public static function startLine($line = NULL, $type = NULL){
+        isset(self::$config) OR self::init($type);
+        $content = isset($line) ? $line : "";
+
+    }
+
+    /**
+     * 单条日志
+     * 收尾
+     * @param null $line
+     */
+    public static function endLine($line = NULL){
+
+    }
+
+    /**
+     * File类型日志特有的分析、统计功能
+     */
+    public static function analyse(){
+        if(self::$currentDriver == "file"){
+
+        }
     }
 }

@@ -54,8 +54,9 @@ class Uphp
         register_shutdown_function(UPHP_DIR.'\Error::fatalHandler');
 
 
-        #   TODO:日志类初始化（内部判断开启状态）
-
+        #   日志类初始化（内部判断开启状态）
+        #   日志首行在请求时就写入
+        Log::startLine();
         #   路由类初始化
         Route::init();
 
@@ -87,11 +88,6 @@ class Uphp
         }
 
         #   TODO:结束日志
-        /*if(isset($log_class)){
-            $log_args = [
-                "Time:" . round((microtime() - APP_START_TIME) * 1000) . "ms".PHP_EOL."::::End::::".PHP_EOL
-            ];
-            call_user_func_array([$log_class, "save"], $log_args);
-        }*/
+
     }
 }

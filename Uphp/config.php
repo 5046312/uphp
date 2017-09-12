@@ -57,6 +57,7 @@ return [
             "date_format" => "Y-m-d", // 日志文件命名格式
             "dir" => "cache/log", // 日志文件存放路径
             "suffix" => ".txt", // 日志文件后缀
+            "page_size" => "5", // 单篇日志最大写入条数（一次请求算一条）
         ],
     ],
 ];
