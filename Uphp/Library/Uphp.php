@@ -38,7 +38,7 @@ class Uphp
                     $dir = $className.'.php';
                     break;
             }
-            include($dir);
+            include_once $dir;
         });
     }
 
@@ -57,6 +57,7 @@ class Uphp
         #   日志类初始化（内部判断开启状态）
         #   日志首行在请求时就写入
         Log::startLine();
+        Log::endLine();
         #   路由类初始化
         Route::init();
 

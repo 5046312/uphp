@@ -20,8 +20,6 @@ class Log
             #   查找日志驱动文件是否存在，验证配置项中的日志类型是否正确
             $driverDir = UPHP_DIR."\\Library\\Driver\\Log\\".ucfirst(strtolower(self::$currentType));
             if(file_exists($driverDir.".php")){
-                #   直接引入，省去了autoload判断的步骤
-                include($driverDir.".php");
                 $driverClass = UPHP_DIR."\\Driver\\Log\\".ucfirst(strtolower(self::$currentType));
                 self::$currentDriver = new $driverClass(self::$config[self::$currentType]);
             }else{
@@ -36,16 +34,7 @@ class Log
      * @param $content
      */
     public static function add($content){
-
-    }
-
-    /**
-     * 日志结尾保存
-     * 一次将临时变量存放的内容写入文件
-     * @param null $content
-     */
-    public static function save($content = NULL){
-
+        self::$currentDriver->add($content);
     }
 
     /**
@@ -53,28 +42,37 @@ class Log
      */
     private static function isOpen(){
         return self::$config['open'];
-//        self::$config['open'] == true ? (return 123) : return 132312231 ;
     }
 
     /**
      * 单条日志
      * 开始
-     * @param null $line
-     * @param null $type
+     * @param null $type 日志类型
      */
-    public static function startLine($line = NULL, $type = NULL){
+    public static function startLine($type = NULL){
         isset(self::$config) OR self::init($type);
-        $content = isset($line) ? $line : "";
-
+        if(self::isOpen()) {
+            self::add("::::Start::::");
+            self::add(date("Y-m-d H:i:s") . "\t" . $_SERVER['REMOTE_ADDR']);
+            self::add($_SERVER['REQUEST_METHOD'] . "\t" . $_SERVER['REQUEST_URI']);
+        }
     }
 
     /**
      * 单条日志
      * 收尾
-     * @param null $line
+     * @param null $content 发布一句内容后结束
      */
-    public static function endLine($line = NULL){
-
+    public static function endLine($content = NULL){
+        if(self::isOpen()){
+            if(isset($content)){
+                self::add($content);
+            }
+            $filesNum = count(get_included_files());
+            self::add("Time:".round((microtime()-APP_START_TIME) * 1000)."ms"."\t"."File:".$filesNum);
+            self::add(":::::End:::::");
+            self::$currentDriver->save();
+        }
     }
 
     /**

@@ -5,7 +5,7 @@ namespace Uphp\Driver\Log;
  * 文件日志类
  * 将数组的每个值单独成行，写入日志中
  * Class File
- * @package Uphp\Log
+ * @package Uphp\Driver\Log
  */
 class File
 {
@@ -25,9 +25,6 @@ class File
         if(!file_exists($this->config['dir'])){
             mkdir($this->config['dir'], 0755, true);
         }
-        $this->add("::::Start::::");
-        $this->add(date("Y-m-d H:i:s")."\t".$_SERVER['REMOTE_ADDR']);
-        $this->add($_SERVER['REQUEST_METHOD']."\t".$_SERVER['REQUEST_URI']);
     }
     /**
      * 追加日志
@@ -43,8 +40,6 @@ class File
      * 在操作执行结束后或在异常处理时执行，即日志收尾
      */
     public function save(){
-        $this->add("Time:" . round((microtime() - APP_START_TIME) * 1000) . "ms");
-        $this->add("::::End::::");
         #   file_put_contents函数 如果写入文件不存在则自动创建，省去主动判断、创建文件步骤
         #   文件追加日志
         file_put_contents($this->config['dir']."/".date($this->config['date_format']).$this->config['suffix'], $this->log.PHP_EOL, FILE_APPEND);
