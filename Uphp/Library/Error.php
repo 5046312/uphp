@@ -55,7 +55,6 @@ class Error extends \Exception{
         ];
         $errMsg = "{$errorType[$no]} {$file}[$line] $str";
         Log::add($errMsg);
-        return true;
     }
 
     /**

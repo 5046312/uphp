@@ -39,7 +39,7 @@ return [
     ],
     #   Session配置
     "session" => [
-        "dir" => "cache/session" // session存放位置
+
     ],
     #   模板配置
     "view" => [
