@@ -7,17 +7,17 @@
 ##  TODO:
 <ol>
 <li>Exception class(Waiting for fix)</li>
-<li>Language class</li>
+<li>Language class(done)</li>
 <li>Cookie class</li>
 <li>Session class</li>
 <li>Route class(Restful)</li>
 <li>Cache class(File,Redis,Memcached)</li>
 <li>File class</li>
 <li>Image class(include Captcha)</li>
-<li>Composer supporting</li>
+<li>Composer supporting(done)</li>
 <li>A easy achieving View class</li>
 <li>More database supporting(MongoDb...)</li>
 <li>Better building and debug tools</li>
-<li>Log generation</li>
+<li>Log generation(done)</li>
 <li>Sql performance query and suggest to better </li>
 </ol>
