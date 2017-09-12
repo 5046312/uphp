@@ -30,9 +30,11 @@ class Route
      * 路由初始化
      */
     public static function init(){
-        $uri = trim(str_replace("/index.php", "", $_SERVER['REQUEST_URI']), "/");
-        self::$uriArr = explode("?", $uri);
-
+        #   按.php分割，包含同框架多入口多应用情况
+        $self  = explode('.php', $_SERVER['PHP_SELF'], 2);
+        $root = explode("/", trim($self[0], "/"));
+        define("TRUE_ROOT", $_SERVER['DOCUMENT_ROOT']."/".$root[0]);
+        self::$uriArr = explode("?", trim($self[1], "/"));
         #   加载路由规则前判断路由文件是否被删除
         if(file_exists(APP_DIR."/route.php")){
             #   根据请求类型，加载路由规则
