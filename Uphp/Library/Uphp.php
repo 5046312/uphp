@@ -38,7 +38,7 @@ class Uphp
                     $dir = $className.'.php';
                     break;
             }
-            include_once $dir;
+            include_once($dir);
         });
     }
 
@@ -53,14 +53,11 @@ class Uphp
         #   fatal处理
         register_shutdown_function(UPHP_DIR.'\Error::fatalHandler');
 
-
         #   日志类初始化（内部判断开启状态）
         #   日志首行在请求时就写入
         Log::startLine();
-        Log::endLine();
         #   路由类初始化
         Route::init();
-
         $this->callRequestMethod();
     }
 
@@ -78,6 +75,8 @@ class Uphp
                 $controller = new $controllerString;
                 if(method_exists($controller, _ACTION_)){
                     echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
+                    #   结束日志（或在异常中已经结束）
+                    Log::endLine();
                 }else{
                     Error::exception(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }
@@ -87,8 +86,5 @@ class Uphp
         }else{
             Error::exception(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
         }
-
-        #   TODO:结束日志
-
     }
 }

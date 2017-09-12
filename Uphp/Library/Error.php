@@ -12,8 +12,8 @@ class Error extends \Exception{
      * @param $e
      */
     public static function exceptionHandler($e){
-        #   日志
-
+        #   结束日志
+        Log::endLine($e->getMessage());
         #   异常报告在开发模式下显示更完全
         $error = [];
         if(config("app.debug")){
