@@ -28,7 +28,7 @@ class Uphp
         spl_autoload_register(function($className){
             #   加载系统类
             #   命名空间判断
-            $namespace = explode("\\", $className);
+            $namespace = explode("\\", $className, 2);
             $dir = "";
             switch ($namespace[0]){
                 case UPHP_DIR:
@@ -38,8 +38,6 @@ class Uphp
                     $dir = $className.'.php';
                     break;
             }
-            p($dir);
-
             include($dir);
         });
     }

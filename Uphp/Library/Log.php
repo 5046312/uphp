@@ -33,8 +33,12 @@ class Log
             #   查找日志驱动文件是否存在，验证配置项中的日志类型是否正确
             $driverDir = UPHP_DIR."\\Library\\Driver\\Log\\".ucfirst(self::$currentType);
             if(file_exists($driverDir.".php")){
-                self::$currentDriver = new $driverDir;
+                #   直接引入，省去了autoload判断的步骤
+                include($driverDir.".php");
+                $driverClass = UPHP_DIR."\\Driver\\Log\\".ucfirst(self::$currentType);
+                self::$currentDriver = new $driverClass;
             }else{
+                p($driverDir);
                 Error::exception(Language::get("LOG_TYPE_ERROR"));
             }
         }
