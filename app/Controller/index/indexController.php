@@ -9,7 +9,6 @@ class indexController
         echo "index/index/index";
 
         $excel = new \PHPExcel();
-        p($excel);
     }
 
     public function test($a, $b){
