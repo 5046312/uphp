@@ -7,8 +7,6 @@ class indexController
     public function index(){
         #   index/index/index()
         echo "index/index/index";
-
-        $excel = new \PHPExcel();
     }
 
     public function test($a, $b){

@@ -70,7 +70,6 @@ class Error extends \Exception{
      * 显示完整trace
      */
     public static function trace($error){
-        include("Uphp/View/exception.php");
     }
 
     /**
@@ -78,15 +77,35 @@ class Error extends \Exception{
      */
     public static function error($error){
 
+
     }
 
     /**
      * fatal error 处理
      */
     public static function fatalHandler(){
+        return;
         #   清空缓存区
-        /*ob_clean();
+        ob_end_clean();
+
         $e = error_get_last();
-        p($e);*/
+        #   结束日志
+        Log::endLine($e['title']);
+
+        #   异常报告在开发模式下显示更完全
+        $error = [];
+        if(config("app.debug")){
+            $error['title'] = $e['message'];
+            $error['file'] = $e['file'];
+            $error['line'] = $e['line'];
+            ob_start();
+            debug_print_backtrace();
+            $error['trace'] = ob_get_clean();
+            p($error);
+        }else{
+            $error['title'] = Language::get('SYSTEM_BUSY');
+        }
+        $res = include(UPHP_DIR."/View/exception.php");
+        p($res);
     }
 }
