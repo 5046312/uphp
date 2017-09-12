@@ -34,9 +34,9 @@ class Route
         self::$uriArr = explode("?", $uri);
 
         #   加载路由规则前判断路由文件是否被删除
-        if(file_exists(config("dir.application")."/route.php")){
+        if(file_exists(APP_DIR."/route.php")){
             #   根据请求类型，加载路由规则
-            $rule = include(config("dir.application")."/route.php");
+            $rule = include(APP_DIR."/route.php");
             #   只获取当前请求类型的路由规则
             self::$rule = $rule[$_SERVER['REQUEST_METHOD']];
 

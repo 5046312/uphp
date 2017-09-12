@@ -13,13 +13,6 @@ return [
         "language" => "ch", // 默认语言包
         "encrypt_key" => "UPHP", // 加密函数密钥
     ],
-
-    #   路径设置
-    "dir" => [
-        "application" => "app", //  应用所在目录
-        "framework" => "Uphp",  //  框架所在目录
-    ],
-
     #   URL设置
     "url" => [
         "must_prefix" => true, // 强制访问后缀（路由规则中无需添加）
@@ -58,7 +51,7 @@ return [
     #   日志配置
     "log" => [
         "open" => true, // 开启日志
-        "type" => "file",
+        "type" => "file", // 默认日志驱动类型
         "error_level" => E_WARNING, // 错误记录级别
         "file" => [
             "date_format" => "Y-m-d", // 日志文件命名格式

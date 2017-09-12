@@ -9,7 +9,7 @@ return [
         "CONTROLLER_NOT_EXIST" => "控制器不存在",
         "ACTION_NOT_EXIST" => "控制器方法不存在",
 
-        "LOG_TYPE_ERROR" => "日志类型配置错误",
+        "LOG_TYPE_ERROR" => "日志类型错误",
     ],
 
     "en" => [

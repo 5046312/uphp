@@ -1,5 +1,5 @@
 <?php
-namespace Uphp\Log\Driver;
+namespace Uphp\Driver\Log;
 
 /**
  * 文件日志类
@@ -12,6 +12,23 @@ class File
     public static $config; // 配置文件
     public static $log = ""; // 日志记录
     public static $dirExist = false; // 判断目录是否已经存在
+
+    /**
+     * 实例化
+     * File constructor.
+     */
+    public function __construct()
+    {
+
+    }
+
+    public function add(){
+
+    }
+
+    public function save(){
+
+    }
 
     /**
      * 初始化
@@ -43,7 +60,7 @@ class File
      * 追加日志
      * @param $content
      */
-    public static function add($content){
+    public static function addd($content){
         #   无需判断是否开启日志，init和save方法才有写入文件操作，执行前已经在Uphp.php中进行处理
         self::$log .= $content.PHP_EOL;
     }
@@ -53,7 +70,7 @@ class File
      * 在操作执行结束后或在异常处理时执行，即日志收尾
      * @param $addContent
      */
-    public static function save($addContent){
+    public static function savee($addContent){
         #   file_put_contents函数 如果写入文件不存在则自动创建，省去主动判断、创建文件步骤
         #   文件追加日志
         file_put_contents(self::$config['dir']."/".date(self::$config['date_format']).self::$config['suffix'], self::$log.$addContent.PHP_EOL, FILE_APPEND);

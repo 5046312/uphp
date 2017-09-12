@@ -31,12 +31,15 @@ class Uphp
             $namespace = explode("\\", $className);
             $dir = "";
             switch ($namespace[0]){
-                case "Uphp":
-                    $dir = "Uphp/Library/".$namespace[1].".php";
+                case UPHP_DIR:
+                    $dir = UPHP_DIR."/Library/".$namespace[1].".php";
                     break;
                 default:
                     $dir = $className.'.php';
+                    break;
             }
+            p($dir);
+
             include($dir);
         });
     }
@@ -46,11 +49,11 @@ class Uphp
         #   开启session
         session_start();
         #   异常处理
-        set_exception_handler('Uphp\Error::exceptionHandler');
+        set_exception_handler(UPHP_DIR.'\Error::exceptionHandler');
         #   错误处理
-        set_error_handler('Uphp\Error::errorHandler');
+        set_error_handler(UPHP_DIR.'\Error::errorHandler');
         #   fatal处理
-        register_shutdown_function('Uphp\Error::fatalHandler');
+        register_shutdown_function(UPHP_DIR.'\Error::fatalHandler');
 
 
         #   TODO:日志类初始化（内部判断开启状态）
@@ -65,13 +68,11 @@ class Uphp
      * 调用请求
      */
     private function callRequestMethod(){
-        #   获取应用所在文件路径
-        $app_dir = config("dir.application");
         #   判断控制器（异常放入autoload中抛出，省去判断文件步骤）
         #   舍去单例，直接实例化
         #   优先判断模块是否存在
-        if(is_dir($app_dir."/Controller/"._MODULE_)){
-            $controllerString = $app_dir."\\Controller\\"._MODULE_."\\"._CONTROLLER_.'Controller';
+        if(is_dir(APP_DIR."/Controller/"._MODULE_)){
+            $controllerString = APP_DIR."\\Controller\\"._MODULE_."\\"._CONTROLLER_.'Controller';
             #   判断控制器是否存在
             if(file_exists($controllerString.".php")){
                 $controller = new $controllerString;
