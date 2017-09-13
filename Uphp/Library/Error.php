@@ -70,6 +70,7 @@ class Error extends \Exception{
      * 显示完整trace
      */
     public static function trace($error){
+        include(UPHP_DIR."/View/exception.php");
     }
 
     /**
