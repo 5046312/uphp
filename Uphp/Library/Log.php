@@ -23,7 +23,7 @@ class Log
                 $driverClass = UPHP_DIR."\\Driver\\Log\\".ucfirst(strtolower(self::$currentType));
                 self::$currentDriver = new $driverClass(self::$config[self::$currentType]);
             }else{
-                Error::exception(Language::get("LOG_TYPE_ERROR"));
+                Error::exception(Language::get("LOG_TYPE_ERROR").":".self::$currentType);
             }
         }
     }

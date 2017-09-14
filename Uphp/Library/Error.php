@@ -12,6 +12,8 @@ class Error extends \Exception{
      * @param $e
      */
     public static function exceptionHandler($e){
+        #   清空缓存区
+        ob_end_clean();
         #   结束日志
         Log::endLine($e->getMessage());
         #   异常报告在开发模式下显示更完全

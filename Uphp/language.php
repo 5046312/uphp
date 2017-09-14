@@ -10,6 +10,8 @@ return [
         "ACTION_NOT_EXIST" => "控制器方法不存在",
 
         "LOG_TYPE_ERROR" => "日志类型错误",
+        "NOT_EXTENSION" => "不支持的拓展",
+        "CACHE_TYPE_ERROR" => "缓存类型错误",
     ],
 
     "en" => [
