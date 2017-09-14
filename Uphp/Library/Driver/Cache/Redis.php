@@ -22,6 +22,11 @@ class Redis
      */
     public $config;
 
+    /**
+     * redis缓存实例化
+     * Redis constructor.
+     * @param $config 传入redis配置
+     */
     public function __construct($config)
     {
         if (!extension_loaded('redis')) {
@@ -33,13 +38,27 @@ class Redis
         $this->link->$connect($config['host'], $config['port'], $config['timeout']);
     }
 
+    /**
+     * 获取缓存值
+     * @param $key
+     * @return bool|string
+     */
     public function get($key){
         return $this->link->get($key);
     }
 
-    public function set($key, $value){
+    /**
+     * 设置缓存
+     * @param $key
+     * @param $value
+     * @param $timeout 设置有效期
+     */
+    public function set($key, $value, $timeout){
+        #   传入有效期判断
         #   写入成功则返回true
-        $this->link->set($key, $value) OR Error::exception(Language::get("CACHE_SET_ERROR").":Redis");
+        isset($timeout)
+            ? $this->link->setex($key, $timeout, $value) OR Error::exception(Language::get("CACHE_SET_ERROR").":Redis")
+            : $this->link->set($key, $value) OR Error::exception(Language::get("CACHE_SET_ERROR").":Redis");
     }
 
     /**
@@ -48,7 +67,7 @@ class Redis
      * @param $key
      */
     public function delete($key){
-        return $this->link->delete($key);
+        $this->link->delete($key);
     }
 
     /**

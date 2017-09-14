@@ -12,7 +12,7 @@
 <li>Cookie class</li>
 <li>Session class</li>
 <li>Route class(Restful)</li>
-<li>Cache class(File,Redis,Memcached)</li>
+<li>Cache class(File,Redis(done),Memcached)</li>
 <li>File class</li>
 <li>Image class(include Captcha)</li>
 <li>Composer supporting(done)</li>
@@ -21,4 +21,5 @@
 <li>Better building and debug tools</li>
 <li>Log generation(done)</li>
 <li>Sql performance query and suggest to better </li>
+<li>Create Module class</li>
 </ol>

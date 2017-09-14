@@ -54,8 +54,13 @@ class Cache
         return self::$cache->get($key);
     }
 
-    public static function set($key, $value){
-        self::$cache->set($key, $value);
+    /**
+     * 设置缓存
+     * @param $key
+     * @param $value
+     */
+    public static function set($key, $value, $timeout){
+        self::$cache->set($key, $value, $timeout);
     }
 
     /**
