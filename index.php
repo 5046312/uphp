@@ -1,6 +1,5 @@
 <?php
 
-
 #   必须在载入前定义应用和框架所在目录
 define("APP_DIR", "app");
 define("UPHP_DIR", "Uphp");

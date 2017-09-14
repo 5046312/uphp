@@ -1,6 +1,5 @@
 <?php
 
-
 #   必须在载入前定义应用和框架所在目录
 define("APP_DIR", "api");
 define("UPHP_DIR", "Uphp");
@@ -13,3 +12,7 @@ include(UPHP_DIR."/Library/Uphp.php");
 #   实例化调用启动方法
 $appClass = UPHP_DIR."\\Uphp";
 $app = (new $appClass)->start();
+
+#   本入口为测试自动创建对应目录功能
+#   需先设置app所在目录
+#   目录不存在时则自动进行目录结构创建

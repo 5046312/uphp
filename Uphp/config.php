@@ -15,8 +15,8 @@ return [
     ],
     #   URL设置
     "url" => [
-        "must_prefix" => true, // 强制访问后缀（路由规则中无需添加）
-        "prefix" => ".html", // url后缀
+        "must_prefix" => true, // 强制访问后缀（路由规则中无需添加后缀样式，只需定位到控制器方法）
+        "prefix" => ".html", // url后缀（未实现）
         "both_type" => true, // 两种路由形式是否同时开启（false时只支持/分割形式，不支持?m=index&c=index&a=index形式，注意：两种模式并不能混用有/则无法用get定位）
     ],
 
