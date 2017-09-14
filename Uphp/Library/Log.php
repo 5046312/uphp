@@ -34,7 +34,7 @@ class Log
      * @param $content
      */
     public static function add($content){
-        self::$currentDriver->add($content);
+        self::$currentDriver->add("# ".$content);
     }
 
     /**
@@ -52,7 +52,7 @@ class Log
     public static function startLine($type = NULL){
         isset(self::$config) OR self::init($type);
         if(self::isOpen()) {
-            self::add("::::Start::::");
+            self::add("=============Start==============");
             self::add(date("Y-m-d H:i:s") . "\t" . $_SERVER['REMOTE_ADDR']);
             self::add($_SERVER['REQUEST_METHOD'] . "\t" . $_SERVER['REQUEST_URI']);
         }
@@ -70,7 +70,7 @@ class Log
             }
             $filesNum = count(get_included_files());
             self::add("Time:".round((microtime()-APP_START_TIME) * 1000)."ms"."\t"."File:".$filesNum);
-            self::add(":::::End:::::");
+            self::add("==============END===============");
             self::$currentDriver->save();
         }
     }
