@@ -55,14 +55,22 @@ class Cache
     }
 
     public static function set($key, $value){
-
+        self::$cache->set($key, $value);
     }
 
+    /**
+     * 删除指定key的键
+     * @param $key
+     * @return mixed 返回删除key的个数
+     */
     public static function delete($key){
-
+        return self::$cache->delete($key);
     }
 
+    /**
+     * 清空缓存
+     */
     public static function clear(){
-
+        self::$cache->clear();
     }
 }

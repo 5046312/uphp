@@ -7,8 +7,6 @@ class indexController
 {
     public function index(){
         #   index/index/index()
-        p(phpinfo());
-        echo "index/index/index";
     }
 
     public function test($a, $b){

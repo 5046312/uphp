@@ -34,18 +34,27 @@ class Redis
     }
 
     public function get($key){
-
+        return $this->link->get($key);
     }
 
     public function set($key, $value){
-
+        #   写入成功则返回true
+        $this->link->set($key, $value) OR Error::exception(Language::get("CACHE_SET_ERROR").":Redis");
     }
 
+    /**
+     * 删除指定键的值
+     * 可传数组
+     * @param $key
+     */
     public function delete($key){
-
+        return $this->link->delete($key);
     }
 
+    /**
+     * 清空数据库
+     */
     public function clear(){
-
+        $this->link->flushDB();
     }
 }
