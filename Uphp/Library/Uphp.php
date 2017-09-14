@@ -38,7 +38,6 @@ class Uphp
                     $dir = $className.'.php';
                     break;
             }
-            p($dir);
             include_once($dir);
         });
         #   引入composer自动加载文件
