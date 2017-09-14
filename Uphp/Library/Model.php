@@ -7,6 +7,7 @@ namespace Uphp;
  */
 class Model
 {
+    private $config; // 数据库配置
     protected $name; // 数据表
     protected $db; // Db链接
     protected $table; // 表名
@@ -15,9 +16,18 @@ class Model
 
     public function __construct($tableName = "", $prefix = "")
     {
-        $this->db = new Mysql();
+        $this->config = config('db');
+        #   判断数据库driver文件是否存在
+        if(!file_exists(UPHP_DIR."/Library/Driver/DB/".$this->config['type'].".php")){
+            #   数据库类型配置错误
+            Error::exception(Language::get("DB_DRIVER_NOT_ERROR").":".$this->config['type']);
+        }else{
+            #   实例化Driver
+            $db = "Uphp\Driver\DB\\".$this->config['type'];
+            $this->db = new $db($this->config);
+        }
         $this->table = empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
-        $this->prefix = empty($prefix)?:Config::get('db_prefix');
+        $this->prefix = empty($prefix) ?: $this->config['db_prefix'];
     }
 
     public function __set($key, $value){

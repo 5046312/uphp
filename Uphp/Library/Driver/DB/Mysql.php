@@ -1,5 +1,5 @@
 <?php
-namespace Uphp;
+namespace Uphp\Driver\DB;
 /**
  * PDO
  * Class Mysql
@@ -12,16 +12,16 @@ class Mysql
     protected $querySql; // Sql
     protected $bindParam = []; // Sql参数绑定
 
-    public function __construct()
+    public function __construct($config)
     {
-        $dsn = "mysql:host=".Config::get('db_host').";dbname=".Config::get('db_name').";port=".Config::get('db_port');
+        $dsn = "mysql:host=".$config['db_host'].";dbname=".$config['db_name'].";port=".$config['db_port'];
         try {
-            $this->PDO = new \PDO($dsn, Config::get('db_username'), Config::get('db_password'), [\PDO::ATTR_PERSISTENT => true]);
+            $this->PDO = new \PDO($dsn, $config['db_username'], $config['db_password'], [\PDO::ATTR_PERSISTENT => true]);
         }catch(\PDOException $e){
             p($e->getMessage());
             die;
         }
-        $this->PDO->exec('set names utf8');
+        $this->PDO->exec('SET NAMES UTF8');
     }
 
     public function query($str, $showSql = false) {
