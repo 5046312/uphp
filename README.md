@@ -16,11 +16,12 @@
 <li>Cache class(File,Redis(done),Memcached)</li>
 <li>File class</li>
 <li>Image class(include Captcha)</li>
-<li>Composer supporting(done)</li>
+<li>Composer support(done)</li>
 <li>A easy achieving View class</li>
 <li>More database supporting(MongoDb...)</li>
 <li>Better building and debug tools</li>
 <li>Log generation(done)</li>
 <li>Sql performance query and suggest to better </li>
 <li>Create Module class</li>
+<li>Swoole support</li>
 </ol>
