@@ -49,8 +49,6 @@ class Uphp
 
     #   启动方法
     public function start(){
-        #   首次进入应用时，进行应用目录和部分文件创建的初始化操作
-        $this->initApp();
         #   开启session
         session_start();
         #   异常处理
@@ -59,6 +57,8 @@ class Uphp
         set_error_handler(UPHP_DIR.'\Error::errorHandler');
         #   fatal处理
         register_shutdown_function(UPHP_DIR.'\Error::fatalHandler');
+        #   首次进入应用时，进行应用目录和部分文件创建的初始化操作
+        Create::init(APP_DIR);
         #   日志类初始化（内部判断开启状态）
         #   日志首行在请求时就写入
         Log::startLine();
@@ -91,14 +91,6 @@ class Uphp
             }
         }else{
             Error::exception(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
-        }
-    }
-
-
-    private function initApp(){
-        #   判断应用目录是否已经存在，不存在则进行创建
-        if(!file_exists(APP_DIR)){
-            mkdir(APP_DIR."/Controller", 0777);
         }
     }
 }
