@@ -14,7 +14,13 @@ class Model
     protected $prefix; // 表前缀
     protected $condition; // 条件
 
-    public function __construct($tableName = "", $prefix = "")
+    /**
+     * 初始化
+     * Model constructor.
+     * @param string $tableName 临时设置表名，如不设置则使用对应Model文件名
+     * @param string $prefix 前缀名，如不设置，则使用配置项
+     */
+    public function __construct($tableName = NULL, $prefix = NULL)
     {
         $this->config = config('db');
         #   判断数据库driver文件是否存在
@@ -30,15 +36,21 @@ class Model
         $this->prefix = empty($prefix) ?: $this->config['db_prefix'];
     }
 
-    public function __set($key, $value){
-        $this->$key = $value;
-    }
-
+    /**
+     * 设置所操作的表
+     * @param $tableName
+     * @return $this
+     */
     public function table($tableName){
         $this->table = $tableName;
         return $this;
     }
 
+    /**
+     * 执行Insert语句
+     * @param $data
+     * @return mixed
+     */
     public function insert($data){
         $fields = "";
         $values = "";
@@ -53,15 +65,28 @@ class Model
         return $this->db->execute($sql);
     }
 
+    /**
+     * 获取最新插入的主键值
+     * @return mixed
+     */
     public function getLastInsertId(){
         return $this->db->getLastInsertId();
     }
 
+    /**
+     * 执行delete
+     * @return mixed
+     */
     public function delete(){
         $sql = "DELETE FROM " . $this->table . $this->parseWhere();
         return $this->db->execute($sql);
     }
 
+    /**
+     * 执行update语句
+     * @param $data
+     * @return mixed
+     */
     public function update($data){
         $fields = "";
         foreach ($data as $k=>$v){
@@ -70,10 +95,13 @@ class Model
         }
         $fields = rtrim($fields, " , ");
         $sql = "UPDATE ".$this->table. " SET {$fields} " . $this->parseWhere();
-        d($sql);
         return $this->db->execute($sql);
     }
 
+    /**
+     * 执行select语句
+     * @return mixed
+     */
     public function select(){
         # SELECT * FROM TABLE WHERE A=2 AND B=3
         $sql = "SELECT " . (empty($this->condition['field']) ? "*" : $this->condition['field']) . " FROM " . $this->table . $this->parseWhere();
@@ -81,10 +109,16 @@ class Model
         return $res;
     }
 
-    // ['id'=> 1]
-    // ['id'=>['>',1]]
-    // ['user.id'=>['>',1]]
-    // ['id'=>['in', '1,2,3,4']]
+    /**
+     * 添加where条件
+     * TODO:字符串形式
+     * ['id'=> 1]
+     * ['id'=>['>',1]]
+     * ['user.id'=>['>',1]]
+     * ['id'=>['in', '1,2,3,4']]
+     * @param $data
+     * @return $this
+     */
     public function where($data){
         foreach($data as $k=>$v){
             if(!is_array($v)){
@@ -98,6 +132,11 @@ class Model
         return $this;
     }
 
+    /**
+     * 添加Or条件
+     * @param $data
+     * @return $this
+     */
     public function orWhere($data){
         foreach($data as $k=>$v){
             if(!is_array($v)){
@@ -111,6 +150,10 @@ class Model
         return $this;
     }
 
+    /**
+     * where条件AND和OR拼装
+     * @return bool|string
+     */
     private function parseWhere(){
         if(empty($this->condition['where'])){
             return false;
@@ -129,13 +172,24 @@ class Model
         }
     }
 
+    /**
+     * Limit
+     * @param $start
+     * @param $pageSize
+     * @return $this
+     */
     public function limit($start, $pageSize){
         $this->condition['limit'] = empty($pageSize) ? "LIMIT {$start}" : "LIMIT {$start},{$pageSize}";
         return $this;
     }
 
-    # field("a,b,c,d,e")
-    # field(["a", "b", "c.id"]);
+    /**
+     * 设置查询的字段
+     * 字符串形式：field("a,b,c,d,e")
+     * 数组形式：field(["a", "b", "c.id"]);
+     * @param $data
+     * @return $this
+     */
     public function field($data){
         if(is_array($data)){
             $this->condition['field'] = implode(",", $data);
@@ -145,8 +199,13 @@ class Model
         return $this;
     }
 
-    # "id desc"
-    # ["id"=>"desc", "name"=>"asc"]
+    /**
+     * 排序
+     * 字符串形式："id desc"
+     * 数组形式：["id"=>"desc", "name"=>"asc"]
+     * @param $data
+     * @return $this
+     */
     public function order($data){
         if(is_array($data)){
             $order = "";
