@@ -31,10 +31,10 @@ class Cache
      */
     public static function init($type = NULL){
         if(isset($type)){
-            self::$config = config("cache.".$type);
+            self::$config = config("temp.".$type);
             self::$currentType = $type;
         }else{
-            $config = config("cache");
+            $config = config("temp");
             self::$config = $config[$config['type']];
             self::$currentType = $config['type'];
         }
@@ -50,7 +50,7 @@ class Cache
     }
 
     public static function get($key){
-        empty(self::$config) AND self::init(config("cache.type"));
+        empty(self::$config) AND self::init(config("temp.type"));
         return self::$cache->get($key);
     }
 

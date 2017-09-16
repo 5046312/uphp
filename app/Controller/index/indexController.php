@@ -1,9 +1,9 @@
 <?php
 namespace app\Controller\index;
-
-class indexController
+use Uphp\Controller;
+class indexController extends Controller
 {
     public function index(){
-        return "create success";
+        return "this is index/index";
     }
 }

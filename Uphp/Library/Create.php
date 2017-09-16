@@ -68,8 +68,12 @@ class Create
                 "<?php\nreturn [\n 'ch' => [],'en' => [] ];"
             ],
             [
+                "/Config/config.php",
+                "<?php\nreturn [\n\n];"
+            ],
+            [
                 "/Controller/index/indexController.php",
-                "<?php\nnamespace ".self::$appDir."\Controller\index;\nclass indexController\n{\n\tpublic function index(){\n\t\treturn \"create success\";\n\t}\n}"
+                "<?php\nnamespace ".self::$appDir."\Controller\index;\nuse Uphp\Controller;\nclass indexController extends Controller\n{\n\tpublic function index(){\n\t\treturn \"create success\";\n\t}\n}"
             ]
         ];
 
