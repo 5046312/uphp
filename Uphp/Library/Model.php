@@ -23,15 +23,10 @@ class Model
     public function __construct($tableName = NULL, $prefix = NULL)
     {
         $this->config = config('db');
-        #   判断数据库driver文件是否存在
-        if(!file_exists(UPHP_DIR."/Library/Driver/DB/".$this->config['type'].".php")){
-            #   数据库类型配置错误
-            Error::exception(Language::get("DB_DRIVER_NOT_ERROR").":".$this->config['type']);
-        }else{
-            #   实例化Driver
-            $db = "Uphp\Driver\DB\\".$this->config['type'];
-            $this->db = new $db($this->config);
-        }
+        #   不再判断数据库driver文件是否存在，统一使用PDO进行多数据库支持
+        #   实例化Driver
+        $db = "Uphp\Driver\DB\PDO";
+        $this->db = new $db($this->config);
         $this->table = empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
         $this->prefix = empty($prefix) ?: $this->config['db_prefix'];
     }
