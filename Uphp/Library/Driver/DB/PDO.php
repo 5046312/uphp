@@ -1,29 +1,47 @@
 <?php
 namespace Uphp\Driver\DB;
+use Uphp\Error;
+
 /**
- * PDO
- * Class Mysql
+ * 操作PDO的类
+ * Class PDO
  * @package Uphp
  */
-class Mysql
+class PDO
 {
     protected $PDO; // 链接
     protected $PDOStatement; // PDOStatement
     protected $querySql; // Sql
     protected $bindParam = []; // Sql参数绑定
 
+    /**
+     * PDO Driver初始化
+     * 传入配置
+     * PDO constructor.
+     * @param $config
+     */
     public function __construct($config)
     {
-        $dsn = "mysql:host=".$config['db_host'].";dbname=".$config['db_name'].";port=".$config['db_port'];
+        switch ($config['type']){
+            case "mysql":
+                $type = "mysql";
+                break;
+        }
+        $dsn = $type.":host=".$config['host'].";dbname=".$config['name'].";port=".$config['port'];
         try {
-            $this->PDO = new \PDO($dsn, $config['db_username'], $config['db_password'], [\PDO::ATTR_PERSISTENT => true]);
+            $this->PDO = new \PDO($dsn, $config['username'], $config['password'], [\PDO::ATTR_PERSISTENT => true]);
         }catch(\PDOException $e){
-            p($e->getMessage());
-            die;
+            Error::exception($e->getMessage());
         }
         $this->PDO->exec('SET NAMES UTF8');
     }
 
+    /**
+     * PDO执行query
+     * @param $str
+     * @param bool $showSql 返回sql语句，但不执行
+     * @return bool
+     */
     public function query($str, $showSql = false) {
         $this->querySql = $str;
         if($showSql){
@@ -32,7 +50,6 @@ class Mysql
         $this->PDOStatement = $this->PDO->prepare($str);
         if(false === $this->PDOStatement){
             $this->error();
-            return false;
         }
         foreach ($this->bindParam as $key => $val) {
             if(is_array($val)){
@@ -46,16 +63,20 @@ class Mysql
             $result = $this->PDOStatement->execute();
             if ( false === $result ) {
                 $this->error();
-                return false;
             } else {
                 return $this->fetchAll();
             }
         }catch (\PDOException $e) {
             $this->error();
-            return false;
         }
     }
 
+    /**
+     * PDO执行execute语句
+     * @param $str
+     * @param bool $showSql 返回sql语句，但不执行
+     * @return bool
+     */
     public function execute($str, $showSql = false) {
         $this->querySql = $str;
         if($showSql){
@@ -64,7 +85,6 @@ class Mysql
         $this->PDOStatement = $this->PDO->prepare($str);
         if(false === $this->PDOStatement){
             $this->error();
-            return false;
         }
         foreach ($this->bindParam as $key => $val) {
             if(is_array($val)){
@@ -78,49 +98,48 @@ class Mysql
             $result =   $this->PDOStatement->execute();
             if ( false === $result) {
                 $this->error();
-                return false;
             } else {
                 // execute success
                 return $result;
             }
         }catch (\PDOException $e) {
             $this->error();
-            return false;
         }
     }
 
+    /**
+     * 参数绑定
+     * @param $key
+     * @param $value
+     */
     public function bind($key, $value){
         $this->bindParam[$key] = $value;
     }
 
+    /**
+     * 获取最后插入的主键
+     * @return string
+     */
     public function getLastInsertId(){
         return $this->PDO->lastInsertId();
     }
 
-    public function free() {
-        $this->PDO = null;
-    }
-
-    public function error()
+    /**
+     * 报错
+     * TODO:Error类处理
+     */
+    private function error()
     {
         $error = $this->PDOStatement->errorInfo();
-        echo "SQL语句:".$this->querySql.'<br>';
-        echo "错误原因:",($error[2]);
-        die;
+        Error::exception("SQL语句:".$this->querySql.'<br>'."错误原因:",($error[2]));
     }
 
+    /**
+     * 返回查询结果
+     * @return mixed
+     */
     public function fetchAll(){
         $res = $this->PDOStatement->fetchAll(\PDO::FETCH_ASSOC);
         return $res;
-    }
-
-    public function showTables($dbname = ""){
-        $this->querySql = empty($dbname)?'SHOW TABLES':'SHOW TABLES FROM '.$dbname;
-        $res = $this->query($this->querySql);
-        $tables = [];
-        foreach($res as $k=>$v){
-            $tables[] = current($v);
-        }
-        return $tables;
     }
 }
