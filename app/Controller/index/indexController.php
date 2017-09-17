@@ -6,7 +6,6 @@ class indexController extends Controller
 {
     public function index(){
         $user = new UserModel();
-        p($user);
-        return "this is index/index";
+        p($user->select());
     }
 }

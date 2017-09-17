@@ -25,10 +25,10 @@ class Model
         $this->config = config('db');
         #   不再判断数据库driver文件是否存在，统一使用PDO进行多数据库支持
         #   实例化Driver
-        $db = "Uphp\Driver\DB\PDO";
-        $this->link = new $db($this->config);
+        $driver = "Uphp\Driver\DB\PDO";
+        $this->link = new $driver($this->config);
         $this->table = empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
-        $this->prefix = empty($prefix) ?: $this->config['db_prefix'];
+        $this->prefix = empty($prefix) ?: $this->config['prefix'];
     }
 
     /**
@@ -95,12 +95,13 @@ class Model
 
     /**
      * 执行select语句
+     * @param $showSql bool 返回语句，不进行查询
      * @return mixed
      */
-    public function select(){
+    public function select($showSql = false){
         # SELECT * FROM TABLE WHERE A=2 AND B=3
         $sql = "SELECT " . (empty($this->condition['field']) ? "*" : $this->condition['field']) . " FROM " . $this->table . $this->parseWhere();
-        $res = $this->link->query($sql);
+        $res = $this->link->query($sql, $showSql);
         return $res;
     }
 
