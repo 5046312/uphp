@@ -9,7 +9,7 @@ class Model
 {
     private $config; // 数据库配置
     protected $name; // 数据表
-    protected $db; // Db链接
+    protected $link; // Db链接
     protected $table; // 表名
     protected $prefix; // 表前缀
     protected $condition; // 条件
@@ -26,7 +26,7 @@ class Model
         #   不再判断数据库driver文件是否存在，统一使用PDO进行多数据库支持
         #   实例化Driver
         $db = "Uphp\Driver\DB\PDO";
-        $this->db = new $db($this->config);
+        $this->link = new $db($this->config);
         $this->table = empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
         $this->prefix = empty($prefix) ?: $this->config['db_prefix'];
     }
@@ -52,12 +52,12 @@ class Model
         foreach ($data as $k=>$v){
             $fields .= "`{$k}`,";
             $values .= ":{$k},";
-            $this->db->bind(":{$k}", $v);
+            $this->link->bind(":{$k}", $v);
         }
         $fields = rtrim($fields, ",");
         $values = rtrim($values, ",");
         $sql = "INSERT INTO ".$this->table."({$fields}) VALUES({$values});";
-        return $this->db->execute($sql);
+        return $this->link->execute($sql);
     }
 
     /**
@@ -65,7 +65,7 @@ class Model
      * @return mixed
      */
     public function getLastInsertId(){
-        return $this->db->getLastInsertId();
+        return $this->link->getLastInsertId();
     }
 
     /**
@@ -74,7 +74,7 @@ class Model
      */
     public function delete(){
         $sql = "DELETE FROM " . $this->table . $this->parseWhere();
-        return $this->db->execute($sql);
+        return $this->link->execute($sql);
     }
 
     /**
@@ -86,11 +86,11 @@ class Model
         $fields = "";
         foreach ($data as $k=>$v){
             $fields .= "`{$k}` = :{$k} , ";
-            $this->db->bind(":{$k}", $v);
+            $this->link->bind(":{$k}", $v);
         }
         $fields = rtrim($fields, " , ");
         $sql = "UPDATE ".$this->table. " SET {$fields} " . $this->parseWhere();
-        return $this->db->execute($sql);
+        return $this->link->execute($sql);
     }
 
     /**
@@ -100,7 +100,7 @@ class Model
     public function select(){
         # SELECT * FROM TABLE WHERE A=2 AND B=3
         $sql = "SELECT " . (empty($this->condition['field']) ? "*" : $this->condition['field']) . " FROM " . $this->table . $this->parseWhere();
-        $res = $this->db->query($sql);
+        $res = $this->link->query($sql);
         return $res;
     }
 
