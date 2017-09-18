@@ -18,9 +18,9 @@ class Log
             #   设置日志类型，
             self::$currentType = isset($type) ? strtolower($type) : strtolower(self::$config['type']);
             #   查找日志驱动文件是否存在，验证配置项中的日志类型是否正确
-            $driverDir = UPHP_DIR."\\Library\\Driver\\Log\\".ucfirst(strtolower(self::$currentType));
+            $driverDir = UPHP_DIR.'\Library\Driver\Log\\'.ucfirst(strtolower(self::$currentType));
             if(file_exists($driverDir.".php")){
-                $driverClass = UPHP_DIR."\\Driver\\Log\\".ucfirst(strtolower(self::$currentType));
+                $driverClass = UPHP_DIR.'\Driver\Log\\'.ucfirst(strtolower(self::$currentType));
                 self::$currentDriver = new $driverClass(self::$config[self::$currentType]);
             }else{
                 Error::exception(Language::get("LOG_TYPE_ERROR").":".self::$currentType);

@@ -25,7 +25,7 @@ class Model
         $this->config = config('db');
         #   不再判断数据库driver文件是否存在，统一使用PDO进行多数据库支持
         #   实例化Driver
-        $driver = "Uphp\Driver\DB\PDO";
+        $driver = 'Uphp\Driver\DB\PDO';
         $this->link = new $driver($this->config);
         $this->table = empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
         $this->prefix = empty($prefix) ?: $this->config['prefix'];
@@ -107,7 +107,6 @@ class Model
 
     /**
      * 添加where条件
-     * TODO:字符串形式
      * ['id'=> 1]
      * ['id'=>['>',1]]
      * ['user.id'=>['>',1]]

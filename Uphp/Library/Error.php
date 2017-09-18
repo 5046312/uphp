@@ -15,7 +15,7 @@ class Error extends \Exception{
         #   清空缓存区
         ob_end_clean();
         #   结束日志
-        Log::endLine("Exception ".$e->getMessage());
+        Log::endLine("Exception # ".$e->getMessage());
         #   异常报告在开发模式下显示更完全
         $error = [];
         if(config("app.debug")){
@@ -55,8 +55,15 @@ class Error extends \Exception{
             1024=>"User Notice",
             2048=>"Strict Notice"
         ];
-        $errMsg = "{$errorType[$no]} {$file}[$line] $str";
-        Log::add($errMsg);
+        #   NOTICE过滤，不在显示
+        #   如有新增则以后添加
+        switch($no){
+            case 8:
+                break;
+            default:
+                $errMsg = "{$errorType[$no]} # {$file}[$line] $str";
+                Log::add($errMsg);
+        }
     }
 
     /**
