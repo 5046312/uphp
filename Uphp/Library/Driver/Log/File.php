@@ -40,8 +40,13 @@ class File
      * 在操作执行结束后或在异常处理时执行，即日志收尾
      */
     public function save(){
-        #   file_put_contents函数 如果写入文件不存在则自动创建，省去主动判断、创建文件步骤
         #   文件追加日志
-        file_put_contents($this->config['dir']."/".date($this->config['date_format']).$this->config['suffix'], $this->log.PHP_EOL, FILE_APPEND);
+        #   增加文件锁，防止并发
+        $log = fopen($this->config['dir']."/".date($this->config['date_format']).$this->config['suffix'], "a");
+        if(flock($log, LOCK_EX)){
+            fwrite($log, $this->log.PHP_EOL);
+        }
+        flock($log, LOCK_UN);
+        fclose($log);
     }
 }
