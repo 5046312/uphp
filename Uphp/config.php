@@ -63,8 +63,11 @@ return [
     ],
 
     #   缓存配置
-    "temp" => [
-        "type" => "redis", // 默认缓存类型
+    "cache" => [
+        "type" => "file", // 默认缓存类型
+        "file" => [
+            "dir" => APP_DIR."/Temp/cache",
+        ],
         #   redis服务器配置
         "redis" => [
             "host" => "127.0.0.1", //

@@ -31,10 +31,10 @@ class Cache
      */
     public static function init($type = NULL){
         if(isset($type)){
-            self::$config = config("temp.".$type);
+            self::$config = config("cache.".$type);
             self::$currentType = $type;
         }else{
-            $config = config("temp");
+            $config = config("cache");
             self::$config = $config[$config['type']];
             self::$currentType = $config['type'];
         }
@@ -50,7 +50,7 @@ class Cache
     }
 
     public static function get($key){
-        empty(self::$config) AND self::init(config("temp.type"));
+        empty(self::$config) AND self::init(config("cache.type"));
         return self::$cache->get($key);
     }
 
@@ -58,8 +58,10 @@ class Cache
      * 设置缓存
      * @param $key
      * @param $value
+     * @param $timeout
      */
-    public static function set($key, $value, $timeout){
+    public static function set($key, $value, $timeout = NULL){
+        empty(self::$config) AND self::init(config("cache.type"));
         self::$cache->set($key, $value, $timeout);
     }
 
@@ -69,6 +71,7 @@ class Cache
      * @return mixed 返回删除key的个数
      */
     public static function delete($key){
+        empty(self::$config) AND self::init(config("cache.type"));
         return self::$cache->delete($key);
     }
 
@@ -76,6 +79,7 @@ class Cache
      * 清空缓存
      */
     public static function clear(){
+        empty(self::$config) AND self::init(config("cache.type"));
         self::$cache->clear();
     }
 }

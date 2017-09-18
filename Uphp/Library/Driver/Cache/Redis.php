@@ -8,7 +8,7 @@ use Uphp\Language;
  * Class Redis
  * @package Uphp\Log
  */
-class Redis
+class Redis implements Cache
 {
     /**
      * 资源
