@@ -27,4 +27,5 @@
 <li>Sql performance query and suggest to better </li>
 <li>Create Module class</li>
 <li>Swoole support</li>
+<li>Wechat support</li>
 </ol>
