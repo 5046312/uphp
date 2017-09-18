@@ -116,13 +116,20 @@ class Model
      * @return $this
      */
     public function where($data){
-        foreach($data as $k=>$v){
-            if(!is_array($v)){
-                // condition is string, eq
-                $this->condition['where'][] = [$k, '=', $v];
-            }else{
-                // condition is array
-                $this->condition['where'][] = [$k, $v[0], $v[1]];
+        #   字符串则不再解析数据
+        if(is_string($data)){
+            #   储存无需解析的Sql条件语句
+            $this->condition['strWhere'] .= $data." AND ";
+        }else{
+            #   数组形式
+            foreach($data as $k=>$v){
+                if(!is_array($v)){
+                    // 两个元素，条件为相等
+                    $this->condition['where'][] = [$k, '=', $v];
+                }else{
+                    // 三个元素，条件获取
+                    $this->condition['where'][] = [$k, $v[0], $v[1]];
+                }
             }
         }
         return $this;
@@ -134,13 +141,18 @@ class Model
      * @return $this
      */
     public function orWhere($data){
-        foreach($data as $k=>$v){
-            if(!is_array($v)){
-                // condition is string, eq
-                $this->condition['orWhere'][] = [$k, '=', $v];
-            }else{
-                // condition is array
-                $this->condition['orWhere'][] = [$k, $v[0], $v[1]];
+        #   传入string，不再解析
+        if(is_string($data)){
+            $this->condition['strOrWhere'] .= " OR ".$data;
+        }else{
+            foreach($data as $k=>$v){
+                if(!is_array($v)){
+                    // condition is string, eq
+                    $this->condition['orWhere'][] = [$k, '=', $v];
+                }else{
+                    // condition is array
+                    $this->condition['orWhere'][] = [$k, $v[0], $v[1]];
+                }
             }
         }
         return $this;
@@ -151,21 +163,17 @@ class Model
      * @return bool|string
      */
     private function parseWhere(){
-        if(empty($this->condition['where'])){
-            return false;
-        }else{
-            $sql = " WHERE ";
-            foreach ($this->condition['where'] as $k=>$v){
-                $sql .= "`{$v[0]}` {$v[1]} {$v[2]} AND ";
-            }
-            $sql = rtrim($sql, "AND ");
-            if(!empty($this->condition['orWhere'])){
-                foreach ($this->condition['orWhere'] as $k=>$v){
-                    $sql .= " OR `{$v[0]}` {$v[1]} {$v[2]}";
-                }
-            }
-            return $sql;
+        $sql = " WHERE ";
+        foreach ($this->condition['where'] as $k=>$v){
+            $sql .= "`{$v[0]}` {$v[1]} {$v[2]} AND ";
         }
+        $sql = rtrim($sql.$this->condition['strWhere'], "AND ");
+        if(!empty($this->condition['orWhere'])){
+            foreach ($this->condition['orWhere'] as $k=>$v){
+                $sql .= " OR `{$v[0]}` {$v[1]} {$v[2]}";
+            }
+        }
+        return $sql.$this->condition['strOrWhere'];
     }
 
     /**
