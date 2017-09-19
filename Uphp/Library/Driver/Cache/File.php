@@ -1,5 +1,6 @@
 <?php
 namespace Uphp\Driver\Cache;
+use Uphp\Create;
 
 /**
  * 文件缓存类
@@ -16,6 +17,7 @@ class File implements Cache
         #   判断缓存文件夹
         if(!is_dir($this->config['dir'])){
             mkdir($this->config['dir'], 0777);
+            Create::createIndexHtml($this->config['dir']);
         }
     }
 

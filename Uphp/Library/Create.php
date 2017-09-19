@@ -22,6 +22,7 @@ class Create
         "/Controller",
         "/Controller/index", // 此处可以递归生成，但是需要分别创建index.html
         "/Language",
+        "/Function",
         "/Library",
         "/Model",
         "/View",
@@ -90,7 +91,7 @@ class Create
     /**
      * 文件夹目录下创建Index.html
      */
-    private static function createIndexHtml($dir){
+    public static function createIndexHtml($dir){
         touch($dir."/index.html");
     }
 }
