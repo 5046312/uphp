@@ -42,7 +42,7 @@ class File
     public function save(){
         #   文件追加日志
         #   增加文件锁，防止并发
-        $log = fopen($this->config['dir']."/".date($this->config['date_format']).$this->config['suffix'], "a");
+        $log = fopen(TRUE_ROOT.$this->config['dir']."/".date($this->config['date_format']).$this->config['suffix'], "a");
         if(flock($log, LOCK_EX)){
             fwrite($log, $this->log.PHP_EOL);
         }

@@ -1,4 +1,9 @@
 <?php
+
+function getFunction($name){
+    include_once(APP_DIR."/Function/".$name.".php");
+}
+
 /**
  * 获取配置或设置配置项
  * @param mixed $key 配置项名称

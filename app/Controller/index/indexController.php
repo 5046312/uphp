@@ -6,7 +6,6 @@ use Uphp\Controller;
 class indexController extends Controller
 {
     public function index(){
-        $r = Cache::get("v");
-        p($r);
+//        appTest();
     }
 }

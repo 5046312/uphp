@@ -80,9 +80,11 @@ class Uphp
             if(file_exists($controllerString.".php")){
                 $controller = new $controllerString;
                 if(method_exists($controller, _ACTION_)){
+                    #   引用应用中function
+                    if(file_exists(APP_DIR."/Function/function.php")){
+                        include_once(APP_DIR."/Function/function.php");
+                    }
                     echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
-                    #   结束日志（或在异常中已经结束）
-                    Log::endLine();
                 }else{
                     Error::exception(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }

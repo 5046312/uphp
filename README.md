@@ -37,3 +37,5 @@
 + v0.6 准备重写Model与Driver
 + v0.7 File日志可以记录每次Sql请求的信息（sql语句、执行时间）
 + v0.8 File日志增加文件锁，防止并发
++ v0.9 彻底解决了框架在多级目录下路由无法正确定位的BUG
++ v0.10 日志写入放在了register_shutdown_function这个类似析构方法中 

@@ -64,6 +64,10 @@ class Create
                 "<?php\nreturn [\n\t'GET' => [],\n\t'POST' => []\n];"
             ],
             [
+                "/Function/function.php",
+                "<?php\n"
+            ],
+            [
                 "/Language/language.php",
                 "<?php\nreturn [\n 'ch' => [],'en' => [] ];"
             ],
