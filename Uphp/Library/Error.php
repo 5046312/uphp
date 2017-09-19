@@ -105,7 +105,7 @@ class Error extends \Exception{
         if ($e = error_get_last()) {
             $rootPath = str_replace("/", "\\", TRUE_ROOT);
             $file = str_replace($rootPath, "", $e['file']);
-            $errMsg = self::$errorType[$e['type']]." # {$file}[{$e['line']}]";
+            $errMsg = self::$errorType[$e['type']]." # {$file}[{$e['line']}] {$e['message']}";
             Log::endLine($errMsg);
             switch($e['type']){
                 case E_ERROR:

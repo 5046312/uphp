@@ -6,6 +6,5 @@ use Uphp\Controller;
 class indexController extends Controller
 {
     public function index(){
-//        appTest();
     }
 }
