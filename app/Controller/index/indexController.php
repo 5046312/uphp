@@ -6,8 +6,7 @@ use Uphp\Controller;
 class indexController extends Controller
 {
     public function index(){
-//        Cache::set("key", "value");
-
-
+        $r = Cache::get("v");
+        p($r);
     }
 }
