@@ -9,10 +9,18 @@ class OpenWeChat
      */
     private static $OpenWeChatConfig;
 
+    /**
+     * 预存Driver
+     * @var
+     */
+    private static $driver;
+
+    /**
+     * 多次使用时减少文件读取
+     */
     private static function init()
     {
-        self::$OpenWeChatConfig = config('OpenWeChat');
-        #   获取access_token，使用配置中缓存方式储存
+        isset(self::$OpenWeChatConfig) OR self::$OpenWeChatConfig = config('OpenWeChat');
     }
 
     /**
@@ -40,107 +48,28 @@ class OpenWeChat
     }
 
     /**
-     * 自定义菜单
+     * 使用魔术方法实例化对应功能Driver
+     * @param $driver
+     * @param $arguments
      */
-    public static function menu(){
+    public static function __callStatic($driver, $arguments)
+    {
+        #   引入微信配置
+        self::init();
 
-    }
-
-    /**
-     * 消息管理
-     */
-    public static function message(){
-
-    }
-
-    /**
-     * 素材管理
-     */
-    public static function material(){
-
-    }
-
-    /**
-     * 用户管理
-     */
-    public static function user(){
-
-    }
-
-    /**
-     * 账号管理
-     */
-    public static function account(){
-
-    }
-
-    /**
-     * 数据统计
-     */
-    public static function dataCube(){
-
-    }
-
-    /**
-     * 微信卡卷
-     */
-    public static function card(){
-
-    }
-
-    /**
-     * 微信门店
-     */
-    public static function business(){
-
-    }
-
-    /**
-     * 微信小店
-     */
-    public static function shop(){
-
-    }
-
-    /**
-     * 微信设备功能
-     */
-    public static function device(){
-
-    }
-
-    /**
-     * 客服功能
-     */
-    public static function customService(){
-
-    }
-
-    /**
-     * 摇一摇
-     */
-    public static function shake(){
-
-    }
-
-    /**
-     * 微信连wifi
-     */
-    public static function wifi(){
-
-    }
-
-    /**
-     * 扫一扫
-     */
-    public static function scan(){
-
-    }
-
-    /**
-     * 微信发票
-     */
-    public static function invoice(){
-
+        #   防多次调用多次实例化
+        if(isset(self::$driver[ucfirst(strtolower($driver))])){
+            return self::$driver[ucfirst(strtolower($driver))];
+        }else{
+            #   初次实例化，判断功能对应Driver是否存在
+            $driverDir = UPHP_DIR.'\Library\Driver\OpenWeChat\\'.ucfirst(strtolower($driver));
+            if(file_exists($driverDir.".php")){
+                $driverClass = UPHP_DIR.'\Driver\OpenWeChat\\'.ucfirst(strtolower($driver));
+                $driver = new $driverClass(self::$config[self::$currentType]);
+                return $driver;
+            }else{
+                Error::exception(Language::get("LOG_TYPE_ERROR").":".self::$currentType);
+            }
+        }
     }
 }
