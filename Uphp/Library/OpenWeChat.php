@@ -19,7 +19,7 @@ class OpenWeChat
      * 获取access_token
      * @return mixed
      */
-    protected static function getAccessToken(){
+    private static function getAccessToken(){
         if($access_token = Cache::get("ACCESS_TOKEN")){
             return $access_token;
         }else{
