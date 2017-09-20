@@ -75,5 +75,13 @@ return [
             "pconnect"=> true, // 长连接
             "timeout" => 3, // 链接超时，默认0不限制链接时间
         ]
+    ],
+    #   Open
+    "OpenWeChat" => [
+        "appId" => "wx95175a1ce02afa6d",
+        "appSecret" => "efde20e45fbaeb3c107bbc3a388d39b3",
+        "token" => "ppo",
+        "WeChatDomain" => "api.weixin.qq.com",
+        "timeout" => 3, // Access_token 失败尝试次数
     ]
 ];

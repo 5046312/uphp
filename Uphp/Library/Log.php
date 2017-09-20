@@ -53,7 +53,7 @@ class Log
         isset(self::$config) OR self::init($type);
         if(self::isOpen()) {
             self::add("=============Start==============");
-            self::add(date("Y-m-d H:i:s") . "\t" . $_SERVER['REMOTE_ADDR']);
+            self::add(date("Y-m-d H:i:s.").floor(microtime()*1000) . "\t" . $_SERVER['REMOTE_ADDR']);
             self::add($_SERVER['REQUEST_METHOD'] . "\t" . $_SERVER['REQUEST_URI']);
         }
     }
