@@ -56,19 +56,19 @@ class OpenWeChat
     {
         #   引入微信配置
         self::init();
-
+        $driverName = ucfirst(strtolower($driver));
         #   防多次调用多次实例化
-        if(isset(self::$driver[ucfirst(strtolower($driver))])){
-            return self::$driver[ucfirst(strtolower($driver))];
+        if(isset(self::$driver[$driverName])){
+            return self::$driver[$driverName];
         }else{
             #   初次实例化，判断功能对应Driver是否存在
-            $driverDir = UPHP_DIR.'\Library\Driver\OpenWeChat\\'.ucfirst(strtolower($driver));
+            $driverDir = UPHP_DIR.'\Library\Driver\OpenWeChat\\'.$driverName;
             if(file_exists($driverDir.".php")){
-                $driverClass = UPHP_DIR.'\Driver\OpenWeChat\\'.ucfirst(strtolower($driver));
-                $driver = new $driverClass(self::$config[self::$currentType]);
+                $driverClass = UPHP_DIR.'\Driver\OpenWeChat\\'.$driverName;
+                $driver = new $driverClass(self::getAccessToken());
                 return $driver;
             }else{
-                Error::exception(Language::get("LOG_TYPE_ERROR").":".self::$currentType);
+                Error::exception("OpenWeChat Driver Not Exist:".$driverName);
             }
         }
     }
