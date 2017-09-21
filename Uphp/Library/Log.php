@@ -18,7 +18,7 @@ class Log
             #   设置日志类型，
             self::$currentType = isset($type) ? strtolower($type) : strtolower(self::$config['type']);
             #   查找日志驱动文件是否存在，验证配置项中的日志类型是否正确
-            $driverDir = UPHP_DIR.'\Library\Driver\Log\\'.ucfirst(strtolower(self::$currentType));
+            $driverDir = TRUE_ROOT.UPHP_DIR.'/Library/Driver/Log/'.ucfirst(strtolower(self::$currentType));
             if(file_exists($driverDir.".php")){
                 $driverClass = UPHP_DIR.'\Driver\Log\\'.ucfirst(strtolower(self::$currentType));
                 self::$currentDriver = new $driverClass(self::$config[self::$currentType]);
@@ -53,7 +53,7 @@ class Log
         isset(self::$config) OR self::init($type);
         if(self::isOpen()) {
             self::add("=============Start==============");
-            self::add(date("Y-m-d H:i:s.").floor(microtime()*1000) . "\t" . $_SERVER['REMOTE_ADDR']);
+            self::add(date("Y-m-d H:i:s.").floor(microtime()*1000) . "\tIP:" . $_SERVER['REMOTE_ADDR']);
             self::add($_SERVER['REQUEST_METHOD'] . "\t" . $_SERVER['REQUEST_URI']);
             if($_SERVER['REQUEST_METHOD'] == "POST" && self::$config['post_data']){
                 self::add(json_encode($_POST));

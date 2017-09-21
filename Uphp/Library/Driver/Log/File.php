@@ -23,7 +23,7 @@ class File
     {
         $this->config = $config;
         #   判断日志文件夹是否存在
-        if(!file_exists($this->config['dir'])){
+        if(!file_exists(TRUE_ROOT.$this->config['dir'])){
             mkdir($this->config['dir'], 0755, true);
             Create::createIndexHtml($this->config['dir']);
         }

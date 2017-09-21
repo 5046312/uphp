@@ -32,10 +32,10 @@ class Uphp
             $dir = "";
             switch ($namespace[0]){
                 case UPHP_DIR:
-                    $dir = UPHP_DIR."/Library/".$namespace[1].".php";
+                    $dir = UPHP_DIR."/Library/".str_replace("\\", "/", $namespace[1]).".php";
                     break;
                 default:
-                    $dir = $className.'.php';
+                    $dir = str_replace("\\", "/", $className).'.php';
                     break;
             }
             include_once($dir);
@@ -59,11 +59,11 @@ class Uphp
         register_shutdown_function(UPHP_DIR.'\Error::fatalHandler');
         #   首次进入应用时，进行应用目录和部分文件创建的初始化操作
         Create::init(APP_DIR);
+        #   路由类初始化
+        Route::init();
         #   日志类初始化（内部判断开启状态）
         #   日志首行在请求时就写入
         Log::startLine();
-        #   路由类初始化
-        Route::init();
         $this->callRequestMethod();
     }
 
@@ -75,23 +75,24 @@ class Uphp
         #   舍去单例，直接实例化
         #   优先判断模块是否存在
         if(is_dir(APP_DIR."/Controller/"._MODULE_)){
-            $controllerString = APP_DIR."\\Controller\\"._MODULE_."\\"._CONTROLLER_.'Controller';
+            $controllerString = APP_DIR."/Controller/"._MODULE_."/"._CONTROLLER_.'Controller';
             #   判断控制器是否存在
-            if(file_exists($controllerString.".php")){
-                $controller = new $controllerString;
+            if(file_exists(TRUE_ROOT.$controllerString.".php")){
+                $c = APP_DIR."\Controller\\"._MODULE_."\\"._CONTROLLER_.'Controller';
+                $controller = new $c;
                 if(method_exists($controller, _ACTION_)){
                     #   引用应用中function
-                    if(file_exists(APP_DIR."/Function/function.php")){
-                        include_once(APP_DIR."/Function/function.php");
+                    if(file_exists(TRUE_ROOT.APP_DIR."/Function/function.php")){
+                        include_once(TRUE_ROOT.APP_DIR."/Function/function.php");
                     }
                     echo call_user_func_array([$controller, _ACTION_], (array)unserialize(_ARGS_));
-                }else{
+                }else {
                     Error::exception(Language::get("ACTION_NOT_EXIST").":"._ACTION_);
                 }
-            }else{
+            }else {
                 Error::exception(Language::get("CONTROLLER_NOT_EXIST").":"._CONTROLLER_);
             }
-        }else{
+        }else {
             Error::exception(Language::get("MODULE_NOT_EXIST").":"._MODULE_);
         }
     }

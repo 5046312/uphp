@@ -33,7 +33,12 @@ class Route
         #   按.php分割，包含同框架多入口多应用情况
         $self  = explode('.php', $_SERVER['PHP_SELF'], 2);
         $root = explode("/", trim($self[0], "/"));
-        $trueRoot = count($root) == 1 ? "" : $root[0]."/" ;
+        $trueRoot = "";
+        if(count($root) > 1){
+            for ($i=0; $i<count($root) - 1; $i++){
+                $trueRoot .= $root[$i]."/";
+            }
+        }
         define("TRUE_ROOT", $_SERVER['DOCUMENT_ROOT']."/".$trueRoot);
         self::$uriArr = explode("?", trim($self[1], "/"));
         #   加载路由规则前判断路由文件是否被删除
