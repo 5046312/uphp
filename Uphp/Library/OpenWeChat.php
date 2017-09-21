@@ -38,7 +38,7 @@ class OpenWeChat
             $url = self::$OpenWeChatConfig['url']."token?grant_type=client_credential&appid=".self::$OpenWeChatConfig['appId']."&secret=".self::$OpenWeChatConfig['appSecret'];
             #   尝试次数
             for ($i=0; $i<self::$OpenWeChatConfig['timeout']; $i++){
-                $r = json_decode(curlGet($url), true);
+                $r = json_decode(curl("GET", $url), true);
                 if(!isset($r['errcode']) || $r['errcode'] == 0){
                     #   正确获取，缓存预留十分钟
                     Cache::set("ACCESS_TOKEN", $r['access_token'], $r['expires_in'] - 600);

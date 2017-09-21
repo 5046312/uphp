@@ -13,7 +13,7 @@ class Uphp
      */
     public function __construct()
     {
-        define("APP_START_TIME", microtime());
+        define("APP_START_TIME", microtime(true));
         #   注册自动加载类
         $this->autoload();
         #   加载系统配置项，用户配置项将按用户全局->模块->控制器依次加载，依次被覆盖

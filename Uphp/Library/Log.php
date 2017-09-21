@@ -69,7 +69,7 @@ class Log
                 self::add($content);
             }
             $filesNum = count(get_included_files());
-            self::add("Time:".round((microtime()-APP_START_TIME) * 1000)."ms"."\t"."File:".$filesNum);
+            self::add("Time:".round((microtime(true)-APP_START_TIME), 3)."s"."\t"."File:".$filesNum);
             self::add("==============End===============");
             self::$currentDriver->save();
         }
