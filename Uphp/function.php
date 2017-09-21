@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * 引入自定义function文件
+ * @param $name
+ */
 function getFunction($name){
     include_once(APP_DIR."/Function/".$name.".php");
 }
@@ -30,33 +34,26 @@ function p($value){
 
 /**
  * curl get
- * @param $url
- * @return mixed
- */
-function curlGet($url){
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //不验证证书
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); //不验证证书
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    $output = curl_exec($ch);
-    curl_close($ch);
-    return ($output);
-}
-
-/**
- * curl post
+ * @param $type GET || POST
  * @param $url
  * @param $data
  * @return mixed
  */
-function curlPost($url, $data){
+function curl($type, $url, $data = null){
+
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //不验证证书
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); //不验证证书
+
+    if($type == "POST"){
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    }else if($type == "GET"){
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+    }
+
     $output = curl_exec($ch);
     curl_close($ch);
     return ($output);

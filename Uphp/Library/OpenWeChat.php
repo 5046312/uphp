@@ -20,7 +20,11 @@ class OpenWeChat
      */
     private static function init()
     {
-        isset(self::$OpenWeChatConfig) OR self::$OpenWeChatConfig = config('OpenWeChat');
+        if(empty(self::$OpenWeChatConfig)){
+            self::$OpenWeChatConfig = config('OpenWeChat');
+            self::$OpenWeChatConfig['url'] = "https://".self::$OpenWeChatConfig['WeChatDomain']."/cgi-bin/";
+        }
+        return self::$OpenWeChatConfig;
     }
 
     /**
@@ -31,7 +35,7 @@ class OpenWeChat
         if($access_token = Cache::get("ACCESS_TOKEN")){
             return $access_token;
         }else{
-            $url = "https://".self::$OpenWeChatConfig['WeChatDomain']."/cgi-bin/token?grant_type=client_credential&appid=".self::$OpenWeChatConfig['appId']."&secret=".self::$OpenWeChatConfig['appSecret'];
+            $url = self::$OpenWeChatConfig['url']."token?grant_type=client_credential&appid=".self::$OpenWeChatConfig['appId']."&secret=".self::$OpenWeChatConfig['appSecret'];
             #   尝试次数
             for ($i=0; $i<self::$OpenWeChatConfig['timeout']; $i++){
                 $r = json_decode(curlGet($url), true);
@@ -54,8 +58,6 @@ class OpenWeChat
      */
     public static function __callStatic($driver, $arguments)
     {
-        #   引入微信配置
-        self::init();
         $driverName = ucfirst(strtolower($driver));
         #   防多次调用多次实例化
         if(isset(self::$driver[$driverName])){
@@ -65,7 +67,7 @@ class OpenWeChat
             $driverDir = UPHP_DIR.'\Library\Driver\OpenWeChat\\'.$driverName;
             if(file_exists($driverDir.".php")){
                 $driverClass = UPHP_DIR.'\Driver\OpenWeChat\\'.$driverName;
-                $driver = new $driverClass(self::getAccessToken());
+                $driver = new $driverClass(self::init(), self::getAccessToken());
                 return $driver;
             }else{
                 Error::exception("OpenWeChat Driver Not Exist:".$driverName);
