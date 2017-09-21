@@ -55,6 +55,9 @@ class Log
             self::add("=============Start==============");
             self::add(date("Y-m-d H:i:s.").floor(microtime()*1000) . "\t" . $_SERVER['REMOTE_ADDR']);
             self::add($_SERVER['REQUEST_METHOD'] . "\t" . $_SERVER['REQUEST_URI']);
+            if($_SERVER['REQUEST_METHOD'] == "POST" && self::$config['post_data']){
+                self::add(json_encode($_POST));
+            }
         }
     }
 

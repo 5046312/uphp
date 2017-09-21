@@ -53,7 +53,8 @@ return [
     "log" => [
         "open" => true, // 开启日志
         "type" => "file", // 默认日志驱动类型
-        "error_level" => E_WARNING, // 错误记录级别
+        "error_level" => E_WARNING, // TODO:错误记录级别
+        "post_data" => true, // 记录post所传内容
         "file" => [
             "date_format" => "Y-m-d", // 日志文件命名格式
             "dir" => APP_DIR."/Temp/log", // 日志文件存放路径

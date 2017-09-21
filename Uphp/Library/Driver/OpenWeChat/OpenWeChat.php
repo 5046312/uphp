@@ -20,6 +20,17 @@ abstract class OpenWeChat
 
     public function __call($name, $arguments)
     {
-        return call_user_func_array([$this, $name], $arguments);
+        $startTime = microtime(true);
+        $res = call_user_func_array([$this, $name], $arguments);
+        $className = explode("\\", get_class($this));
+        if(isset($res['errcode']) && $res['errcode'] != 0){
+            #   微信接口调用失败
+            Log::add("OpenWeChat X ".end($className)."/".$name." [".round(microtime(true)-$startTime, 3)."s]");
+        }else{
+            #   成功
+            Log::add("OpenWeChat √ ".end($className)."/".$name." [".round(microtime(true)-$startTime, 3)."s]");
+
+        }
+        return $res;
     }
 }

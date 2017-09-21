@@ -17,12 +17,20 @@ class Menu extends OpenWeChat
         return json_decode($r, true);
     }
 
+    /**
+     * 自定义菜单查询接口
+     * @return mixed
+     */
     protected function get(){
         $api = $this->config['url']."menu/get?{$this->access_token}";
         $r = curl("GET", $api);
         return json_decode($r, true);
     }
 
+    /**
+     * 自定义菜单删除接口
+     * @return mixed
+     */
     protected function delete(){
         $api = $this->config['url']."menu/delete?{$this->access_token}";
         $r = curl("GET", $api);
