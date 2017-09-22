@@ -39,4 +39,5 @@
 + v0.8 File日志增加文件锁，防止并发
 + v0.9 彻底解决了框架在多级目录下路由无法正确定位的BUG
 + v0.10 日志写入放在了register_shutdown_function这个类似析构方法中
-+ v0.11 新增OpenWeChat类，实现Access_Token的获取、保存、日志记录 
++ v0.11 新增OpenWeChat类，实现Access_Token的获取、保存、日志记录
++ v0.12 修复Linux路径不兼容问题，修复框架在N层目录下访问错误的BUG
