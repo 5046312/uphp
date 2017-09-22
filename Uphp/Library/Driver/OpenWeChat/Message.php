@@ -18,8 +18,8 @@ class Message extends OpenWeChat
      */
     protected function getNormal($type = null){
 
-        // 文字 text
         /**
+         * 文字 text
          * <xml>
          * <ToUserName><![CDATA[toUser]]></ToUserName>
          * <FromUserName><![CDATA[fromUser]]></FromUserName>
@@ -30,8 +30,8 @@ class Message extends OpenWeChat
          * </xml>
          * */
 
-        // 图片 image
         /**
+         * 图片 image
          * <xml>
          * <ToUserName><![CDATA[toUser]]></ToUserName>
          * <FromUserName><![CDATA[fromUser]]></FromUserName>
@@ -43,8 +43,8 @@ class Message extends OpenWeChat
          * </xml>
          * */
 
-        // 语音 voice Todo: 开启语音识别后，增加了Recongnition字段
         /**
+         * 语音 voice Todo: 开启语音识别后，增加了Recongnition字段
          * <xml>
          * <ToUserName><![CDATA[toUser]]></ToUserName>
          * <FromUserName><![CDATA[fromUser]]></FromUserName>
@@ -57,8 +57,8 @@ class Message extends OpenWeChat
          * </xml>
          * */
 
-        // 视频 video
         /**
+         * 视频 video
          * <xml>
          * <ToUserName><![CDATA[toUser]]></ToUserName>
          * <FromUserName><![CDATA[fromUser]]></FromUserName>
@@ -70,8 +70,8 @@ class Message extends OpenWeChat
          * </xml>
          * */
 
-        // 小视频 shortvideo
         /**
+         * 小视频 shortvideo
          * <xml>
          * <ToUserName><![CDATA[toUser]]></ToUserName>
          * <FromUserName><![CDATA[fromUser]]></FromUserName>
@@ -83,8 +83,8 @@ class Message extends OpenWeChat
          * </xml>
          * */
 
-        // 地理位置 location
         /**
+         * 地理位置 location
          * <xml>
          * <ToUserName><![CDATA[toUser]]></ToUserName>
          * <FromUserName><![CDATA[fromUser]]></FromUserName>
@@ -98,8 +98,8 @@ class Message extends OpenWeChat
          * </xml>
          */
 
-        // 链接 link
         /**
+         * 链接 link
          * <xml>
          * <ToUserName><![CDATA[toUser]]></ToUserName>
          * <FromUserName><![CDATA[fromUser]]></FromUserName>
@@ -111,6 +111,7 @@ class Message extends OpenWeChat
          * <MsgId>1234567890123456</MsgId>
          * </xml>
          */
+
         $postStr = file_get_contents("php://input");
         if (!empty($postStr)) {
             $postObj = json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA));
@@ -130,6 +131,16 @@ class Message extends OpenWeChat
      * @param $info
      */
     protected function returnMsg($info){
+        echo $this->sendMsg($info);
+        die;
+    }
+
+    /**
+     * 返回拼装好消息部分的XML
+     * @param $info
+     * @return string
+     */
+    private function sendMsg($info){
         switch($info['MsgType']){
             // 文字
             case "text":
@@ -220,65 +231,20 @@ class Message extends OpenWeChat
                 </xml>";
                 break;
         }
-        // 1 回复文本消息
-
-        echo $info;
-        die;
-
-        // 2 回复图片消息
-        // 3 回复语音消息
-        // 4 回复视频消息
-        // 5 回复音乐消息
-        // 6 回复图文消息
-
+        return $info;
     }
 
     /**
      * 接收事件推送
+     * subscribe、unsubscribe、LOCATION、CLICK、scancode_waitmsg
      */
-    protected function eventReturn(){
-        // 关注/取消关注事件
-        $get = $this->get("event");
-        switch($get['Event']){
-            // 关注公众号
-            case "subscribe":
-                $info = "<xml>
-                            <ToUserName><![CDATA[{$get['FromUserName']}]]></ToUserName>
-                            <FromUserName><![CDATA[{$get['ToUserName']}]]></FromUserName>
-                            <CreateTime>".time()."</CreateTime>
-                            <MsgType><![CDATA[text]]></MsgType>
-                            <Content><![CDATA[欢迎关注。。]]></Content>
-                        </xml>";
-                break;
-
-            // 取消关注
-            case "unsubscribe":
-                break;
-
-            // 发送地理位置
-            case "LOCATION":
-                $info = "<xml>
-                            <ToUserName><![CDATA[{$get['FromUserName']}]]></ToUserName>
-                            <FromUserName><![CDATA[{$get['ToUserName']}]]></FromUserName>
-                            <CreateTime>".time()."</CreateTime>
-                            <MsgType><![CDATA[text]]></MsgType>
-                            <Content><![CDATA[已经锁定了你的位置]]></Content>
-                        </xml>";
-                break;
-
-            // 点击自定义菜单
-            case "CLICK":
-                break;
-
-            // 扫描二维码带提示
-            case "scancode_waitmsg":
-                break;
+    protected function eventReturn($type, $info){
+        $get = $this->getNormal("event");
+        if($get['Event'] == $type){
+            $info['ToUserName'] = $get['FromUserName'];
+            $info['FromUserName'] = $get['ToUserName'];
+            echo $this->sendMsg($info);
+            return $this->sendMsg($info);
         }
-        echo $info;
-        die;
     }
-
-
-
-
 }

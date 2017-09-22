@@ -13,8 +13,6 @@
 ```
 $text = [
             "MsgType" => "text", // * 消息类型
-            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
-            "FromUserName" => "", // * 开发者微信号
             "Content" => "", // * 发送的文字内容（支持换行）
         ];
 ```
@@ -22,8 +20,6 @@ $text = [
 ```
 $image = [
             "MsgType" => "image", // * 消息类型
-            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
-            "FromUserName" => "", // * 开发者微信号
             "MediaId" => "", // * 通过素材管理中的接口上传多媒体文件，得到的id。
         ];
 ```
@@ -31,8 +27,6 @@ $image = [
 ```
 $voice = [
             "MsgType" => "voice", // * 消息类型
-            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
-            "FromUserName" => "", // * 开发者微信号
             "MediaId" => "", // * 通过素材管理中的接口上传多媒体文件，得到的id
         ];
 ```
@@ -40,8 +34,6 @@ $voice = [
 ```
 $video = [
             "MsgType" => "video", // * 消息类型
-            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
-            "FromUserName" => "", // * 开发者微信号
             "MediaId" => "", // * 通过素材管理中的接口上传多媒体文件，得到的id
             "Title" => "", // 视频消息的标题
             "Description" => "", // 视频消息的描述
@@ -51,8 +43,6 @@ $video = [
 ```
 $music = [
             "MsgType" => "music", // * 消息类型
-            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
-            "FromUserName" => "", // * 开发者微信号
             "ThumbMediaId" => "", // * 缩略图的媒体id，通过素材管理中的接口上传多媒体文件，得到的id
             "Title" => "", // 音乐标题
             "Description" => "", // 音乐描述
@@ -64,8 +54,6 @@ $music = [
 ```
 $news = [
             "MsgType" => "news", // * 消息类型
-            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
-            "FromUserName" => "", // * 开发者微信号
             "ArticleCount" => "", // * 图文消息个数，限制为8条以内
             "Articles" =>
             [
