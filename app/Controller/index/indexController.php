@@ -8,6 +8,6 @@ use Uphp\OpenWeChat;
 class indexController extends Controller
 {
     public function index(){
-        OpenWeChat::first();
+        OpenWeChat::Message()->getAndReturn("papapa");
     }
 }

@@ -29,7 +29,6 @@ abstract class OpenWeChat
         }else{
             #   成功
             Log::add("OpenWeChat √ ".end($className)."/".$name." [".round(microtime(true)-$startTime, 3)."s]");
-
         }
         return $res;
     }

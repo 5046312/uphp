@@ -58,6 +58,7 @@ class OpenWeChat
      */
     public static function __callStatic($driver, $arguments)
     {
+        self::first();
         $driverName = ucfirst(strtolower($driver));
         #   防多次调用多次实例化
         if(isset(self::$driver[$driverName])){
@@ -65,7 +66,7 @@ class OpenWeChat
         }else{
             #   初次实例化，判断功能对应Driver是否存在
             $driverDir = UPHP_DIR.'\Library\Driver\OpenWeChat\\'.$driverName;
-            if(file_exists($driverDir.".php")){
+            if(file_exists(TRUE_ROOT.str_replace("\\", "/", $driverDir).".php")){
                 $driverClass = UPHP_DIR.'\Driver\OpenWeChat\\'.$driverName;
                 $driver = new $driverClass(self::init(), self::getAccessToken());
                 return $driver;
@@ -78,7 +79,7 @@ class OpenWeChat
     /**
      * 接口配置时使用
      */
-    public static function first(){
+    private static function first(){
         #   首次认证，有四个参数，signature、nonce、timestamp、echostr
         if($_GET['echostr']){
             //形成数组，然后按字典序排序
@@ -89,10 +90,6 @@ class OpenWeChat
                 echo $_GET['echostr'];
                 die;
             }
-        }else {
-            #   第二次就没有echostr参数
-            //接收事件推送并回复
         }
-
     }
 }

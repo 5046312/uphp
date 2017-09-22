@@ -41,7 +41,7 @@ class Cache
 
         #   查找日志驱动文件是否存在，验证配置项中的日志类型是否正确
         $driverDir = UPHP_DIR."\\Library\\Driver\\Cache\\".ucfirst(strtolower(self::$currentType));
-        if(file_exists($driverDir.".php")){
+        if(file_exists(TRUE_ROOT.str_replace("\\", "/", $driverDir).".php")){
             $driverClass = UPHP_DIR."\\Driver\\Cache\\".ucfirst(strtolower(self::$currentType));
             self::$cache = new $driverClass(self::$config);
         }else{
