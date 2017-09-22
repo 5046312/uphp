@@ -10,7 +10,7 @@ class OpenWeChat
     private static $OpenWeChatConfig;
 
     /**
-     * 预存Driver
+     * 存放driver，减少二次重复实例化
      * @var
      */
     private static $driver;
@@ -68,8 +68,8 @@ class OpenWeChat
             $driverDir = UPHP_DIR.'\Library\Driver\OpenWeChat\\'.$driverName;
             if(file_exists(TRUE_ROOT.str_replace("\\", "/", $driverDir).".php")){
                 $driverClass = UPHP_DIR.'\Driver\OpenWeChat\\'.$driverName;
-                $driver = new $driverClass(self::init(), self::getAccessToken());
-                return $driver;
+                self::$driver[$driverName] = new $driverClass(self::init(), self::getAccessToken());
+                return self::$driver[$driverName];
             }else{
                 Error::exception("OpenWeChat Driver Not Exist:".$driverName);
             }

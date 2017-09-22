@@ -6,6 +6,80 @@
 框架配置 < 应用配置 < 模块配置 < 控制器配置
 相同配置会由高到低进行覆盖
 
+## OpenWeChat
+被动回复用户消息的数组模板：
+
+文字 text:
+```
+$text = [
+            "MsgType" => "text", // * 消息类型
+            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
+            "FromUserName" => "", // * 开发者微信号
+            "Content" => "", // * 发送的文字内容（支持换行）
+        ];
+```
+图片 image:
+```
+$image = [
+            "MsgType" => "image", // * 消息类型
+            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
+            "FromUserName" => "", // * 开发者微信号
+            "MediaId" => "", // * 通过素材管理中的接口上传多媒体文件，得到的id。
+        ];
+```
+语音 voice:
+```
+$voice = [
+            "MsgType" => "voice", // * 消息类型
+            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
+            "FromUserName" => "", // * 开发者微信号
+            "MediaId" => "", // * 通过素材管理中的接口上传多媒体文件，得到的id
+        ];
+```
+视频 video:
+```
+$video = [
+            "MsgType" => "video", // * 消息类型
+            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
+            "FromUserName" => "", // * 开发者微信号
+            "MediaId" => "", // * 通过素材管理中的接口上传多媒体文件，得到的id
+            "Title" => "", // 视频消息的标题
+            "Description" => "", // 视频消息的描述
+        ];
+```
+音乐 music:
+```
+$music = [
+            "MsgType" => "music", // * 消息类型
+            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
+            "FromUserName" => "", // * 开发者微信号
+            "ThumbMediaId" => "", // * 缩略图的媒体id，通过素材管理中的接口上传多媒体文件，得到的id
+            "Title" => "", // 音乐标题
+            "Description" => "", // 音乐描述
+            "MusicURL" => "", // 音乐链接
+            "HQMusicUrl" => "", // 高质量音乐链接，WIFI环境优先使用该链接播放音乐
+        ];
+```
+图文 news: // Todo: 可发送多条内容（尚未完成）
+```
+$news = [
+            "MsgType" => "news", // * 消息类型
+            "ToUserName" => "", // * 接收方帐号（收到的OpenID）
+            "FromUserName" => "", // * 开发者微信号
+            "ArticleCount" => "", // * 图文消息个数，限制为8条以内
+            "Articles" =>
+            [
+                [
+                    "Title" => "", // 图文消息标题
+                    "Description" => "", // 图文消息描述
+                    "PicUrl" => "", // 图片链接，支持JPG、PNG格式，较好的效果为大图360*200，小图200*200
+                    "Url" => "", // 点击图文消息跳转链接
+                ],
+                ...
+            ]
+        ];
+```
+
 ## DONE
 + Language class(done)
 + Composer support(done)
