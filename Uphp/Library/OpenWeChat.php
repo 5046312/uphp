@@ -74,4 +74,25 @@ class OpenWeChat
             }
         }
     }
+
+    /**
+     * 接口配置时使用
+     */
+    public static function first(){
+        #   首次认证，有四个参数，signature、nonce、timestamp、echostr
+        if($_GET['echostr']){
+            //形成数组，然后按字典序排序
+            $array = [$_GET['nonce'], $_GET['timestamp'], self::init()['token']];
+            sort($array);
+            //拼接成字符串,sha1加密 ，然后与signature进行校验
+            if(sha1(implode($array)) == $_GET['signature']){
+                echo $_GET['echostr'];
+                die;
+            }
+        }else {
+            #   第二次就没有echostr参数
+            //接收事件推送并回复
+        }
+
+    }
 }
