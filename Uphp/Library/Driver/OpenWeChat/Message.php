@@ -12,7 +12,7 @@ class Message extends OpenWeChat
 
     public $ToUserName;
     public $FromUserName;
-
+    public $get; // 缓存接收的信息，不再重复处理
     /**
      * 接收全部类型消息，并返回数组形式
      * {"ToUserName":"gh_e3af9eff6","FromUserName":"oCOse3W_L-M","CreateTime":"1506044669","MsgType":"text","Content":"123","MsgId":"64684120"}
@@ -114,20 +114,34 @@ class Message extends OpenWeChat
          * <MsgId>1234567890123456</MsgId>
          * </xml>
          */
-
-        $postStr = file_get_contents("php://input");
-        if (!empty($postStr)) {
-            $json = json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA));
-            Log::add("FromWeChat # ".$json);
-            $arr = json_decode($json, true);
-            $this->ToUserName = $arr['FromUserName'];
-            $this->FromUserName = $arr['ToUserName'];
+        #   存为成员，第二次不在进行处理
+        if (isset($this->get)){
             if(isset($type)){
-                if($arr['MsgType'] == $type){
-                    return $arr;
+                if($this->get['MsgType'] == $type){
+                    return $this->get;
+                }else{
+                    return null;
                 }
             }
-            return $arr;
+            return $this->get;
+        }else{
+            $postStr = file_get_contents("php://input");
+            if (!empty($postStr)) {
+                $json = json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA));
+                Log::add("FromWeChat # ".$json);
+                $arr = json_decode($json, true);
+                $this->get = $arr;
+                $this->ToUserName = $arr['FromUserName'];
+                $this->FromUserName = $arr['ToUserName'];
+                if(isset($type)){
+                    if($arr['MsgType'] == $type){
+                        return $arr;
+                    }else{
+                        return null;
+                    }
+                }
+                return $arr;
+            }
         }
     }
 
