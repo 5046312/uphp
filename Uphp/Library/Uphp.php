@@ -17,7 +17,7 @@ class Uphp
         #   注册自动加载类
         $this->autoload();
         #   加载系统配置项，用户配置项将按用户全局->模块->控制器依次加载，依次被覆盖
-        Config::init(include("Uphp/config.php"));
+        Config::init(include(UPHP_DIR."/config.php"));
         #   时区设置
         date_default_timezone_set(Config::get("app.timezone"));
     }
@@ -61,6 +61,8 @@ class Uphp
         Create::init(APP_DIR);
         #   路由类初始化
         Route::init();
+        #   引入用户模块和控制器配置
+        Config::userConfigInit();
         #   日志类初始化（内部判断开启状态）
         #   日志首行在请求时就写入
         Log::startLine();

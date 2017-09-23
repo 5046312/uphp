@@ -15,7 +15,12 @@ class Config
 
     public static function init($config){
         if(empty(self::$config)){
+            #   首次引入（Uphp中初始化系统格式配置）
             self::$config = $config;
+            #   1、应用配置
+            if(file_exists(APP_DIR."/Config/config.php")){
+                self::init(include_once(APP_DIR."/Config/config.php"));
+            }
         }else{
             #   不为空则从后向前进行覆盖
             foreach ($config as $area=>$value){
@@ -29,6 +34,21 @@ class Config
         return self::$config;
     }
 
+    /**
+     * 用户配置文件的载入覆盖操作
+     */
+    public static function userConfigInit(){
+
+        #   2、模块配置
+        if(file_exists(APP_DIR."/Config/"._MODULE_."/config.php")){
+            self::init(include_once(APP_DIR."/Config/"._MODULE_."/config.php"));
+        }
+        #   3、控制器配置
+
+        if(file_exists(APP_DIR."/Config/"._MODULE_."/"._CONTROLLER_."config.php")){
+            self::init(include_once(APP_DIR."/Config/"._MODULE_."/"._CONTROLLER_."config.php"));
+        }
+    }
 
     /**
      * 新增或修改配置项
