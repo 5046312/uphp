@@ -10,13 +10,16 @@ use Uphp\Log;
 class Message extends OpenWeChat
 {
 
+    public $ToUserName;
+    public $FromUserName;
+
     /**
      * 接收全部类型消息，并返回数组形式
      * {"ToUserName":"gh_e3af9eff6","FromUserName":"oCOse3W_L-M","CreateTime":"1506044669","MsgType":"text","Content":"123","MsgId":"64684120"}
      * @param $type 过滤指定类型的数据 text image voice video shortvideo location link event
      * @return mixed
      */
-    protected function getNormal($type = null){
+    protected function get($type = null){
 
         /**
          * 文字 text
@@ -117,6 +120,8 @@ class Message extends OpenWeChat
             $postObj = json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA));
             Log::add("FromWeChat # ".$postObj);
             $arr = json_decode($postObj, true);
+            $this->ToUserName = $arr['FromUserName'];
+            $this->FromUserName = $arr['ToUserName'];
             if(isset($type)){
                 if($arr['MsgType'] == $type){
                     return $arr;
@@ -145,8 +150,8 @@ class Message extends OpenWeChat
             // 文字
             case "text":
                 $info = "<xml>
-                    <ToUserName><![CDATA[{$info['ToUserName']}]]></ToUserName>
-                    <FromUserName><![CDATA[{$info['FromUserName']}]]></FromUserName>
+                    <ToUserName><![CDATA[{$this->ToUserName}]]></ToUserName>
+                    <FromUserName><![CDATA[{$this->FromUserName}]]></FromUserName>
                     <CreateTime>".time()."</CreateTime>
                     <MsgType><![CDATA[text]]></MsgType>
                     <Content><![CDATA[{$info['Content']}]]></Content>
@@ -155,8 +160,8 @@ class Message extends OpenWeChat
             // 图片
             case "image":
                 $info = "<xml>
-                    <ToUserName><![CDATA[{$info['ToUserName']}]]></ToUserName>
-                    <FromUserName><![CDATA[{$info['FromUserName']}]]></FromUserName>
+                    <ToUserName><![CDATA[{$this->ToUserName}]]></ToUserName>
+                    <FromUserName><![CDATA[{$this->FromUserName}]]></FromUserName>
                     <CreateTime>".time()."</CreateTime>
                     <MsgType><![CDATA[image]]></MsgType>
                     <Image>
@@ -167,8 +172,8 @@ class Message extends OpenWeChat
             // 语音
             case "voice":
                 $info = "<xml>
-                    <ToUserName><![CDATA[{$info['ToUserName']}]]></ToUserName>
-                    <FromUserName><![CDATA[{$info['FromUserName']}]]></FromUserName>
+                    <ToUserName><![CDATA[{$this->ToUserName}]]></ToUserName>
+                    <FromUserName><![CDATA[{$this->FromUserName}]]></FromUserName>
                     <CreateTime>".time()."</CreateTime>
                     <MsgType><![CDATA[voice]]></MsgType>
                     <Voice>
@@ -179,8 +184,8 @@ class Message extends OpenWeChat
             // 视频
             case "video":
                 $info = "<xml>
-                    <ToUserName><![CDATA[{$info['ToUserName']}]]></ToUserName>
-                    <FromUserName><![CDATA[{$info['FromUserName']}]]></FromUserName>
+                    <ToUserName><![CDATA[{$this->ToUserName}]]></ToUserName>
+                    <FromUserName><![CDATA[{$this->FromUserName}]]></FromUserName>
                     <CreateTime>".time()."</CreateTime>
                     <MsgType><![CDATA[video]]></MsgType>
                     <Video>
@@ -193,8 +198,8 @@ class Message extends OpenWeChat
             // 音乐
             case "music":
                 $info = "<xml>
-                    <ToUserName><![CDATA[{$info['ToUserName']}]]></ToUserName>
-                    <FromUserName><![CDATA[{$info['FromUserName']}]]></FromUserName>
+                    <ToUserName><![CDATA[{$this->ToUserName}]]></ToUserName>
+                    <FromUserName><![CDATA[{$this->FromUserName}]]></FromUserName>
                     <CreateTime>".time()."</CreateTime>
                     <MsgType><![CDATA[music]]></MsgType>
                     <Music>
@@ -209,8 +214,8 @@ class Message extends OpenWeChat
             // 图文信息
             case "news":
                 $info = "<xml>
-                    <ToUserName><![CDATA[{$info['ToUserName']}]]></ToUserName>
-                    <FromUserName><![CDATA[{$info['FromUserName']}]]></FromUserName>
+                    <ToUserName><![CDATA[{$this->ToUserName}]]></ToUserName>
+                    <FromUserName><![CDATA[{$this->FromUserName}]]></FromUserName>
                     <CreateTime>".time()."</CreateTime>
                     <MsgType><![CDATA[news]]></MsgType>
                     <ArticleCount>{$info['ArticleCount']}</ArticleCount>
@@ -239,7 +244,7 @@ class Message extends OpenWeChat
      * subscribe、unsubscribe、LOCATION、CLICK、scancode_waitmsg
      */
     protected function eventReturn($type, $info){
-        $get = $this->getNormal("event");
+        $get = $this->get("event");
         if($get['Event'] == $type){
             $info['ToUserName'] = $get['FromUserName'];
             $info['FromUserName'] = $get['ToUserName'];

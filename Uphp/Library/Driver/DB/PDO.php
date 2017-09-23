@@ -50,7 +50,7 @@ class PDO
         }
 
         #   日志所记录查询时间
-        $sqlStartTime = microtime();
+        $sqlStartTime = microtime(true);
         $this->querySql = $str;
         #   PDO预处理
         $this->PDOStatement = $this->PDO->prepare($str);
@@ -70,7 +70,7 @@ class PDO
             #   PDO执行
             $result = $this->PDOStatement->execute();
             #   执行结束，写入日志
-            Log::add("SQL # {$str} - Time:".round(((microtime()-$sqlStartTime) * 1000), 3)."ms");
+            Log::add("SQL # {$str} - Time:".round(((microtime(true)-$sqlStartTime)), 3)."s");
             if ( false === $result ) {
                 $this->error();
             } else {
@@ -93,7 +93,7 @@ class PDO
             return $str;
         }
         #   日志所记录查询时间
-        $sqlStartTime = microtime();
+        $sqlStartTime = microtime(true);
         $this->querySql = $str;
         #   PDO预处理
         $this->PDOStatement = $this->PDO->prepare($str);
@@ -111,7 +111,7 @@ class PDO
         try{
             $result =   $this->PDOStatement->execute();
             #   执行结束，写入日志
-            Log::add("SQL # {$str} - Time:".round(((microtime()-$sqlStartTime) * 1000), 3)."ms");
+            Log::add("SQL # {$str} - Time:".round(((microtime(true)-$sqlStartTime)), 3)."s");
             if ( false === $result) {
                 $this->error();
             } else {

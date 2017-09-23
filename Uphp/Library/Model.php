@@ -164,12 +164,12 @@ class Model
     private function parseWhere(){
         $sql = " WHERE ";
         foreach ($this->condition['where'] as $k=>$v){
-            $sql .= "`{$v[0]}` {$v[1]} {$v[2]} AND ";
+            $sql .= "`{$v[0]}` {$v[1]} '{$v[2]}' AND ";
         }
         $sql = rtrim($sql.$this->condition['strWhere'], "AND ");
         if(!empty($this->condition['orWhere'])){
             foreach ($this->condition['orWhere'] as $k=>$v){
-                $sql .= " OR `{$v[0]}` {$v[1]} {$v[2]}";
+                $sql .= " OR `{$v[0]}` '{$v[1]}' {$v[2]}";
             }
         }
         return $sql.$this->condition['strOrWhere'];
