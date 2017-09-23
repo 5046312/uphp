@@ -117,9 +117,9 @@ class Message extends OpenWeChat
 
         $postStr = file_get_contents("php://input");
         if (!empty($postStr)) {
-            $postObj = json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA));
-            Log::add("FromWeChat # ".$postObj);
-            $arr = json_decode($postObj, true);
+            $json = json_encode(simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA));
+            Log::add("FromWeChat # ".$json);
+            $arr = json_decode($json, true);
             $this->ToUserName = $arr['FromUserName'];
             $this->FromUserName = $arr['ToUserName'];
             if(isset($type)){

@@ -22,14 +22,13 @@ abstract class OpenWeChat
     {
         $startTime = microtime(true);
         $res = call_user_func_array([$this, $name], $arguments);
-        $resStr = json_encode(simplexml_load_string($res, 'SimpleXMLElement', LIBXML_NOCDATA));
         $className = explode("\\", get_class($this));
         if(isset($res['errcode']) && $res['errcode'] != 0){
             #   微信接口调用失败
-            Log::add("OpenWeChat X ".end($className)."/".$name." [".round(microtime(true)-$startTime, 3)."s] ".$resStr);
+            Log::add("OpenWeChat X ".end($className)."/".$name." [".round(microtime(true)-$startTime, 3)."s] ".json_encode($res));
         }else{
             #   成功
-            Log::add("OpenWeChat √ ".end($className)."/".$name." [".round(microtime(true)-$startTime, 3)."s] ".$resStr);
+            Log::add("OpenWeChat √ ".end($className)."/".$name." [".round(microtime(true)-$startTime, 3)."s] ".json_encode($res));
         }
         return $res;
     }
