@@ -268,7 +268,7 @@ class Message extends OpenWeChat
             $info['ToUserName'] = $get['FromUserName'];
             $info['FromUserName'] = $get['ToUserName'];
             echo $this->sendMsg($info);
-            return $this->sendMsg($info);
+            return $info;
         }
     }
 }
