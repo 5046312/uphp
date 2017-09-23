@@ -145,6 +145,11 @@ class Message extends OpenWeChat
         }
     }
 
+    protected function getType(){
+        $get = $this->get();
+        return $get['MsgType'];
+    }
+
     /**
      * 被动回复用户消息
      * @param $info
