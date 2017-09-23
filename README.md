@@ -70,6 +70,7 @@ $news = [
 
 ## DONE
 + Language class(done)
++ Config class(done)
 + Composer support(done)
 + Log generation(done)
 
@@ -103,3 +104,4 @@ $news = [
 + v0.10 日志写入放在了register_shutdown_function这个类似析构方法中
 + v0.11 新增OpenWeChat类，实现Access_Token的获取、保存、日志记录
 + v0.12 修复Linux路径不兼容问题，修复框架在N层目录下访问错误的BUG
++ v0.13 完成配置载入优先级，逐级覆盖
