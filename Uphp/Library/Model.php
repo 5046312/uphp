@@ -11,7 +11,6 @@ class Model
     protected $name; // 数据表
     protected $link; // Db链接
     protected $table; // 表名
-    protected $prefix; // 表前缀
     protected $condition; // 条件
 
     /**
@@ -27,8 +26,9 @@ class Model
         #   实例化Driver
         $driver = 'Uphp\Driver\DB\PDO';
         $this->link = new $driver($this->config);
-        $this->table = empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
-        $this->prefix = empty($prefix) ?: $this->config['prefix'];
+        $this->table = $this->config['prefix'];
+        $this->table .= empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
+
     }
 
     /**
