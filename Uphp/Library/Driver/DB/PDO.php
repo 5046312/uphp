@@ -147,7 +147,7 @@ class PDO
     private function error()
     {
         $error = $this->PDOStatement->errorInfo();
-        Error::exception("SQL语句:".$this->querySql.'<br>'."错误原因:",($error[2]));
+        Error::exception("SQL语句:".$this->querySql.'<br>'."错误原因:".($error[2]));
     }
 
     /**
