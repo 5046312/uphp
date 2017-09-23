@@ -27,8 +27,7 @@ class Model
         $driver = 'Uphp\Driver\DB\PDO';
         $this->link = new $driver($this->config);
         $this->table = $this->config['prefix'];
-        $this->table .= empty($tableName) ? rtrim(pathinfo(get_class($this))['basename'], "Model") : $tableName;
-
+        $this->table .= empty($tableName) ? rtrim(explode("\\", get_class($this))[2], "Model") : $tableName;
     }
 
     /**
