@@ -19,7 +19,7 @@ class Message extends OpenWeChat
      * @param $type 过滤指定类型的数据 text image voice video shortvideo location link event
      * @return mixed
      */
-    protected function get($type = null){
+    protected function getNormal($type = null){
 
         /**
          * 文字 text
@@ -146,7 +146,7 @@ class Message extends OpenWeChat
     }
 
     protected function getType(){
-        $get = $this->get();
+        $get = $this->getNormal();
         return $get['MsgType'];
     }
 
@@ -261,14 +261,22 @@ class Message extends OpenWeChat
     /**
      * 接收事件推送
      * subscribe、unsubscribe、LOCATION、CLICK、scancode_waitmsg
+     * @param $type 指定接收的事件类型，如不指定则返回全部事件类型消息
      */
-    protected function eventReturn($type, $info){
-        $get = $this->get("event");
-        if($get['Event'] == $type){
-            $info['ToUserName'] = $get['FromUserName'];
-            $info['FromUserName'] = $get['ToUserName'];
-            echo $this->sendMsg($info);
-            return $info;
+    protected function getEvent($type = null){
+        $get = $this->getNormal("event");
+        if(isset($type)){
+            if($get['Event'] == $type){
+                $info['ToUserName'] = $get['FromUserName'];
+                $info['FromUserName'] = $get['ToUserName'];
+                echo $this->sendMsg($info);
+                return $info;
+            }else{
+                return null;
+            }
+        } else{
+            return $get;
         }
+
     }
 }
