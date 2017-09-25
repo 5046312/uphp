@@ -279,4 +279,13 @@ class Message extends OpenWeChat
         }
 
     }
+
+
+    /**
+     * 获取自动回复规则
+     */
+    protected function getCurrentAutoReplyInfo(){
+        $api = "https://api.weixin.qq.com/cgi-bin/get_current_autoreply_info?".$this->access_token;
+        return json_decode(curl("GET", $api), true);
+    }
 }
