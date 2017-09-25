@@ -65,7 +65,7 @@ return [
 
     #   缓存配置
     "cache" => [
-        "type" => "file", // 默认缓存类型
+        "type" => "memcached", // 默认缓存类型
         "file" => [
             "dir" => APP_DIR."/Temp/cache",
         ],
@@ -75,7 +75,12 @@ return [
             "port" => "6379", //
             "pconnect"=> true, // 长连接
             "timeout" => 3, // 链接超时，默认0不限制链接时间
-        ]
+        ],
+        #   Memcached配置
+        "memcached" => [
+            "host" => "127.0.0.1",
+            "port" => "11211",
+        ],
     ],
     #   Open
     "OpenWeChat" => [
