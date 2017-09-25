@@ -11,15 +11,23 @@ class User extends OpenWeChat
     /**
      * 创建标签
      */
-    protected function tagsCreate(){
-
+    protected function tagsCreate($tagName){
+        $api = "https://api.weixin.qq.com/cgi-bin/tags/create?".$this->access_token;
+        $info = [
+            "tag" => [
+                "name" => $tagName,
+            ]
+        ];
+        $r = curl("POST", $api, json_encode($info, JSON_UNESCAPED_UNICODE), true);
+        return $r;
     }
 
     /**
      * 获取已创建的标签
      */
     protected function tagsGet(){
-
+        $api = "https://api.weixin.qq.com/cgi-bin/tags/get?".$this->access_token;
+        return curl("GET", $api, null, true);
     }
 
     /**
@@ -32,8 +40,14 @@ class User extends OpenWeChat
     /**
      * 删除标签
      */
-    protected function tagsDelete(){
-
+    protected function tagsDelete($tagId){
+        $api = "https://api.weixin.qq.com/cgi-bin/tags/delete?".$this->access_token;
+        $info = [
+            "tag" => [
+                "id" => $tagId,
+            ]
+        ];
+        return curl("POST", $api, $info, true);
     }
 
     /**
