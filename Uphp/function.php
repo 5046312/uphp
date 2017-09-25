@@ -37,10 +37,10 @@ function p($value){
  * @param $type GET || POST
  * @param $url
  * @param $data
- * @param $nick
+ * @param $trans 返回值是否进行Json转Array
  * @return mixed
  */
-function curl($type, $url, $data = null){
+function curl($type, $url, $data = null, $trans = false){
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -54,6 +54,9 @@ function curl($type, $url, $data = null){
     }
     $output = curl_exec($ch);
     curl_close($ch);
+    if($trans){
+        return json_decode($output, true);
+    }
     return ($output);
 }
 
