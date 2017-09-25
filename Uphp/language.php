@@ -8,6 +8,8 @@ return [
         "MODULE_NOT_EXIST" => "模块不存在",
         "CONTROLLER_NOT_EXIST" => "控制器不存在",
         "ACTION_NOT_EXIST" => "控制器方法不存在",
+
+        "Driver Not Exist" => "对应Driver不存在",
         #   日志
         "LOG_TYPE_ERROR" => "日志类型错误",
         #   Redis、Memcache等拓展

@@ -71,7 +71,7 @@ class OpenWeChat
                 self::$driver[$driverName] = new $driverClass(self::init(), self::getAccessToken());
                 return self::$driver[$driverName];
             }else{
-                Error::exception("OpenWeChat Driver Not Exist:".$driverName);
+                Error::exception(Language::get("Driver Not Exist").":".$driverName);
             }
         }
     }
