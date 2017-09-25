@@ -89,6 +89,8 @@ $news = [
 + Create Module class
 + Swoole support
 + WeChat support
++ Alipay support
+
 
 
 ## Version collect
@@ -105,3 +107,4 @@ $news = [
 + v0.11 新增OpenWeChat类，实现Access_Token的获取、保存、日志记录
 + v0.12 修复Linux路径不兼容问题，修复框架在N层目录下访问错误的BUG
 + v0.13 完成配置载入优先级，逐级覆盖
++ v0.14 微信OpenWeChat中Message部分基本完成，符合操作逻辑
