@@ -76,4 +76,23 @@ class Redis implements Cache
     public function clear(){
         $this->link->flushDB();
     }
+
+    /**
+     * 入队
+     * @param $key
+     * @param $value
+     */
+    public function lPush($key, $value){
+        $this->link->lPush($key, $value);
+    }
+
+
+    /**
+     * 出队
+     * @param $key
+     * @return string
+     */
+    public function rPop($key){
+        return $this->link->rPop($key);
+    }
 }
