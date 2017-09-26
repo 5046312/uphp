@@ -65,7 +65,7 @@ return [
 
     #   缓存配置
     "cache" => [
-        "type" => "memcached", // 默认缓存类型
+        "type" => "file", // 默认缓存类型
         "file" => [
             "dir" => APP_DIR."/Temp/cache",
         ],

@@ -28,7 +28,7 @@ class Qrcode extends OpenWeChat
                     ]
             ]
         ];
-        return curl("POST", $api, $info, true);
+        return curl("POST", $api, json_encode($info), true);
     }
 
     /**
@@ -45,7 +45,7 @@ class Qrcode extends OpenWeChat
                     ]
             ]
         ];
-        return curl("POST", $api, $info, true);
+        return curl("POST", $api, json_encode($info), true);
     }
 
     /**
